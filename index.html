@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy Birthday! 💖 | A Secret Celebration</title>
+  <meta name="description" content="A secret cinematic birthday celebration website filled with memories, love letter, cake slicing, and starry night sky.">
+  <meta name="theme-color" content="#fde2ec">
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:title" content="Happy Birthday! ✨">
+  <meta property="og:description" content="A secret celebration crafted just for you.">
+  <meta property="og:image" content="assets/cover.jpg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@400;500;600;700&family=Gaegu:wght@400;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Quicksand"', 'sans-serif'],
+            serif: ['"Cormorant Garamond"', 'serif'],
+            display: ['"Playfair Display"', 'serif'],
+            script: ['"Dancing Script"', 'cursive'],
+            gaegu: ['"Gaegu"', 'cursive'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- GSAP & Canvas Confetti -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="overflow-x-hidden selection:bg-pink-300 selection:text-pink-900 min-h-screen">
+
+  <!-- Ambient Audio & Sound Control Pill -->
+  <div id="sound-control" class="fixed top-4 right-4 z-50 flex items-center gap-2 bg-white/70 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-lg border border-pink-200/50 transition-all hover:scale-105 select-none">
+    <button id="toggle-audio-btn" class="flex items-center gap-2 text-xs font-medium text-pink-700 focus:outline-none" title="Toggle Romantic Ambient Music">
+      <div id="equalizer-bars" class="flex items-end gap-0.5 h-3.5 w-3.5">
+        <span class="eq-bar w-0.5 bg-pink-500 rounded-full h-2"></span>
+        <span class="eq-bar w-0.5 bg-pink-500 rounded-full h-3.5"></span>
+        <span class="eq-bar w-0.5 bg-pink-500 rounded-full h-1.5"></span>
+      </div>
+      <span id="audio-label" class="hidden sm:inline">Music: On</span>
+    </button>
+    <div class="h-3 w-[1px] bg-pink-200"></div>
+    <button id="toggle-sfx-btn" class="text-pink-600 hover:text-pink-800 transition-colors p-0.5" title="Mute/Unmute Sound FX">
+      <i data-lucide="volume-2" class="w-4 h-4"></i>
+    </button>
+  </div>
+
+  <!-- Progress Bar (Scene Tracker) -->
+  <div class="fixed top-0 left-0 w-full h-1 z-50 bg-pink-100/30">
+    <div id="scene-progress" class="h-full bg-gradient-to-r from-pink-400 via-rose-400 to-purple-400 transition-all duration-700 w-1/5 shadow-sm"></div>
+  </div>
+
+  <!-- Global Canvas for Ambient Floating Hearts & Particles -->
+  <canvas id="ambient-canvas" class="fixed inset-0 pointer-events-none z-10"></canvas>
+
+  <!-- Flower and Fire Cinematic Overlays -->
+  <div id="flower-overlay" class="fixed inset-0 z-[60] opacity-0 pointer-events-none flower-bg"></div>
+  <div id="fire-overlay" class="fixed inset-0 z-[60] opacity-0 pointer-events-none fire-bg"></div>
+
+  <!-- Flash Overlay for Transitions -->
+  <div id="flash-overlay" class="fixed inset-0 bg-white pointer-events-none z-50 opacity-0 transition-opacity duration-500"></div>
+
+  <!-- MAIN SCENE CONTAINER -->
+  <main id="app-container" class="relative w-full min-h-screen overflow-hidden">
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 1: Cover & Secure Passcode Lock                                     -->
+    <!-- ========================================================================= -->
+    <section id="scene-1" class="scene active relative flex items-center justify-center min-h-screen px-4 z-20">
+      <div class="relative w-full max-w-xs">
+        <div id="photo-panel" class="panel">
+          <div id="card-front" class="polaroid cursor-pointer">
+            <div class="bow">🎀</div>
+            <img id="cover-photo" src="assets/cover.jpg" alt="Us">
+            <h1 id="recipient-title">Happy Birthday!</h1>
+            <p id="passcode-hint" class="hint">✨ Tap card to enter passcode • 1234</p>
+          </div>
+        </div>
+        <div id="pin-panel" class="panel panel-hidden absolute inset-0 flex flex-col items-center justify-center gap-5">
+          <h2 class="f-serif text-3xl font-bold text-[#7a2d4f]">Enter Passcode</h2>
+          <div id="pin-display" class="flex gap-3">
+            <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+          </div>
+          <div class="grid grid-cols-3 gap-3.5">
+            <button class="key-btn" data-key="1">1</button><button class="key-btn" data-key="2">2</button><button class="key-btn" data-key="3">3</button>
+            <button class="key-btn" data-key="4">4</button><button class="key-btn" data-key="5">5</button><button class="key-btn" data-key="6">6</button>
+            <button class="key-btn" data-key="7">7</button><button class="key-btn" data-key="8">8</button><button class="key-btn" data-key="9">9</button>
+            <button class="key-btn">*</button><button class="key-btn" data-key="0">0</button><button class="key-btn" data-action="delete">⌫</button>
+          </div>
+          <button id="flip-back-btn" class="text-xs underline text-[#8a3d5f]">← Back to Photo</button>
+          <div id="passcode-error" class="text-xs text-rose-500 opacity-0 transition-opacity">Incorrect passcode, try again!</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 2: Cute Lantern & Pull Cord (Intro & Outro)                         -->
+    <!-- ========================================================================= -->
+    <section id="scene-2" class="scene hidden relative flex flex-col items-center min-h-screen z-20 overflow-hidden">
+      <div id="scene2-wash" class="absolute inset-0 bg-white/70 opacity-0 pointer-events-none"></div>
+      <div id="lantern-stage" class="flex flex-col items-center">
+        <div class="lantern-rod"></div><div class="lantern-cap"></div>
+        <div class="lantern"><i class="eye l"></i><i class="eye r"></i><i class="cheek l"></i><i class="cheek r"></i><div class="smile"></div></div>
+        <div id="pull-cord-wrapper" class="flex flex-col items-center cursor-grab select-none touch-none pb-6">
+          <div class="lantern-cap" style="width:14px;height:6px"></div>
+          <div class="chain"></div><div class="knob"></div>
+          <div class="text-pink-300 text-xs mt-2">↓</div>
+        </div>
+      </div>
+      <p id="pull-text" class="pull-text">DRAG THE STRING DOWN TO PULL</p>
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <button id="fire-btn" class="fire-btn hidden pointer-events-auto">🔥</button>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 3: Swipe / Slice the Cake Feature                                   -->
+    <!-- ========================================================================= -->
+    <section id="scene-3" class="scene hidden relative flex flex-col items-center justify-center gap-6 min-h-screen px-4 z-20 select-none overflow-hidden">
+      <div class="text-center">
+        <h2 id="cake-title" class="f-playfair text-4xl font-bold text-[#a8667a] leading-tight">Swipe to Cut the Cake! 🎂</h2>
+        <p id="cake-sub" class="mt-2 text-sm text-pink-400">Drag your finger/cursor to slice</p>
+      </div>
+      <div id="cake-interactive-box" class="touch-none cursor-crosshair">
+        <img src="assets/cake-pixel.png" alt="Cake" class="w-64 pixel-img pointer-events-none">
+      </div>
+      <div class="relative w-14 h-14">
+        <svg viewBox="0 0 60 60" class="-rotate-90 w-full h-full">
+          <circle cx="30" cy="30" r="26" fill="none" stroke="#f3c4cf" stroke-width="4"/>
+          <circle id="slice-ring-fg" cx="30" cy="30" r="26" fill="none" stroke="#d98aa0" stroke-width="4"
+                  stroke-linecap="round" stroke-dasharray="163.36" stroke-dashoffset="163.36"/>
+        </svg>
+        <span id="slice-pct" class="absolute inset-0 flex items-center justify-center text-[11px] font-semibold text-[#c9788f]">0%</span>
+      </div>
+      <button id="goto-letter-btn" class="next-btn opacity-0 pointer-events-none transition-opacity duration-700">Next Scene →</button>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 4: Romantic Unfolding Letter                                        -->
+    <!-- ========================================================================= -->
+    <section id="scene-4" class="scene hidden relative flex flex-col items-center justify-center gap-6 min-h-screen px-4 py-8 z-20 overflow-hidden">
+      <div id="envelope-wrapper" class="flex flex-col items-center text-center">
+        <h2 class="text-2xl font-bold text-[#e0568f]">A Letter, Just For You</h2>
+        <p class="f-serif italic text-pink-300 text-sm">Tap the envelope to unseal</p>
+        <div id="envelope-box" class="envelope">
+          <div id="envelope-top-flap" class="env-flap"></div>
+          <button id="wax-seal" class="env-seal">✦</button>
+          <div class="env-label"><div class="f-serif italic">For You, My Cuuuuu</div><small class="text-[9px] tracking-widest">TAP TO UNSEAL ♡</small></div>
+        </div>
+      </div>
+      <div id="letter-modal" class="hidden letter-card">
+        <button id="close-letter-btn" class="absolute top-2 right-4 text-pink-300 text-sm">×</button>
+        <h3 id="letter-greeting">Happy Birthday ✨</h3>
+        <p class="sub">Just for you ♡</p>
+        <div class="letter-paper-content custom-scrollbar">
+          <div id="typewriter-body"></div><span id="typewriter-cursor" class="inline-block w-0.5 h-5 bg-rose-500 animate-pulse"></span>
+        </div>
+      </div>
+      <button id="goto-starry-btn" class="next-btn hidden">Next →</button>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 5: Space Drift Photo Gallery                                        -->
+    <!-- ========================================================================= -->
+    <section id="scene-5" class="scene hidden relative min-h-screen z-20 overflow-hidden bg-black">
+      <canvas id="starry-canvas" class="absolute inset-0 pointer-events-none"></canvas>
+      <div id="polaroid-gallery" class="absolute inset-0"></div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- LIGHTBOX / EXPANDED PHOTO MODAL                                           -->
+  <!-- ========================================================================= -->
+  <div id="photo-modal" class="fixed inset-0 z-50 hidden bg-black flex items-center justify-center p-4">
+    <button id="close-modal-btn" class="absolute top-5 right-5 text-white text-3xl">✕</button>
+    <div class="w-full max-w-sm bg-[#222] rounded-3xl p-3 space-y-3">
+      <img id="modal-img" src="" alt="" class="w-full aspect-[3/4] object-cover rounded-2xl bg-black">
+      <div class="flex gap-2">
+        <a id="modal-download" href="#" download class="flex-1 text-center py-2.5 rounded-lg bg-[#2db5c9] text-white font-medium">⬇ Download</a>
+        <button id="modal-like-btn" class="px-3 rounded-lg bg-[#2db5c9] text-white">♡</button>
+      </div>
+    </div>
+    <!-- Stubs so existing JS IDs still resolve safely -->
+    <span id="modal-title" class="hidden"></span><span id="modal-date" class="hidden"></span>
+    <p id="modal-story" class="hidden"></p><span id="modal-like-count" class="hidden"></span>
+    <button id="modal-prev-btn" class="hidden"></button><button id="modal-next-btn" class="hidden"></button>
+  </div>
+
+  <!-- Custom Logic & Animation Engine -->
+  <script src="script.js"></script>
+</body>
+</html>
