@@ -114,34 +114,16 @@ let APP_CONFIG = loadSavedConfig();
 
 function loadSavedConfig() {
   try {
-    const saved = localStorage.getItem('birthday_app_config');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      // Migrate from old default 1234 if present
-      if (!parsed.passcode || parsed.passcode === "1234") {
-        parsed.passcode = DEFAULT_CONFIG.passcode;
-      }
-      return { 
-        ...DEFAULT_CONFIG, 
-        ...parsed, 
-        partnerName: DEFAULT_CONFIG.partnerName,
-        senderName: DEFAULT_CONFIG.senderName,
-        memories: DEFAULT_CONFIG.memories,
-        passcode: parsed.passcode === "1234" ? DEFAULT_CONFIG.passcode : (parsed.passcode || DEFAULT_CONFIG.passcode),
-        letterBody: DEFAULT_CONFIG.letterBody, 
-        passcodeHint: DEFAULT_CONFIG.passcodeHint 
-      };
-    }
+    localStorage.removeItem('birthday_app_config');
   } catch (e) {
-    console.warn("Could not load saved config from localStorage:", e);
+    console.warn("Could not clear old config from localStorage:", e);
   }
   return { ...DEFAULT_CONFIG };
 }
 
 function saveConfig(newConfig) {
   try {
-    APP_CONFIG = { ...APP_CONFIG, ...newConfig };
-    localStorage.setItem('birthday_app_config', JSON.stringify(APP_CONFIG));
+    APP_CONFIG = { ...APP_CONFIG, ...newConfig, partnerName: "Amna", senderName: "Noor ul Hassan", passcode: "0910" };
     applyConfigToDOM();
   } catch (e) {
     console.error("Failed to save config:", e);
