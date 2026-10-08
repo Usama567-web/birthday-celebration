@@ -488,6 +488,7 @@ function setupScene1() {
   if (cardFront) {
     cardFront.addEventListener('click', () => {
       sounds.init();
+      sounds.startBGM();
       sounds.playWhoosh();
       if (cardFlipper) {
         cardFlipper.classList.add('is-flipped');
@@ -512,6 +513,7 @@ function setupScene1() {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       sounds.init();
+      if (!sounds.isMusicPlaying) sounds.startBGM();
 
       btn.classList.add('pressed');
       setTimeout(() => btn.classList.remove('pressed'), 120);
