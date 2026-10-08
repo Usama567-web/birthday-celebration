@@ -29,39 +29,81 @@ I love you darlzzzz please be with me…`,
   memories: [
     {
       id: 1,
-      title: "Our Golden Hour",
-      date: "September 14, 2024",
-      image: "assets/cover.jpg",
-      caption: "The way you laugh when we lose track of time...",
-      story: "That unforgettable sunset evening where the lights strung across the trees matched the twinkle in your eyes.",
+      type: "image",
+      title: "Cherished Moments",
+      date: "Special Times",
+      image: "A Bhabhi/img 1.jpeg",
+      images: ["A Bhabhi/img 1.jpeg", "A Bhabhi/img 2.jpeg", "A Bhabhi/img 3.jpeg"],
       likes: 1314
     },
     {
       id: 2,
-      title: "Sunset by the Shore",
-      date: "July 22, 2024",
-      image: "assets/memory-1.jpg",
-      caption: "Barefoot walks and salty ocean breezes...",
-      story: "Walking hand-in-hand along the tide as the sky turned shades of cotton candy pink and warm gold.",
-      likes: 999
-    },
-    {
-      id: 3,
-      title: "Underneath the Aurora & Stars",
-      date: "December 30, 2024",
-      image: "assets/memory-2.jpg",
-      caption: "Wrapped in blankets, counting shooting stars...",
-      story: "The night was freezing, but with you wrapped in that cozy blanket on the hill, watching the constellations.",
+      type: "video",
+      title: "Our Moments in Motion 🎥",
+      date: "Forever Happy",
+      video: "A Bhabhi/v-1.mp4",
       likes: 2026
     },
     {
-      id: 4,
-      title: "Sweet Birthday Morning",
-      date: "October 5, 2025",
-      image: "assets/memory-3.jpg",
-      caption: "A quiet corner cafe, a pastry, and your radiant smile...",
-      story: "Seeing you smile as you blew out the tiny candle was the highlight of my entire year.",
+      id: 3,
+      type: "image",
+      title: "Radiant Happiness",
+      date: "Beautiful Days",
+      image: "A Bhabhi/img 4.jpeg",
+      images: ["A Bhabhi/img 4.jpeg", "A Bhabhi/img 5.jpeg", "A Bhabhi/img 6.jpeg"],
       likes: 1520
+    },
+    {
+      id: 4,
+      type: "video",
+      title: "Sweet Giggles & Smiles 🎬",
+      date: "Golden Times",
+      video: "A Bhabhi/v-2.mp4",
+      likes: 1888
+    },
+    {
+      id: 5,
+      type: "image",
+      title: "Endless Laughter",
+      date: "Together Always",
+      image: "A Bhabhi/img 7.jpeg",
+      images: ["A Bhabhi/img 7.jpeg", "A Bhabhi/img 8.jpeg", "A Bhabhi/img 9.jpeg"],
+      likes: 1750
+    },
+    {
+      id: 6,
+      type: "video",
+      title: "Pure Joy & Love ✨",
+      date: "Always & Forever",
+      video: "A Bhabhi/v-3.mp4",
+      likes: 2400
+    },
+    {
+      id: 7,
+      type: "image",
+      title: "Brightest Star",
+      date: "Magic Moments",
+      image: "A Bhabhi/img 10.jpeg",
+      images: ["A Bhabhi/img 10.jpeg", "A Bhabhi/img 11.jpeg", "A Bhabhi/img 12.jpeg"],
+      likes: 1999
+    },
+    {
+      id: 8,
+      type: "image",
+      title: "Unconditional Love",
+      date: "Forever With You",
+      image: "A Bhabhi/img 13.jpeg",
+      images: ["A Bhabhi/img 13.jpeg", "A Bhabhi/img 14.jpeg", "A Bhabhi/img 15.jpeg"],
+      likes: 2500
+    },
+    {
+      id: 9,
+      type: "image",
+      title: "My Favorite Story",
+      date: "Every Single Day",
+      image: "A Bhabhi/img 3.jpeg",
+      images: ["A Bhabhi/img 3.jpeg", "A Bhabhi/img 8.jpeg", "A Bhabhi/img 12.jpeg"],
+      likes: 3100
     }
   ]
 };
@@ -81,6 +123,7 @@ function loadSavedConfig() {
       return { 
         ...DEFAULT_CONFIG, 
         ...parsed, 
+        memories: DEFAULT_CONFIG.memories,
         passcode: parsed.passcode === "1234" ? DEFAULT_CONFIG.passcode : (parsed.passcode || DEFAULT_CONFIG.passcode),
         letterBody: DEFAULT_CONFIG.letterBody, 
         passcodeHint: DEFAULT_CONFIG.passcodeHint 
@@ -816,6 +859,9 @@ function setupScene5() {
   setupPhotoModal();
 }
 
+let modalSlideIndex = 0;
+let autoSwapTimer = null;
+
 function renderPolaroidGallery() {
   const gallery = document.getElementById('polaroid-gallery');
   if (!gallery) return;
@@ -828,7 +874,29 @@ function renderPolaroidGallery() {
     card.className = 'space-card';
     card.style.cssText = `left:${x}%;top:${y}%;--r:${(i % 2 ? 1 : -1) * (4 + i % 4 * 3)}deg;` +
                          `animation-duration:${9 + i}s;animation-delay:-${i * 2}s`;
-    card.innerHTML = `<img src="${mem.image}" alt="${mem.title}">`;
+    
+    if (mem.type === 'video') {
+      // 3 video cards that play continuously until page is closed
+      card.innerHTML = `
+        <video src="${encodeURI(mem.video)}" autoplay loop muted playsinline class="w-full h-full object-cover pointer-events-none"></video>
+        <div class="video-card-badge">
+          <span>▶ Video</span>
+        </div>
+      `;
+      // Ensure video plays continuously
+      const v = card.querySelector('video');
+      if (v) {
+        v.play().catch(() => {});
+      }
+    } else {
+      card.innerHTML = `
+        <img src="${encodeURI(mem.image)}" alt="${mem.title}" class="w-full h-full object-cover">
+        <div class="photo-card-badge">
+          <span>3 Photos 📷</span>
+        </div>
+      `;
+    }
+
     card.onclick = () => { sounds.playClick(); openPhotoModal(idx); };
     gallery.appendChild(card);
   });
@@ -841,23 +909,32 @@ function setupPhotoModal() {
   const prevBtn = document.getElementById('modal-prev-btn');
   const nextBtn = document.getElementById('modal-next-btn');
   const likeBtn = document.getElementById('modal-like-btn');
+  const slidePrevBtn = document.getElementById('modal-slide-prev');
+  const slideNextBtn = document.getElementById('modal-slide-next');
+  const slideDots = document.querySelectorAll('.slide-dot');
+  const thumbItems = document.querySelectorAll('.thumb-item');
+
+  function closeModal() {
+    sounds.playClick();
+    if (autoSwapTimer) clearInterval(autoSwapTimer);
+    const video = document.getElementById('modal-video');
+    if (video) video.pause();
+    if (modal) modal.classList.add('hidden');
+  }
 
   if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      sounds.playClick();
-      modal.classList.add('hidden');
-    });
+    closeBtn.addEventListener('click', closeModal);
   }
 
   if (modal) {
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
-        sounds.playClick();
-        modal.classList.add('hidden');
+        closeModal();
       }
     });
   }
 
+  // Next / Prev Memory Navigation
   if (prevBtn) {
     prevBtn.addEventListener('click', () => {
       sounds.playClick();
@@ -874,12 +951,49 @@ function setupPhotoModal() {
     });
   }
 
+  // Slide navigation within the single photo modal (3 photos)
+  if (slidePrevBtn) {
+    slidePrevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sounds.playClick();
+      stepSlide(-1);
+    });
+  }
+
+  if (slideNextBtn) {
+    slideNextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sounds.playClick();
+      stepSlide(1);
+    });
+  }
+
+  slideDots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sounds.playClick();
+      const target = parseInt(dot.dataset.slide, 10);
+      setSlide(target);
+    });
+  });
+
+  thumbItems.forEach(thumb => {
+    thumb.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sounds.playClick();
+      const target = parseInt(thumb.dataset.thumb, 10);
+      setSlide(target);
+    });
+  });
+
   if (likeBtn) {
     likeBtn.addEventListener('click', () => {
       sounds.playHeartPop();
       const mem = APP_CONFIG.memories[activeModalMemoryIndex];
       if (mem) {
         mem.likes = (mem.likes || 1000) + 1;
+        const likeCountEl = document.getElementById('modal-like-count');
+        if (likeCountEl) likeCountEl.textContent = `${mem.likes.toLocaleString()} Likes`;
         likeBtn.innerHTML = '♥';
         likeBtn.classList.add('text-rose-400');
         spawnKissHearts();
@@ -890,31 +1004,132 @@ function setupPhotoModal() {
 
 function openPhotoModal(index) {
   activeModalMemoryIndex = index;
+  modalSlideIndex = 0;
   const modal = document.getElementById('photo-modal');
   if (!modal) return;
   modal.classList.remove('hidden');
   updatePhotoModalContent();
 }
 
+function stepSlide(dir) {
+  const mem = APP_CONFIG.memories[activeModalMemoryIndex];
+  if (!mem || mem.type === 'video' || !mem.images) return;
+  modalSlideIndex = (modalSlideIndex + dir + mem.images.length) % mem.images.length;
+  applySlide(modalSlideIndex);
+  restartAutoSwap();
+}
+
+function setSlide(idx) {
+  const mem = APP_CONFIG.memories[activeModalMemoryIndex];
+  if (!mem || mem.type === 'video' || !mem.images) return;
+  modalSlideIndex = idx % mem.images.length;
+  applySlide(modalSlideIndex);
+  restartAutoSwap();
+}
+
+function restartAutoSwap() {
+  if (autoSwapTimer) clearInterval(autoSwapTimer);
+  const mem = APP_CONFIG.memories[activeModalMemoryIndex];
+  if (mem && mem.type === 'image' && mem.images && mem.images.length > 1) {
+    autoSwapTimer = setInterval(() => {
+      modalSlideIndex = (modalSlideIndex + 1) % mem.images.length;
+      applySlide(modalSlideIndex);
+    }, 2800);
+  }
+}
+
+function applySlide(idx) {
+  const mem = APP_CONFIG.memories[activeModalMemoryIndex];
+  if (!mem || !mem.images) return;
+
+  const currentSrc = mem.images[idx];
+  const imgEl = document.getElementById('modal-img');
+  const downloadEl = document.getElementById('modal-download');
+  const dots = document.querySelectorAll('.slide-dot');
+  const thumbs = document.querySelectorAll('.thumb-item');
+
+  if (imgEl) {
+    imgEl.style.opacity = '0';
+    setTimeout(() => {
+      imgEl.src = encodeURI(currentSrc);
+      imgEl.style.opacity = '1';
+    }, 180);
+  }
+
+  if (downloadEl) {
+    downloadEl.href = encodeURI(currentSrc);
+    downloadEl.download = `${mem.title.replace(/\s+/g, '_')}_photo_${idx + 1}.jpeg`;
+  }
+
+  dots.forEach((dot, i) => {
+    if (i === idx) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
+    }
+  });
+
+  thumbs.forEach((thumb, i) => {
+    if (i === idx) {
+      thumb.classList.add('active');
+    } else {
+      thumb.classList.remove('active');
+    }
+  });
+}
+
 function updatePhotoModalContent() {
+  if (autoSwapTimer) clearInterval(autoSwapTimer);
+
   const mem = APP_CONFIG.memories[activeModalMemoryIndex];
   if (!mem) return;
 
-  const imgEl = document.getElementById('modal-img');
+  const imgContainer = document.getElementById('modal-img-container');
+  const videoContainer = document.getElementById('modal-video-container');
+  const thumbnailsContainer = document.getElementById('modal-thumbnails');
+  const videoEl = document.getElementById('modal-video');
   const titleEl = document.getElementById('modal-title');
   const dateEl = document.getElementById('modal-date');
-  const storyEl = document.getElementById('modal-story');
   const likeCountEl = document.getElementById('modal-like-count');
   const downloadEl = document.getElementById('modal-download');
+  const thumbImgs = document.querySelectorAll('.thumb-img');
 
-  if (imgEl) imgEl.src = mem.image;
   if (titleEl) titleEl.textContent = mem.title;
   if (dateEl) dateEl.textContent = mem.date;
-  if (storyEl) storyEl.textContent = mem.story;
   if (likeCountEl) likeCountEl.textContent = `${mem.likes.toLocaleString()} Likes`;
-  if (downloadEl) {
-    downloadEl.href = mem.image;
-    downloadEl.download = `${mem.title.replace(/\s+/g, '_')}.jpg`;
+
+  if (mem.type === 'video') {
+    // Mode: Video Playback in Lightbox
+    if (imgContainer) imgContainer.classList.add('hidden');
+    if (thumbnailsContainer) thumbnailsContainer.classList.add('hidden');
+    if (videoContainer) videoContainer.classList.remove('hidden');
+
+    if (videoEl) {
+      videoEl.src = encodeURI(mem.video);
+      videoEl.play().catch(() => {});
+    }
+
+    if (downloadEl) {
+      downloadEl.href = encodeURI(mem.video);
+      downloadEl.download = `${mem.title.replace(/\s+/g, '_')}.mp4`;
+    }
+  } else {
+    // Mode: 3 Images in Single Photo Modal with Auto-Swap
+    if (videoEl) videoEl.pause();
+    if (videoContainer) videoContainer.classList.add('hidden');
+    if (imgContainer) imgContainer.classList.remove('hidden');
+    if (thumbnailsContainer) thumbnailsContainer.classList.remove('hidden');
+
+    // Populate thumbnail strip
+    if (mem.images) {
+      mem.images.forEach((src, i) => {
+        if (thumbImgs[i]) thumbImgs[i].src = encodeURI(src);
+      });
+    }
+
+    modalSlideIndex = 0;
+    applySlide(modalSlideIndex);
+    restartAutoSwap();
   }
 }
 
