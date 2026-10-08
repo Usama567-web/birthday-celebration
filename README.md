@@ -1,6 +1,6 @@
-# ✨ Cinematic Birthday Web Application 💖
+# ✨ Cinematic Birthday Web Application 💖 (For Amina from Noor ul Hassan)
 
-A romantic, interactive, and production-ready birthday web application crafted with Tailwind CSS, custom glassmorphism styles, GSAP animations, Canvas Confetti, and an internal synthesized Web Audio sound engine.
+A romantic, interactive, and personalized birthday celebration website for Amina, crafted with love by Noor ul Hassan with custom animations, Web Audio synthesizer, and starry memory gallery.
 
 ---
 
@@ -106,9 +106,9 @@ Open [`script.js`](file:///c:/Users/hp/Desktop/New%20folder%20%282%29/script.js)
 ├── style.css        # 3D card flips, glassmorphism, cake slice, polaroid effects
 ├── script.js        # Scene state machine, Web Audio synth, touch gestures & canvas
 ├── README.md        # Deployment and customization documentation
+├── A Bhabhi/        # Personal photos (img 1-15) and videos (v 1-3)
 └── assets/          # Generated romantic polaroid and memory photos
+    ├── cover-1.jpg  # Main cover picture
     ├── cover.jpg
-    ├── memory-1.jpg
-    ├── memory-2.jpg
-    └── memory-3.jpg
+    └── cake-pixel.png
 ```

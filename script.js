@@ -8,24 +8,25 @@
 // 1. CONFIGURATION & CUSTOMIZATION
 // ----------------------------------------------------------------------------
 const DEFAULT_CONFIG = {
-  partnerName: "My Girl",
+  partnerName: "Amina",
+  senderName: "Noor ul Hassan",
   passcode: "0910",
   passcodeHint: "✨ Tap card to enter passcode • 0910",
-  letterDate: "October 5th, 2026",
-  letterBody: `Happiest birthday my gurll🥳👸
+  letterDate: "October 9th, 2026",
+  letterBody: `Happiest Birthday, my wonderful Amina! 🥳👸💖
 
-I pray you achieve all your dreams, stay happy, and keep smiling the way you do...
+I pray you achieve every single one of your dreams, stay endlessly happy, and keep smiling the way you do...
 
-because that smile is my favorite thing🫶
+because that beautiful smile is my favorite thing in the whole world🫶✨
 
-Everyday is your day because you are the main character... and YOU KNOW IT😌
+Every day is your day because you are the main character... and YOU KNOW IT😌💖
 
-Let's share unlimited laughs, love, fights, and happiness🫅😏
+Let's share unlimited laughs, love, cute moments, and lifelong happiness together🫅
 
-I love you forever and ever and ever
+Thank you for being in my life and for being the most precious part of it. Wishing you the happiest and most blessed birthday, Amina! 🥳🫀💋
 
-Thankyou for being my partner in every sense, happy 19th darlzzz🥳🫀💋
-I love you darlzzzz please be with me…`,
+With all my love forever and always,
+Your Noor ul Hassan 💖`,
   memories: [
     {
       id: 1,
@@ -123,6 +124,8 @@ function loadSavedConfig() {
       return { 
         ...DEFAULT_CONFIG, 
         ...parsed, 
+        partnerName: DEFAULT_CONFIG.partnerName,
+        senderName: DEFAULT_CONFIG.senderName,
         memories: DEFAULT_CONFIG.memories,
         passcode: parsed.passcode === "1234" ? DEFAULT_CONFIG.passcode : (parsed.passcode || DEFAULT_CONFIG.passcode),
         letterBody: DEFAULT_CONFIG.letterBody, 
@@ -1298,7 +1301,13 @@ function spawnKissHearts() {
 
 function applyConfigToDOM() {
   const recipientTitle = document.getElementById('recipient-title');
-  if (recipientTitle) recipientTitle.textContent = `Happy Birthday!`;
+  if (recipientTitle) recipientTitle.textContent = `Happy Birthday ${APP_CONFIG.partnerName || 'Amina'}!`;
+
+  const senderSubtitle = document.getElementById('sender-subtitle');
+  if (senderSubtitle) senderSubtitle.textContent = `With Love from ${APP_CONFIG.senderName || 'Noor ul Hassan'} 💖`;
+
+  const letterGreeting = document.getElementById('letter-greeting');
+  if (letterGreeting) letterGreeting.textContent = `Happy Birthday ${APP_CONFIG.partnerName || 'Amina'} ✨`;
 
   const passcodeHint = document.getElementById('passcode-hint');
   if (passcodeHint) passcodeHint.textContent = APP_CONFIG.passcodeHint;
