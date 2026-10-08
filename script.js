@@ -594,6 +594,7 @@ function setupScene1() {
   }
 
   function validatePin() {
+    sounds.startBGM();
     if (enteredPin === APP_CONFIG.passcode) {
       sounds.playSuccessChime();
       pinDots.forEach(dot => dot.classList.add('success'));
@@ -1398,9 +1399,13 @@ document.addEventListener('DOMContentLoaded', () => {
       sounds.startBGM();
     }
   };
-  window.addEventListener('click', startAudioOnGesture, { once: true });
-  window.addEventListener('touchstart', startAudioOnGesture, { once: true });
-  window.addEventListener('keydown', startAudioOnGesture, { once: true });
+  window.addEventListener('click', startAudioOnGesture, { capture: true, once: true });
+  window.addEventListener('touchstart', startAudioOnGesture, { capture: true, once: true });
+  window.addEventListener('pointerdown', startAudioOnGesture, { capture: true, once: true });
+  window.addEventListener('keydown', startAudioOnGesture, { capture: true, once: true });
+
+  // Attempt to play BGM immediately if browser policy allows
+  sounds.startBGM();
 
   spawnAmbientHearts();
   setupInteractiveClickSparkles();
