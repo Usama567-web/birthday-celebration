@@ -9,7 +9,7 @@ A romantic, interactive, and production-ready birthday web application crafted w
 1. **Scene 1: Cover & Secure Passcode Lock**
    - Polaroid-style couple photo frame with realistic tilt, subtle ribbon bow, and washi tape details.
    - Smooth 3D card flip when tapped to reveal a glassmorphic 4-digit numeric PIN pad.
-   - Default passcode: **`1234`** (with error shake animation and hint toggle).
+   - Default passcode: **`0910`** (with error shake animation and hint toggle).
    - Golden ripple transition upon unlocking.
 
 2. **Scene 2: Floral Background & Interactive Elements**

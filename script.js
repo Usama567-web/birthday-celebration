@@ -9,8 +9,8 @@
 // ----------------------------------------------------------------------------
 const DEFAULT_CONFIG = {
   partnerName: "My Girl",
-  passcode: "1234",
-  passcodeHint: "✨ Tap card to enter passcode • 1234",
+  passcode: "0910",
+  passcodeHint: "✨ Tap card to enter passcode • 0910",
   letterDate: "October 5th, 2026",
   letterBody: `Happiest birthday my gurll🥳👸
 
@@ -74,8 +74,17 @@ function loadSavedConfig() {
     const saved = localStorage.getItem('birthday_app_config');
     if (saved) {
       const parsed = JSON.parse(saved);
-      // Ensure the user's specific letter updates take priority
-      return { ...DEFAULT_CONFIG, ...parsed, letterBody: DEFAULT_CONFIG.letterBody, passcodeHint: DEFAULT_CONFIG.passcodeHint };
+      // Migrate from old default 1234 if present
+      if (!parsed.passcode || parsed.passcode === "1234") {
+        parsed.passcode = DEFAULT_CONFIG.passcode;
+      }
+      return { 
+        ...DEFAULT_CONFIG, 
+        ...parsed, 
+        passcode: parsed.passcode === "1234" ? DEFAULT_CONFIG.passcode : (parsed.passcode || DEFAULT_CONFIG.passcode),
+        letterBody: DEFAULT_CONFIG.letterBody, 
+        passcodeHint: DEFAULT_CONFIG.passcodeHint 
+      };
     }
   } catch (e) {
     console.warn("Could not load saved config from localStorage:", e);
@@ -374,36 +383,62 @@ function switchScene(fromSceneId, toSceneId, options = {}) {
 let enteredPin = "";
 
 function setupScene1() {
-  const photoPanel = document.getElementById('photo-panel');
-  const pinPanel = document.getElementById('pin-panel');
+  const cardFlipper = document.getElementById('card-flipper');
   const cardFront = document.getElementById('card-front');
   const flipBackBtn = document.getElementById('flip-back-btn');
+  const pinDisplay = document.getElementById('pin-display');
   const pinDots = document.querySelectorAll('#pin-display .pin-dot');
   const keyBtns = document.querySelectorAll('.key-btn');
   const errorMsg = document.getElementById('passcode-error');
   const passcodeHint = document.getElementById('passcode-hint');
+  const hintToggleBtn = document.getElementById('hint-toggle-btn');
+  const hintBubble = document.getElementById('hint-bubble');
+  const hintBubbleText = document.getElementById('hint-bubble-text');
+  const hintToggleLabel = document.getElementById('hint-toggle-label');
 
   if (passcodeHint) {
     passcodeHint.textContent = APP_CONFIG.passcodeHint;
   }
+  if (hintBubbleText) {
+    hintBubbleText.textContent = `✨ Passcode: ${APP_CONFIG.passcode}`;
+  }
 
-  // Tap front card to flip to passcode screen
-  if (cardFront) {
-    cardFront.addEventListener('click', () => {
+  // Interactive Hint Toggle on PIN Pad
+  if (hintToggleBtn && hintBubble) {
+    hintToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       sounds.init();
       sounds.playClick();
-      photoPanel.classList.add('panel-hidden');
-      pinPanel.classList.remove('panel-hidden');
+      const isHidden = hintBubble.classList.contains('hidden');
+      if (isHidden) {
+        hintBubble.classList.remove('hidden');
+        if (hintToggleLabel) hintToggleLabel.textContent = 'Hide hint';
+      } else {
+        hintBubble.classList.add('hidden');
+        if (hintToggleLabel) hintToggleLabel.textContent = 'Need a hint?';
+      }
     });
   }
 
-  // Back button
+  // Smooth 3D card flip when tapped
+  if (cardFront) {
+    cardFront.addEventListener('click', () => {
+      sounds.init();
+      sounds.playWhoosh();
+      if (cardFlipper) {
+        cardFlipper.classList.add('is-flipped');
+      }
+    });
+  }
+
+  // Flip back to front photo
   if (flipBackBtn) {
     flipBackBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      sounds.playClick();
-      pinPanel.classList.add('panel-hidden');
-      photoPanel.classList.remove('panel-hidden');
+      sounds.playWhoosh();
+      if (cardFlipper) {
+        cardFlipper.classList.remove('is-flipped');
+      }
       resetPin();
     });
   }
@@ -426,6 +461,11 @@ function setupScene1() {
           enteredPin = enteredPin.slice(0, -1);
           updatePinDisplay();
         }
+      } else if (action === 'clear') {
+        if (enteredPin.length > 0) {
+          sounds.playClick();
+          resetPin();
+        }
       } else if (key !== undefined) {
         if (enteredPin.length < 4) {
           sounds.playKeypadBeep(key);
@@ -438,6 +478,37 @@ function setupScene1() {
         }
       }
     });
+  });
+
+  // Physical keyboard navigation for desktop users
+  window.addEventListener('keydown', (e) => {
+    const scene1 = document.getElementById('scene-1');
+    if (!scene1 || !scene1.classList.contains('active')) return;
+    if (!cardFlipper || !cardFlipper.classList.contains('is-flipped')) return;
+
+    if (e.key >= '0' && e.key <= '9') {
+      if (enteredPin.length < 4) {
+        sounds.init();
+        sounds.playKeypadBeep(e.key);
+        enteredPin += e.key;
+        updatePinDisplay();
+        if (enteredPin.length === 4) {
+          validatePin();
+        }
+      }
+    } else if (e.key === 'Backspace') {
+      if (enteredPin.length > 0) {
+        sounds.playClick();
+        enteredPin = enteredPin.slice(0, -1);
+        updatePinDisplay();
+      }
+    } else if (e.key === 'Escape') {
+      if (cardFlipper) {
+        sounds.playWhoosh();
+        cardFlipper.classList.remove('is-flipped');
+        resetPin();
+      }
+    }
   });
 
   function updatePinDisplay() {
@@ -459,6 +530,7 @@ function setupScene1() {
   function validatePin() {
     if (enteredPin === APP_CONFIG.passcode) {
       sounds.playSuccessChime();
+      pinDots.forEach(dot => dot.classList.add('success'));
       
       if (window.confetti) {
         confetti({
@@ -480,10 +552,15 @@ function setupScene1() {
     } else {
       sounds.playError();
       pinDots.forEach(dot => dot.classList.add('error'));
+      if (pinDisplay) pinDisplay.classList.add('pin-shake');
       if (errorMsg) errorMsg.style.opacity = '1';
 
       setTimeout(() => {
-        pinDots.forEach(dot => dot.classList.remove('error'));
+        pinDots.forEach(dot => {
+          dot.classList.remove('error');
+          dot.classList.remove('success');
+        });
+        if (pinDisplay) pinDisplay.classList.remove('pin-shake');
         resetPin();
       }, 700);
     }
@@ -1010,6 +1087,9 @@ function applyConfigToDOM() {
 
   const passcodeHint = document.getElementById('passcode-hint');
   if (passcodeHint) passcodeHint.textContent = APP_CONFIG.passcodeHint;
+
+  const hintBubbleText = document.getElementById('hint-bubble-text');
+  if (hintBubbleText) hintBubbleText.textContent = `✨ Passcode: ${APP_CONFIG.passcode}`;
 }
 
 // ----------------------------------------------------------------------------

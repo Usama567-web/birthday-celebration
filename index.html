@@ -86,28 +86,80 @@
     <!-- SCENE 1: Cover & Secure Passcode Lock                                     -->
     <!-- ========================================================================= -->
     <section id="scene-1" class="scene active relative flex items-center justify-center min-h-screen px-4 z-20">
-      <div class="relative w-full max-w-xs">
-        <div id="photo-panel" class="panel">
-          <div id="card-front" class="polaroid cursor-pointer">
-            <div class="bow">🎀</div>
-            <img id="cover-photo" src="assets/cover.jpg" alt="Us">
-            <h1 id="recipient-title">Happy Birthday!</h1>
-            <p id="passcode-hint" class="hint">✨ Tap card to enter passcode • 1234</p>
+      <div class="flip-card-perspective relative w-full max-w-xs">
+        <div id="card-flipper" class="flip-card-inner">
+
+          <!-- FRONT FACE: Vintage Polaroid Card -->
+          <div id="photo-panel" class="flip-card-face flip-card-front">
+            <div id="card-front" class="polaroid cursor-pointer select-none" title="Tap card to enter passcode">
+              <div class="bow">🎀</div>
+              <img id="cover-photo" src="assets/cover.jpg" alt="Us">
+              <h1 id="recipient-title">Happy Birthday!</h1>
+              <p id="passcode-hint" class="hint">✨ Tap card to enter passcode • 0910</p>
+              <div class="mt-2.5 inline-flex items-center gap-1.5 text-[11px] font-semibold text-pink-700 bg-pink-100/70 hover:bg-pink-100 px-3 py-1 rounded-full border border-pink-200/60 shadow-xs transition-all hover:scale-105">
+                <span>Tap to unlock</span>
+                <span class="inline-block">↻</span>
+              </div>
+            </div>
           </div>
-        </div>
-        <div id="pin-panel" class="panel panel-hidden absolute inset-0 flex flex-col items-center justify-center gap-5">
-          <h2 class="f-serif text-3xl font-bold text-[#7a2d4f]">Enter Passcode</h2>
-          <div id="pin-display" class="flex gap-3">
-            <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+
+          <!-- BACK FACE: Frosted Glassmorphic PIN Pad -->
+          <div id="pin-panel" class="flip-card-face flip-card-back glassmorphic-panel select-none">
+            <!-- Header bar with flip back button -->
+            <div class="flex items-center justify-between w-full px-1">
+              <span class="text-[11px] font-bold tracking-widest uppercase text-pink-700/80">Secret Access</span>
+              <button id="flip-back-btn" type="button" class="flex items-center gap-1 text-[11px] font-semibold text-pink-700 hover:text-pink-900 bg-white/70 hover:bg-white/95 border border-pink-200/70 px-2.5 py-1 rounded-full shadow-xs transition-all cursor-pointer" title="Flip back to photo">
+                <span>↻ Photo</span>
+              </button>
+            </div>
+
+            <!-- Title & Subtitle -->
+            <div class="text-center my-0.5">
+              <h2 class="f-serif text-3xl font-bold text-[#7a2d4f] leading-none">Enter Passcode</h2>
+              <p class="text-[11px] text-[#9c5a75] mt-1 font-medium">Enter the 4-digit secret key</p>
+            </div>
+
+            <!-- PIN Dot Indicators -->
+            <div id="pin-display" class="flex gap-3 my-0.5">
+              <div class="pin-dot"></div>
+              <div class="pin-dot"></div>
+              <div class="pin-dot"></div>
+              <div class="pin-dot"></div>
+            </div>
+
+            <!-- Glassmorphic Keypad (3x4) -->
+            <div class="grid grid-cols-3 gap-2.5 my-0.5">
+              <button class="key-btn" data-key="1">1</button>
+              <button class="key-btn" data-key="2">2</button>
+              <button class="key-btn" data-key="3">3</button>
+              <button class="key-btn" data-key="4">4</button>
+              <button class="key-btn" data-key="5">5</button>
+              <button class="key-btn" data-key="6">6</button>
+              <button class="key-btn" data-key="7">7</button>
+              <button class="key-btn" data-key="8">8</button>
+              <button class="key-btn" data-key="9">9</button>
+              <button class="key-btn text-xs font-bold text-pink-600/80" data-action="clear" title="Clear All">C</button>
+              <button class="key-btn" data-key="0">0</button>
+              <button class="key-btn text-sm font-semibold text-pink-700" data-action="delete" title="Backspace">⌫</button>
+            </div>
+
+            <!-- Error Notification -->
+            <div id="passcode-error" class="text-xs font-semibold text-rose-500 opacity-0 transition-opacity min-h-[16px] text-center">
+              Incorrect passcode, try again!
+            </div>
+
+            <!-- Hint Toggle & Collapsible Badge -->
+            <div class="flex flex-col items-center gap-1.5 w-full mt-0.5">
+              <button id="hint-toggle-btn" type="button" class="flex items-center gap-1.5 text-[11px] font-semibold text-pink-700 hover:text-pink-900 transition-all px-3 py-1 rounded-full bg-white/60 hover:bg-white/90 border border-pink-200/70 shadow-xs cursor-pointer">
+                <span>💡</span>
+                <span id="hint-toggle-label">Need a hint?</span>
+              </button>
+              <div id="hint-bubble" class="hint-bubble hidden text-[11px] font-bold text-[#7a2d4f] bg-pink-100/90 border border-pink-200/90 px-3.5 py-1 rounded-full shadow-xs">
+                <span id="hint-bubble-text">✨ Passcode: 0910</span>
+              </div>
+            </div>
           </div>
-          <div class="grid grid-cols-3 gap-3.5">
-            <button class="key-btn" data-key="1">1</button><button class="key-btn" data-key="2">2</button><button class="key-btn" data-key="3">3</button>
-            <button class="key-btn" data-key="4">4</button><button class="key-btn" data-key="5">5</button><button class="key-btn" data-key="6">6</button>
-            <button class="key-btn" data-key="7">7</button><button class="key-btn" data-key="8">8</button><button class="key-btn" data-key="9">9</button>
-            <button class="key-btn">*</button><button class="key-btn" data-key="0">0</button><button class="key-btn" data-action="delete">⌫</button>
-          </div>
-          <button id="flip-back-btn" class="text-xs underline text-[#8a3d5f]">← Back to Photo</button>
-          <div id="passcode-error" class="text-xs text-rose-500 opacity-0 transition-opacity">Incorrect passcode, try again!</div>
+
         </div>
       </div>
     </section>
