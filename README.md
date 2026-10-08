@@ -106,9 +106,11 @@ Open [`script.js`](file:///c:/Users/hp/Desktop/New%20folder%20%282%29/script.js)
 ├── style.css        # 3D card flips, glassmorphism, cake slice, polaroid effects
 ├── script.js        # Scene state machine, Web Audio synth, touch gestures & canvas
 ├── README.md        # Deployment and customization documentation
+├── W-Audio.mpeg     # Background romantic song (continuous repeat loop)
 ├── A Bhabhi/        # Personal photos (img 1-15) and videos (v 1-3)
 └── assets/          # Generated romantic polaroid and memory photos
     ├── cover-1.jpg  # Main cover picture
     ├── cover.jpg
-    └── cake-pixel.png
+    ├── cake-pixel.png
+    └── W-Audio.mpeg # Mirrored audio asset
 ```
