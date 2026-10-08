@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Happy Birthday Amina! 💖 | A Special Celebration by Noor ul Hassan</title>
-  <meta name="description" content="A secret cinematic birthday celebration website for Amina, crafted with love by Noor ul Hassan.">
+  <title>Happy Birthday Amna! 💖 | A Special Celebration by Noor ul Hassan</title>
+  <meta name="description" content="A secret cinematic birthday celebration website for Amna, crafted with love by Noor ul Hassan.">
   <meta name="theme-color" content="#fde2ec">
 
   <!-- Open Graph / Social Meta -->
-  <meta property="og:title" content="Happy Birthday Amina! ✨ With Love from Noor ul Hassan">
-  <meta property="og:description" content="A secret cinematic birthday celebration crafted with love by Noor ul Hassan for Amina.">
+  <meta property="og:title" content="Happy Birthday Amna! ✨ With Love from Noor ul Hassan">
+  <meta property="og:description" content="A secret cinematic birthday celebration crafted with love by Noor ul Hassan for Amna.">
   <meta property="og:image" content="assets/cover-1.jpg">
 
   <!-- Google Fonts -->
@@ -47,6 +47,12 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="overflow-x-hidden selection:bg-pink-300 selection:text-pink-900 min-h-screen">
+
+  <!-- Background Audio (W-Audio.mpeg on continuous repeat) -->
+  <audio id="bgm-music" loop preload="auto">
+    <source src="W-Audio.mpeg" type="audio/mpeg">
+    <source src="assets/W-Audio.mpeg" type="audio/mpeg">
+  </audio>
 
   <!-- Ambient Audio & Sound Control Pill -->
   <div id="sound-control" class="fixed top-4 right-4 z-50 flex items-center gap-2 bg-white/70 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-lg border border-pink-200/50 transition-all hover:scale-105 select-none">
@@ -93,11 +99,11 @@
           <div id="photo-panel" class="flip-card-face flip-card-front">
             <div id="card-front" class="polaroid cursor-pointer select-none" title="Tap card to enter passcode">
               <div class="bow">🎀</div>
-              <img id="cover-photo" src="assets/cover-1.jpg" alt="Amina">
-              <h1 id="recipient-title">Happy Birthday Amina!</h1>
+              <img id="cover-photo" src="assets/cover-1.jpg" alt="Amna">
+              <h1 id="recipient-title">Happy Birthday Amna!</h1>
               <p id="sender-subtitle" class="text-xs text-pink-600/85 font-medium">With Love from Noor ul Hassan 💖</p>
               <p id="passcode-hint" class="hint mt-1">✨ Tap card to enter passcode • 0910</p>
-              <div class="mt-2.5 inline-flex items-center gap-1.5 text-[11px] font-semibold text-pink-700 bg-pink-100/70 hover:bg-pink-100 px-3 py-1 rounded-full border border-pink-200/60 shadow-xs transition-all hover:scale-105">
+              <div class="mt-2.5 inline-flex items-center gap-1.5 text-[11px] font-semibold text-pink-700 bg-pink-100/70 hover:bg-pink-100 px-3 py-1 rounded-full border border-pink-200/60 shadow-xs transition-all hover:scale-105 tap-hint-shimmer">
                 <span>Tap to unlock</span>
                 <span class="inline-block">↻</span>
               </div>
@@ -217,12 +223,12 @@
         <div id="envelope-box" class="envelope">
           <div id="envelope-top-flap" class="env-flap"></div>
           <button id="wax-seal" class="env-seal">✦</button>
-          <div class="env-label"><div class="f-serif italic">For Dearest Amina</div><small class="text-[9px] tracking-widest">FROM NOOR UL HASSAN ♡</small></div>
+          <div class="env-label"><div class="f-serif italic">For Dearest Amna</div><small class="text-[9px] tracking-widest">FROM NOOR UL HASSAN ♡</small></div>
         </div>
       </div>
       <div id="letter-modal" class="hidden letter-card">
         <button id="close-letter-btn" class="absolute top-2 right-4 text-pink-300 text-sm">×</button>
-        <h3 id="letter-greeting">Happy Birthday Amina ✨</h3>
+        <h3 id="letter-greeting">Happy Birthday Amna ✨</h3>
         <p class="sub">With All My Love • Noor ul Hassan ♡</p>
         <div class="letter-paper-content custom-scrollbar">
           <div id="typewriter-body"></div><span id="typewriter-cursor" class="inline-block w-0.5 h-5 bg-rose-500 animate-pulse"></span>

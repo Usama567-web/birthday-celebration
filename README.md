@@ -1,6 +1,6 @@
-# ✨ Cinematic Birthday Web Application 💖 (For Amina from Noor ul Hassan)
+# ✨ Cinematic Birthday Web Application 💖 (For Amna from Noor ul Hassan)
 
-A romantic, interactive, and personalized birthday celebration website for Amina, crafted with love by Noor ul Hassan with custom animations, Web Audio synthesizer, and starry memory gallery.
+A romantic, interactive, and personalized birthday celebration website for Amna, crafted with love by Noor ul Hassan with custom animations, continuous background music (`W-Audio.mpeg`), and starry memory gallery.
 
 ---
 

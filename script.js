@@ -8,12 +8,12 @@
 // 1. CONFIGURATION & CUSTOMIZATION
 // ----------------------------------------------------------------------------
 const DEFAULT_CONFIG = {
-  partnerName: "Amina",
+  partnerName: "Amna",
   senderName: "Noor ul Hassan",
   passcode: "0910",
   passcodeHint: "✨ Tap card to enter passcode • 0910",
   letterDate: "October 9th, 2026",
-  letterBody: `Happiest Birthday, my wonderful Amina! 🥳👸💖
+  letterBody: `Happiest Birthday, my wonderful Amna! 🥳👸💖
 
 I pray you achieve every single one of your dreams, stay endlessly happy, and keep smiling the way you do...
 
@@ -23,7 +23,7 @@ Every day is your day because you are the main character... and YOU KNOW IT😌�
 
 Let's share unlimited laughs, love, cute moments, and lifelong happiness together🫅
 
-Thank you for being in my life and for being the most precious part of it. Wishing you the happiest and most blessed birthday, Amina! 🥳🫀💋
+Thank you for being in my life and for being the most precious part of it. Wishing you the happiest and most blessed birthday, Amna! 🥳🫀💋
 
 With all my love forever and always,
 Your Noor ul Hassan 💖`,
@@ -156,11 +156,18 @@ class SoundEngine {
     this.ctx = null;
     this.isMuted = false;
     this.isMusicPlaying = false;
-    this.bgmTimer = null;
-    this.chordStep = 0;
+    this.bgmAudio = null;
+    this.noteInterval = null;
   }
 
   init() {
+    if (!this.bgmAudio) {
+      this.bgmAudio = document.getElementById('bgm-music');
+      if (!this.bgmAudio) {
+        this.bgmAudio = new Audio('W-Audio.mpeg');
+        this.bgmAudio.loop = true;
+      }
+    }
     if (!this.ctx) {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       if (AudioCtx) {
@@ -299,44 +306,73 @@ class SoundEngine {
   }
 
   startBGM() {
+    this.init();
     this.isMusicPlaying = true;
     const eqBars = document.getElementById('equalizer-bars');
     const audioLabel = document.getElementById('audio-label');
     if (eqBars) eqBars.classList.remove('paused');
     if (audioLabel) audioLabel.textContent = "Music: On";
 
-    const progression = [
-      [261.63, 329.63, 392.00, 493.88], // Cmaj7
-      [220.00, 261.63, 329.63, 392.00], // Am7
-      [293.66, 349.23, 440.00, 523.25], // Dm7
-      [196.00, 246.94, 293.66, 349.23]  // G7
-    ];
+    if (this.bgmAudio) {
+      this.bgmAudio.loop = true;
+      this.bgmAudio.volume = this.isMuted ? 0 : 0.75;
+      const playPromise = this.bgmAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(e => {
+          console.log("Audio awaiting user interaction:", e);
+        });
+      }
+    }
 
-    const playNextChord = () => {
-      if (!this.isMusicPlaying) return;
-      const chord = progression[this.chordStep % progression.length];
-      this.chordStep++;
-
-      chord.forEach((freq, i) => {
-        setTimeout(() => {
-          if (!this.isMusicPlaying) return;
-          this.playTone(freq, 'sine', 2.8, 0.045);
-        }, i * 140);
-      });
-
-      this.bgmTimer = setTimeout(playNextChord, 3600);
-    };
-
-    playNextChord();
+    this.startMusicNotesEmitter();
   }
 
   stopBGM() {
     this.isMusicPlaying = false;
-    clearTimeout(this.bgmTimer);
     const eqBars = document.getElementById('equalizer-bars');
     const audioLabel = document.getElementById('audio-label');
     if (eqBars) eqBars.classList.add('paused');
     if (audioLabel) audioLabel.textContent = "Music: Off";
+
+    if (this.bgmAudio) {
+      this.bgmAudio.pause();
+    }
+    this.stopMusicNotesEmitter();
+  }
+
+  setMuted(muted) {
+    this.isMuted = muted;
+    if (this.bgmAudio) {
+      this.bgmAudio.volume = this.isMuted ? 0 : 0.75;
+    }
+  }
+
+  startMusicNotesEmitter() {
+    if (this.noteInterval) clearInterval(this.noteInterval);
+    const soundControl = document.getElementById('sound-control');
+    if (!soundControl) return;
+
+    this.noteInterval = setInterval(() => {
+      if (!this.isMusicPlaying) return;
+      const notes = ['🎵', '🎶', '✨', '💖'];
+      const note = document.createElement('span');
+      note.className = 'floating-note select-none';
+      note.textContent = notes[Math.floor(Math.random() * notes.length)];
+      
+      const rect = soundControl.getBoundingClientRect();
+      note.style.left = `${rect.left + Math.random() * rect.width * 0.6}px`;
+      note.style.top = `${rect.top - 5}px`;
+      
+      document.body.appendChild(note);
+      setTimeout(() => note.remove(), 2200);
+    }, 1400);
+  }
+
+  stopMusicNotesEmitter() {
+    if (this.noteInterval) {
+      clearInterval(this.noteInterval);
+      this.noteInterval = null;
+    }
   }
 }
 
@@ -1301,19 +1337,47 @@ function spawnKissHearts() {
 
 function applyConfigToDOM() {
   const recipientTitle = document.getElementById('recipient-title');
-  if (recipientTitle) recipientTitle.textContent = `Happy Birthday ${APP_CONFIG.partnerName || 'Amina'}!`;
+  if (recipientTitle) recipientTitle.textContent = `Happy Birthday ${APP_CONFIG.partnerName || 'Amna'}!`;
 
   const senderSubtitle = document.getElementById('sender-subtitle');
   if (senderSubtitle) senderSubtitle.textContent = `With Love from ${APP_CONFIG.senderName || 'Noor ul Hassan'} 💖`;
 
   const letterGreeting = document.getElementById('letter-greeting');
-  if (letterGreeting) letterGreeting.textContent = `Happy Birthday ${APP_CONFIG.partnerName || 'Amina'} ✨`;
+  if (letterGreeting) letterGreeting.textContent = `Happy Birthday ${APP_CONFIG.partnerName || 'Amna'} ✨`;
 
   const passcodeHint = document.getElementById('passcode-hint');
   if (passcodeHint) passcodeHint.textContent = APP_CONFIG.passcodeHint;
 
   const hintBubbleText = document.getElementById('hint-bubble-text');
   if (hintBubbleText) hintBubbleText.textContent = `✨ Passcode: ${APP_CONFIG.passcode}`;
+}
+
+function setupInteractiveClickSparkles() {
+  const emojis = ['💖', '✨', '🌸', '💕', '⭐'];
+  window.addEventListener('pointerdown', (e) => {
+    // Avoid spawning when clicking inputs/buttons
+    if (e.target && (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT')) return;
+    for (let i = 0; i < 4; i++) {
+      const sparkle = document.createElement('span');
+      sparkle.className = 'click-sparkle text-sm select-none pointer-events-none';
+      sparkle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      
+      const offsetX = (Math.random() - 0.5) * 16;
+      const offsetY = (Math.random() - 0.5) * 16;
+      sparkle.style.left = `${e.clientX + offsetX}px`;
+      sparkle.style.top = `${e.clientY + offsetY}px`;
+
+      const tx = (Math.random() - 0.5) * 60;
+      const ty = -(Math.random() * 50 + 30);
+      const rot = (Math.random() - 0.5) * 90;
+      sparkle.style.setProperty('--tx', `${tx}px`);
+      sparkle.style.setProperty('--ty', `${ty}px`);
+      sparkle.style.setProperty('--rot', `${rot}deg`);
+
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 1200);
+    }
+  });
 }
 
 // ----------------------------------------------------------------------------
@@ -1334,6 +1398,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (toggleSfxBtn) {
     toggleSfxBtn.addEventListener('click', () => {
       sounds.isMuted = !sounds.isMuted;
+      sounds.setMuted(sounds.isMuted);
       sounds.playClick();
       toggleSfxBtn.innerHTML = sounds.isMuted 
         ? `<i data-lucide="volume-x" class="w-4 h-4 text-slate-400"></i>`
@@ -1342,15 +1407,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Graceful user interaction starts ambient audio
-  window.addEventListener('click', () => {
+  // Graceful user interaction starts background audio on continuous repeat
+  const startAudioOnGesture = () => {
     sounds.init();
     if (!sounds.isMusicPlaying) {
       sounds.startBGM();
     }
-  }, { once: true });
+  };
+  window.addEventListener('click', startAudioOnGesture, { once: true });
+  window.addEventListener('touchstart', startAudioOnGesture, { once: true });
+  window.addEventListener('keydown', startAudioOnGesture, { once: true });
 
   spawnAmbientHearts();
+  setupInteractiveClickSparkles();
   applyConfigToDOM();
 
   // Start Scene 1

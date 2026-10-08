@@ -138,13 +138,43 @@ body::before { /* soft colour blobs */
   background: #fff;
   padding: 14px 14px 18px;
   border-radius: 14px;
-  box-shadow: 0 20px 50px rgba(190, 100, 150, 0.25);
+  box-shadow: 0 20px 50px rgba(190, 100, 150, 0.25), 0 0 35px rgba(254, 205, 211, 0.35);
   text-align: center;
+  animation: cardFloating 5s ease-in-out infinite alternate;
 }
 .polaroid img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 6px; }
-.polaroid .bow { position: absolute; top: -24px; left: -28px; font-size: 54px; transform: rotate(-20deg); filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
+.polaroid .bow {
+  position: absolute;
+  top: -24px;
+  left: -28px;
+  font-size: 54px;
+  transform: rotate(-20deg);
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+  animation: bowPulse 3.5s ease-in-out infinite alternate;
+}
 .polaroid h1 { font-family: 'Cormorant Garamond', serif; font-weight: 700; color: #7a2d4f; font-size: 1.9rem; margin-top: .8rem; }
 .polaroid .hint { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: .8rem; color: #ba6d8f; }
+
+@keyframes cardFloating {
+  0% {
+    transform: translateY(0px) rotate(-0.5deg);
+    box-shadow: 0 20px 50px rgba(190, 100, 150, 0.25), 0 0 25px rgba(254, 205, 211, 0.3);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.8deg);
+    box-shadow: 0 28px 60px rgba(190, 100, 150, 0.32), 0 0 45px rgba(254, 205, 211, 0.55);
+  }
+  100% {
+    transform: translateY(0px) rotate(-0.5deg);
+    box-shadow: 0 20px 50px rgba(190, 100, 150, 0.25), 0 0 25px rgba(254, 205, 211, 0.3);
+  }
+}
+
+@keyframes bowPulse {
+  0%   { transform: rotate(-20deg) scale(1); }
+  50%  { transform: rotate(-16deg) scale(1.08); }
+  100% { transform: rotate(-20deg) scale(1); }
+}
 
 /* Keypad Circular Buttons */
 .key-btn {
@@ -651,4 +681,80 @@ body::before { /* soft colour blobs */
 @keyframes sparkFade {
   0%   { transform: scale(1) translate(0, 0); opacity: 1; }
   100% { transform: scale(0) translate(var(--tx, 0), var(--ty, 0)); opacity: 0; }
+}
+
+/* Shimmer on Unlock Badge */
+.tap-hint-shimmer {
+  background: linear-gradient(90deg, #fce7f3 0%, #ffe4e6 50%, #fce7f3 100%);
+  background-size: 200% 100%;
+  animation: shimmerMove 3s infinite;
+}
+
+@keyframes shimmerMove {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Floating Romantic Music Notes */
+.floating-note {
+  position: fixed;
+  pointer-events: none;
+  z-index: 60;
+  font-size: 18px;
+  animation: noteFloat 2.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes noteFloat {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.6) rotate(0deg);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translate(14px, -35px) scale(1.15) rotate(15deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-10px, -70px) scale(1.25) rotate(-20deg);
+  }
+}
+
+/* Interactive Click Sparkles / Hearts */
+.click-sparkle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  user-select: none;
+  animation: sparkleFly 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes sparkleFly {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx, 0px), var(--ty, -50px)) scale(1.15) rotate(var(--rot, 0deg));
+  }
+}
+
+/* Wax Seal Pulse Glow in Scene 4 */
+.env-seal {
+  animation: sealGlowPulse 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes sealGlowPulse {
+  0% {
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(244, 63, 94, 0.85), 0 0 45px rgba(251, 113, 133, 0.4);
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
