@@ -34,10 +34,10 @@ A romantic, interactive, and personalized birthday celebration website for Amna,
    - Tapping any polaroid opens a luxury Lightbox Modal with the high-resolution photo, romantic story note, like button (with floating heart bursts and counter), and instant download button.
    - Interactive buttons: "Send Birthday Love 💋", "Make a Wish 🌠" (spawns custom shooting star), and "Replay From Start ↺".
 
-6. **🎵 Built-in Ambient Music & Audio Synthesizer**
-   - Synthesizes romantic lofi electric piano chords (`Cmaj7 → Am7 → Dm7 → G7`) and tactile sound effects using the browser's native **Web Audio API**.
-   - **Zero external MP3 dependencies** — guaranteed to work without missing files, CORS issues, or broken links on GitHub Pages!
-   - Top-right sound control pill with animated equalizer bars, mute toggle, and music toggle.
+6. **🎵 Background Audio Song (`W-Audio.mpeg` on Continuous Repeat)**
+   - Continuous romantic background song playing `W-Audio.mpeg` on an infinite loop.
+   - Interactive audio control pill at top-right with live equalizer bars, floating musical notes (`🎵`, `🎶`, `💖`), and mute toggle.
+   - Zero-latency tactile sound effects (card flips, keypad beeps, chime, wax seal crack, typewriter) synthesized natively.
 
 ---
 
