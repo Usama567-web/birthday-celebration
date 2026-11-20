@@ -674,75 +674,289 @@ function setupScene1() {
 }
 
 // ----------------------------------------------------------------------------
-// 5. SCENE 2: CUTE LANTERN & PULL STRING (Intro & Outro)
+// 5. SCENE 2: HEART MESSAGES CANVAS PARTICLE ANIMATION ENGINE
 // ----------------------------------------------------------------------------
-function setupScene2(mode = 'intro') {
-  const $ = id => document.getElementById(id);
-  const wrap = $('pull-cord-wrapper'), 
-        stage = $('lantern-stage'), 
-        txt = $('pull-text'),
-        fireBtn = $('fire-btn'), 
-        wash = $('scene2-wash');
-  let pulled = false, startY = 0, drag = false;
+const PARTICLES_PER_HEART_BURST = 60;
+const TRAIL_THROTTLE_MS = 25;
+const HEART_MESSAGES_LIST = [
+  "Thinking of You 💖",
+  "I Love You, Shaista ✨",
+  "My Love 🌹",
+  "You're My Favorite Person 🫶",
+  "My Beautiful Queen 👸",
+  "Forever & Always 💕",
+  "With Love, Usama 🫀",
+  "Happy Birthday, My Girl 🎂"
+];
 
-  gsap.set([stage, txt], { opacity: 1 }); 
-  gsap.set(wash, { opacity: 0 });
-  if (fireBtn) fireBtn.classList.add('hidden');
+let heartCanvasAnimationId = null;
+let heartParticles = [];
+let heartMessages = [];
+let ambientBokeh = [];
+let lastTrailTime = 0;
+let heartMessageIndex = 0;
 
-  const pull = () => {
-    if (pulled) return; 
-    pulled = true;
-    sounds.playPullString();
-    gsap.timeline()
-      .to(wrap, { y: 40, duration: .15 })
-      .to(wrap, { y: 0, duration: .7, ease: 'elastic.out(1.2,.3)' });
+function setupScene2() {
+  const canvas = document.getElementById('heart-canvas');
+  const toCakeBtn = document.getElementById('heart-to-cake-btn');
+  if (!canvas) return;
 
-    if (mode === 'intro') {
-      gsap.to([stage, txt], { opacity: 0, duration: .8, delay: .3 });
-      gsap.to(wash, { opacity: 1, duration: 1, delay: .3, onComplete: () => {
-        if (fireBtn) {
-          fireBtn.classList.remove('hidden');
-          gsap.from(fireBtn, { scale: .6, opacity: 0, duration: .6 });
-        }
-      }});
-    } else { 
-      // outro: lights go out, then transition into the space gallery
-      const f = $('flash-overlay');
-      if (f) {
-        f.style.background = '#000'; 
-        f.style.transition = 'opacity 1.4s'; 
-        f.style.opacity = '1';
-        setTimeout(() => switchScene('scene-2', 'scene-5', { onEnter: setupScene5 }), 1500);
-        setTimeout(() => { f.style.opacity = '0'; }, 2000);
-        setTimeout(() => { f.style.background = ''; f.style.transition = ''; }, 3500);
-      } else {
-        switchScene('scene-2', 'scene-5', { onEnter: setupScene5 });
-      }
+  const ctx = canvas.getContext('2d');
+  let dpr = window.devicePixelRatio || 1;
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+
+  heartParticles = [];
+  heartMessages = [];
+  ambientBokeh = [];
+
+  function resizeCanvas() {
+    dpr = window.devicePixelRatio || 1;
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  // Initialize subtle ambient background bokeh particles (blue, cyan, soft pink, violet)
+  const BOKEH_COLORS = [
+    'rgba(56, 189, 248, ',  // soft blue
+    'rgba(34, 211, 238, ',  // cyan
+    'rgba(244, 114, 182, ', // soft pink
+    'rgba(192, 132, 252, '  // soft violet
+  ];
+  for (let i = 0; i < 50; i++) {
+    ambientBokeh.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: Math.random() * 4 + 1.5,
+      baseAlpha: Math.random() * 0.35 + 0.1,
+      alpha: 0.2,
+      pulseSpeed: Math.random() * 0.02 + 0.008,
+      pulseOffset: Math.random() * Math.PI * 2,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      colorPrefix: BOKEH_COLORS[Math.floor(Math.random() * BOKEH_COLORS.length)]
+    });
+  }
+
+  // Trigger Heart Burst along parametric heart curve
+  function triggerHeartBurst(x, y) {
+    const BURST_COLORS = [
+      '#ff4b8b', '#ff69b4', '#f43f5e', '#fb7185',
+      '#38bdf8', '#22d3ee', '#c084fc', '#fda4af', '#fef08a'
+    ];
+    for (let i = 0; i < PARTICLES_PER_HEART_BURST; i++) {
+      const t = (i / PARTICLES_PER_HEART_BURST) * Math.PI * 2;
+      // Parametric heart: x = 16*sin^3(t), y = -(13*cos(t) - 5*cos(2t) - 2*cos(3t) - cos(4t))
+      const hx = 16 * Math.pow(Math.sin(t), 3);
+      const hy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+      
+      const dist = Math.hypot(hx, hy) || 1;
+      const dirX = hx / dist;
+      const dirY = hy / dist;
+      const speed = Math.random() * 2.8 + 1.2;
+      const spread = (Math.random() - 0.5) * 0.35;
+      
+      const color = BURST_COLORS[Math.floor(Math.random() * BURST_COLORS.length)];
+      const maxLife = Math.floor(Math.random() * 30 + 55);
+
+      heartParticles.push({
+        formsHeartShape: true,
+        x: x + hx * 0.9,
+        y: y + hy * 0.9,
+        vx: (dirX + spread) * speed,
+        vy: (dirY + spread) * speed,
+        radius: Math.random() * 2.5 + 1.8,
+        color: color,
+        alpha: 1,
+        maxLife: maxLife,
+        life: maxLife,
+        damping: 0.965,
+        shadowBlur: Math.random() * 10 + 10
+      });
     }
+  }
+
+  // Spawn trail heart particle throttled by TRAIL_THROTTLE_MS
+  function spawnTrailHeartParticle(x, y) {
+    const now = performance.now();
+    if (now - lastTrailTime < TRAIL_THROTTLE_MS) return;
+    lastTrailTime = now;
+
+    const TRAIL_COLORS = ['#ff69b4', '#38bdf8', '#c084fc', '#f43f5e', '#a78bfa'];
+    for (let i = 0; i < 2; i++) {
+      const color = TRAIL_COLORS[Math.floor(Math.random() * TRAIL_COLORS.length)];
+      const maxLife = Math.floor(Math.random() * 18 + 22);
+      heartParticles.push({
+        formsHeartShape: false,
+        x: x + (Math.random() - 0.5) * 6,
+        y: y + (Math.random() - 0.5) * 6,
+        vx: (Math.random() - 0.5) * 1.1,
+        vy: -Math.random() * 1.4 - 0.3,
+        radius: Math.random() * 2 + 1.2,
+        color: color,
+        alpha: 0.85,
+        maxLife: maxLife,
+        life: maxLife,
+        damping: 0.92,
+        shadowBlur: 7
+      });
+    }
+  }
+
+  // Push new floating heart message near (x, y - 10)
+  function addHeartMessage(x, y) {
+    const text = HEART_MESSAGES_LIST[heartMessageIndex % HEART_MESSAGES_LIST.length];
+    heartMessageIndex++;
+
+    heartMessages.push({
+      text: text,
+      x: x,
+      y: y - 10,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: -1.2 - Math.random() * 0.5,
+      alpha: 1,
+      maxLife: 80,
+      life: 80
+    });
+  }
+
+  // Handle Canvas Interaction
+  const handlePointerDown = (e) => {
+    sounds.init();
+    sounds.playHeartPop();
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    triggerHeartBurst(x, y);
+    addHeartMessage(x, y);
   };
 
-  if (wrap) {
-    wrap.onclick = pull;
-    wrap.onpointerdown = e => { 
-      startY = e.clientY; 
-      drag = true; 
-      wrap.setPointerCapture(e.pointerId); 
+  const handlePointerMove = (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    spawnTrailHeartParticle(x, y);
+  };
+
+  canvas.onpointerdown = handlePointerDown;
+  canvas.onpointermove = handlePointerMove;
+
+  // Next Step Transition to Scene 3 (Cake Slicing)
+  if (toCakeBtn) {
+    toCakeBtn.onclick = (e) => {
+      e.stopPropagation();
+      sounds.playConfettiFanfare();
+      if (heartCanvasAnimationId) {
+        cancelAnimationFrame(heartCanvasAnimationId);
+      }
+      playFireTransition(() => {
+        switchScene('scene-2', 'scene-3', { onEnter: setupScene3 });
+      });
     };
-    wrap.onpointermove = e => { 
-      if (drag && e.clientY - startY > 40) { 
-        drag = false; 
-        pull(); 
-      } 
-    };
-    wrap.onpointerup = () => { drag = false; };
   }
 
-  if (fireBtn) {
-    fireBtn.onclick = () => {
-      sounds.playConfettiFanfare();
-      playFireTransition(() => switchScene('scene-2', 'scene-3', { onEnter: setupScene3 }));
-    };
+  // Main Render Loop
+  let tick = 0;
+  function animate() {
+    tick++;
+    ctx.clearRect(0, 0, width, height);
+
+    // Deep dark background
+    ctx.fillStyle = '#06040a';
+    ctx.fillRect(0, 0, width, height);
+
+    // Subtle radial ambient glow
+    const grad = ctx.createRadialGradient(width / 2, height / 2, 20, width / 2, height / 2, Math.max(width, height) * 0.65);
+    grad.addColorStop(0, 'rgba(45, 15, 35, 0.45)');
+    grad.addColorStop(0.5, 'rgba(15, 10, 25, 0.3)');
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0.85)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, width, height);
+
+    // Ambient background bokeh particles (blue, cyan, pink, violet)
+    ambientBokeh.forEach(b => {
+      b.x += b.vx;
+      b.y += b.vy;
+      if (b.x < 0) b.x = width;
+      if (b.x > width) b.x = 0;
+      if (b.y < 0) b.y = height;
+      if (b.y > height) b.y = 0;
+
+      const a = b.baseAlpha + Math.sin(tick * b.pulseSpeed + b.pulseOffset) * 0.15;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `${b.colorPrefix}${Math.max(0, Math.min(1, a))})`;
+      ctx.shadowColor = `${b.colorPrefix}0.6)`;
+      ctx.shadowBlur = 8;
+      ctx.fill();
+    });
+
+    // Update and draw Heart Particles
+    ctx.save();
+    for (let i = heartParticles.length - 1; i >= 0; i--) {
+      const p = heartParticles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vx *= p.damping;
+      p.vy *= p.damping;
+      if (!p.formsHeartShape) {
+        p.vy -= 0.035; // gentle upward drift for trail
+      }
+      p.life--;
+      p.alpha = Math.max(0, p.life / p.maxLife);
+
+      if (p.life <= 0) {
+        heartParticles.splice(i, 1);
+        continue;
+      }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha;
+      ctx.shadowColor = p.color;
+      ctx.shadowBlur = p.shadowBlur;
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // Update and draw Floating Heart Messages
+    ctx.save();
+    ctx.font = '600 18px "Dancing Script", "Quicksand", cursive, sans-serif';
+    ctx.textAlign = 'center';
+    for (let i = heartMessages.length - 1; i >= 0; i--) {
+      const m = heartMessages[i];
+      m.x += m.vx;
+      m.y += m.vy;
+      m.life--;
+      m.alpha = Math.max(0, m.life / m.maxLife);
+
+      if (m.life <= 0) {
+        heartMessages.splice(i, 1);
+        continue;
+      }
+
+      ctx.shadowColor = `rgba(244, 63, 94, ${m.alpha * 0.9})`;
+      ctx.shadowBlur = 12;
+      ctx.fillStyle = `rgba(255, 240, 245, ${m.alpha})`;
+      ctx.fillText(m.text, m.x, m.y);
+    }
+    ctx.restore();
+
+    heartCanvasAnimationId = requestAnimationFrame(animate);
   }
+
+  cancelAnimationFrame(heartCanvasAnimationId);
+  heartCanvasAnimationId = requestAnimationFrame(animate);
 }
 
 // ----------------------------------------------------------------------------
