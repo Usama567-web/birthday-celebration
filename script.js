@@ -764,30 +764,44 @@ let coverSlideIndex = 0;
 let coverSlideTimer = null;
 
 function setupCoverSlideshow() {
-  const slides = [
-    document.getElementById('cover-photo-1'),
-    document.getElementById('cover-photo-2'),
-    document.getElementById('cover-photo-3')
-  ].filter(Boolean);
-
+  const slides = document.querySelectorAll('.cover-slide');
   const dots = document.querySelectorAll('.cover-dot');
-  if (slides.length === 0) return;
+  if (!slides || slides.length === 0) return;
+
+  const fallbacks = [
+    's/1.jpg',
+    's/IMG_20260528_224653.jpg',
+    's/WhatsApp Image 2026-11-20 at 2.30.27 PM (1).jpeg',
+    's/WhatsApp Image 2026-11-20 at 2.30.27 PM.jpeg'
+  ];
+
+  slides.forEach((slide, i) => {
+    slide.addEventListener('error', () => {
+      if (fallbacks[i] && !slide.src.includes(encodeURI(fallbacks[i]))) {
+        slide.src = encodeURI(fallbacks[i]);
+      }
+    });
+  });
 
   function showSlide(idx) {
     coverSlideIndex = (idx + slides.length) % slides.length;
     slides.forEach((slide, i) => {
       if (i === coverSlideIndex) {
         slide.classList.add('active');
+        slide.style.opacity = '1';
+        slide.style.zIndex = '2';
       } else {
         slide.classList.remove('active');
+        slide.style.opacity = '0';
+        slide.style.zIndex = '1';
       }
     });
 
     dots.forEach((dot, i) => {
       if (i === coverSlideIndex) {
-        dot.classList.add('active');
+        dot.className = 'cover-dot active';
       } else {
-        dot.classList.remove('active');
+        dot.className = 'cover-dot';
       }
     });
   }
@@ -808,6 +822,8 @@ function setupCoverSlideshow() {
     }, 5000);
   }
 
+  // Auto-start immediately with first slide active and 5s timer
+  showSlide(0);
   restartCoverTimer();
 }
 
