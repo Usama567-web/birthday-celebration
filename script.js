@@ -414,7 +414,6 @@ class SoundEngine {
     if (audioLabel) audioLabel.textContent = "Music: On";
 
     if (this.bgmAudio) {
-      this.bgmAudio.loop = true;
       this.bgmAudio.volume = this.isMuted ? 0 : 0.75;
       const playPromise = this.bgmAudio.play();
       if (playPromise !== undefined) {
@@ -1756,11 +1755,21 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.lucide) window.lucide.createIcons();
 
   const toggleAudioBtn = document.getElementById('toggle-audio-btn');
+  const skipAudioBtn = document.getElementById('skip-audio-btn');
   const toggleSfxBtn = document.getElementById('toggle-sfx-btn');
 
   if (toggleAudioBtn) {
     toggleAudioBtn.addEventListener('click', () => {
       sounds.toggleBGM();
+    });
+  }
+
+  if (skipAudioBtn) {
+    skipAudioBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sounds.init();
+      sounds.playClick();
+      sounds.playNextTrack();
     });
   }
 
