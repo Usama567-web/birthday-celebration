@@ -170,8 +170,26 @@ function saveConfig(newConfig) {
 }
 
 // ----------------------------------------------------------------------------
-// 2. SYNTHESIZED WEB AUDIO & SOUND EFFECTS ENGINE (Zero External 404s)
+// 2. SYNTHESIZED WEB AUDIO & 3-SONG ROTATING SERIES PLAYLIST
 // ----------------------------------------------------------------------------
+const BGM_PLAYLIST = [
+  {
+    title: "Romantic Melody",
+    src: "assets/W-Audio.mpeg",
+    fallback: "W-Audio.mpeg"
+  },
+  {
+    title: "Alfaaz - Hamza Malik × Zain Zohaib",
+    src: "assets/song-alfaaz.mp4",
+    fallback: "Alfaaz_Lyrics__Full_Song__💜___Hamza_Malik_×_Zain_Zohaib(128k).m4a.mp4"
+  },
+  {
+    title: "Jo Tum Mere Ho - Anuv Jain",
+    src: "assets/song-anuv-jain.mp4",
+    fallback: "Anuv_Jain_-_JO_TUM_MERE_HO__Official_Video_(128k).m4a.mp4"
+  }
+];
+
 class SoundEngine {
   constructor() {
     this.ctx = null;
@@ -179,16 +197,52 @@ class SoundEngine {
     this.isMusicPlaying = false;
     this.bgmAudio = null;
     this.noteInterval = null;
+    this.playlist = BGM_PLAYLIST;
+    this.currentTrackIndex = this.getInitialTrackIndex();
+  }
+
+  getInitialTrackIndex() {
+    try {
+      const stored = localStorage.getItem('birthday_bgm_track_index');
+      let idx = stored !== null ? parseInt(stored, 10) : 0;
+      if (isNaN(idx) || idx < 0 || idx >= this.playlist.length) {
+        idx = 0;
+      }
+      // Prepare and save the next song index for the next refresh / revisit
+      const nextIdx = (idx + 1) % this.playlist.length;
+      localStorage.setItem('birthday_bgm_track_index', nextIdx.toString());
+      return idx;
+    } catch (e) {
+      return 0;
+    }
   }
 
   init() {
     if (!this.bgmAudio) {
       this.bgmAudio = document.getElementById('bgm-music');
       if (!this.bgmAudio) {
-        this.bgmAudio = new Audio('W-Audio.mpeg');
-        this.bgmAudio.loop = true;
+        this.bgmAudio = new Audio();
       }
+      this.applyCurrentTrack();
+
+      // Whenever a song finishes playing, automatically play the next song in the series!
+      this.bgmAudio.addEventListener('ended', () => {
+        this.playNextTrack();
+      });
+
+      // Handle audio errors gracefully by trying fallback source
+      this.bgmAudio.addEventListener('error', () => {
+        const track = this.playlist[this.currentTrackIndex];
+        if (track && track.fallback && !this.bgmAudio.src.includes(encodeURI(track.fallback))) {
+          console.warn("Retrying with fallback audio source:", track.fallback);
+          this.bgmAudio.src = encodeURI(track.fallback);
+          if (this.isMusicPlaying) {
+            this.bgmAudio.play().catch(() => {});
+          }
+        }
+      });
     }
+
     if (!this.ctx) {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       if (AudioCtx) {
@@ -197,6 +251,31 @@ class SoundEngine {
     }
     if (this.ctx && this.ctx.state === 'suspended') {
       this.ctx.resume();
+    }
+  }
+
+  applyCurrentTrack() {
+    if (!this.bgmAudio) return;
+    const track = this.playlist[this.currentTrackIndex];
+    if (track) {
+      this.bgmAudio.src = encodeURI(track.src);
+      this.bgmAudio.load();
+      const audioBtn = document.getElementById('toggle-audio-btn');
+      if (audioBtn) {
+        audioBtn.title = `Now Playing (${this.currentTrackIndex + 1}/${this.playlist.length}): ${track.title} (Click to toggle)`;
+      }
+    }
+  }
+
+  playNextTrack() {
+    this.currentTrackIndex = (this.currentTrackIndex + 1) % this.playlist.length;
+    try {
+      localStorage.setItem('birthday_bgm_track_index', ((this.currentTrackIndex + 1) % this.playlist.length).toString());
+    } catch (e) {}
+    this.applyCurrentTrack();
+    if (this.isMusicPlaying && this.bgmAudio) {
+      this.bgmAudio.volume = this.isMuted ? 0 : 0.75;
+      this.bgmAudio.play().catch(e => console.log("Audio play error:", e));
     }
   }
 
