@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Happy Birthday Amna! 💖 | A Special Celebration by Noor ul Hassan</title>
-  <meta name="description" content="A secret cinematic birthday celebration website for Amna, crafted with love by Noor ul Hassan.">
+  <title>Happy Birthday Shaista! 💖 | A Special Celebration by Usama</title>
+  <meta name="description" content="A secret cinematic birthday celebration website for Shaista, crafted with love by Usama.">
   <meta name="theme-color" content="#fde2ec">
 
   <!-- Open Graph / Social Meta -->
-  <meta property="og:title" content="Happy Birthday Amna! ✨ With Love from Noor ul Hassan">
-  <meta property="og:description" content="A secret cinematic birthday celebration crafted with love by Noor ul Hassan for Amna.">
-  <meta property="og:image" content="assets/cover-1.jpg">
+  <meta property="og:title" content="Happy Birthday Shaista! ✨ With Love from Usama">
+  <meta property="og:description" content="A secret cinematic birthday celebration crafted with love by Usama for Shaista.">
+  <meta property="og:image" content="Bunny 🐰🫠/IMG_20260528_224653.jpg">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,9 +101,9 @@
           <div id="photo-panel" class="flip-card-face flip-card-front">
             <div id="card-front" class="polaroid cursor-pointer select-none" title="Tap card to enter passcode">
               <div class="bow">🎀</div>
-              <img id="cover-photo" src="assets/cover-1.jpg" alt="Amna">
-              <h1 id="recipient-title">Happy Birthday Amna!</h1>
-              <p id="sender-subtitle" class="text-xs text-pink-600/85 font-medium">With Love from Noor ul Hassan 💖</p>
+              <img id="cover-photo" src="Bunny 🐰🫠/IMG_20260528_224653.jpg" alt="Shaista">
+              <h1 id="recipient-title">Happy Birthday Shaista!</h1>
+              <p id="sender-subtitle" class="text-xs text-pink-600/85 font-medium">With Love from Usama 💖</p>
               <p id="passcode-hint" class="hint mt-1">✨ Tap card to enter passcode • 0910</p>
               <div class="mt-2.5 inline-flex items-center gap-1.5 text-[11px] font-semibold text-pink-700 bg-pink-100/70 hover:bg-pink-100 px-3 py-1 rounded-full border border-pink-200/60 shadow-xs transition-all hover:scale-105 tap-hint-shimmer">
                 <span>Tap to unlock</span>
@@ -225,13 +225,13 @@
         <div id="envelope-box" class="envelope">
           <div id="envelope-top-flap" class="env-flap"></div>
           <button id="wax-seal" class="env-seal">✦</button>
-          <div class="env-label"><div class="f-serif italic">For Dearest Amna</div><small class="text-[9px] tracking-widest">FROM NOOR UL HASSAN ♡</small></div>
+          <div class="env-label"><div class="f-serif italic">For Dearest Shaista</div><small class="text-[9px] tracking-widest">FROM USAMA ♡</small></div>
         </div>
       </div>
       <div id="letter-modal" class="hidden letter-card">
         <button id="close-letter-btn" class="absolute top-2 right-4 text-pink-300 text-sm">×</button>
-        <h3 id="letter-greeting">Happy Birthday Amna ✨</h3>
-        <p class="sub">With All My Love • Noor ul Hassan ♡</p>
+        <h3 id="letter-greeting">Happy Birthday Shaista ✨</h3>
+        <p class="sub">With All My Love • Usama ♡</p>
         <div class="letter-paper-content custom-scrollbar">
           <div id="typewriter-body"></div><span id="typewriter-cursor" class="inline-block w-0.5 h-5 bg-rose-500 animate-pulse"></span>
         </div>
@@ -299,11 +299,17 @@
 
       <!-- Memory Info Header -->
       <div class="flex items-center justify-between px-1">
-        <div>
-          <h4 id="modal-title" class="text-sm font-bold text-pink-100">Our Sweet Moments</h4>
-          <p id="modal-date" class="text-[11px] text-pink-300/70">Special Times</p>
+        <div class="flex items-center gap-2">
+          <button id="modal-prev-btn" class="text-[11px] font-medium text-pink-300 hover:text-white px-2 py-0.5 rounded-lg bg-white/10 hover:bg-white/20 transition-all cursor-pointer" title="Previous Memory Card">❮ Card</button>
+          <div>
+            <h4 id="modal-title" class="text-sm font-bold text-pink-100">Our Sweet Moments</h4>
+            <p id="modal-date" class="text-[11px] text-pink-300/70">Special Times</p>
+          </div>
         </div>
-        <div id="modal-like-count" class="text-xs text-pink-300 font-semibold">1,314 Likes</div>
+        <div class="flex items-center gap-2">
+          <div id="modal-like-count" class="text-xs text-pink-300 font-semibold">1,314 Likes</div>
+          <button id="modal-next-btn" class="text-[11px] font-medium text-pink-300 hover:text-white px-2 py-0.5 rounded-lg bg-white/10 hover:bg-white/20 transition-all cursor-pointer" title="Next Memory Card">Card ❯</button>
+        </div>
       </div>
 
       <!-- Actions: Download & Like -->
@@ -318,8 +324,6 @@
 
       <!-- Stubs for legacy IDs if needed -->
       <p id="modal-story" class="hidden"></p>
-      <button id="modal-prev-btn" class="hidden"></button>
-      <button id="modal-next-btn" class="hidden"></button>
     </div>
   </div>
 

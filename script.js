@@ -8,12 +8,12 @@
 // 1. CONFIGURATION & CUSTOMIZATION
 // ----------------------------------------------------------------------------
 const DEFAULT_CONFIG = {
-  partnerName: "Amna",
-  senderName: "Noor ul Hassan",
+  partnerName: "Shaista",
+  senderName: "Usama",
   passcode: "0910",
   passcodeHint: "✨ Tap card to enter passcode • 0910",
   letterDate: "October 9th, 2026",
-  letterBody: `Happiest Birthday, my wonderful Amna! 🥳👸💖
+  letterBody: `Happiest Birthday, my wonderful Shaista! 🥳👸💖
 
 I pray you achieve every single one of your dreams, stay endlessly happy, and keep smiling the way you do...
 
@@ -23,87 +23,126 @@ Every day is your day because you are the main character... and YOU KNOW IT😌�
 
 Let's share unlimited laughs, love, cute moments, and lifelong happiness together🫅
 
-Thank you for being in my life and for being the most precious part of it. Wishing you the happiest and most blessed birthday, Amna! 🥳🫀💋
+Thank you for being in my life and for being the most precious part of it. Wishing you the happiest and most blessed birthday, Shaista! 🥳🫀💋
 
 With all my love forever and always,
-Your Noor ul Hassan 💖`,
+Your Usama 💖`,
   memories: [
     {
       id: 1,
       type: "image",
-      title: "Cherished Moments",
+      title: "My Beautiful Queen 👸",
       date: "Special Times",
-      image: "A Bhabhi/img 1.jpeg",
-      images: ["A Bhabhi/img 1.jpeg", "A Bhabhi/img 2.jpeg", "A Bhabhi/img 3.jpeg"],
+      image: "Bunny 🐰🫠/IMG_20260528_224653.jpg",
+      images: [
+        "Bunny 🐰🫠/IMG_20260528_224653.jpg",
+        "Bunny 🐰🫠/IMG_20261024_230626.jpg",
+        "Bunny 🐰🫠/IMG_20261024_230635.jpg"
+      ],
       likes: 1314
     },
     {
       id: 2,
-      type: "video",
-      title: "Our Moments in Motion 🎥",
-      date: "Forever Happy",
-      video: "A Bhabhi/v-1.mp4",
+      type: "image",
+      title: "Dua-e-Khair & Blessings ✨",
+      date: "Blessed Moments",
+      image: "Bunny 🐰🫠/IMG_20261024_230614.jpg",
+      images: [
+        "Bunny 🐰🫠/IMG_20261024_230614.jpg",
+        "Bunny 🐰🫠/IMG_20261024_230602.jpg",
+        "Bunny 🐰🫠/IMG_20261024_230537.jpg"
+      ],
       likes: 2026
     },
     {
       id: 3,
       type: "image",
-      title: "Radiant Happiness",
+      title: "Sweet Surprises & Roses 🌹",
       date: "Beautiful Days",
-      image: "A Bhabhi/img 4.jpeg",
-      images: ["A Bhabhi/img 4.jpeg", "A Bhabhi/img 5.jpeg", "A Bhabhi/img 6.jpeg"],
+      image: "Bunny 🐰🫠/IMG_20260901_104957.jpg",
+      images: [
+        "Bunny 🐰🫠/IMG_20260901_104957.jpg",
+        "Bunny 🐰🫠/IMG_20260831_174941.jpg",
+        "Bunny 🐰🫠/IMG_20260831_175014.jpg"
+      ],
       likes: 1520
     },
     {
       id: 4,
-      type: "video",
-      title: "Sweet Giggles & Smiles 🎬",
-      date: "Golden Times",
-      video: "A Bhabhi/v-2.mp4",
+      type: "image",
+      title: "Our Bunny 🐰 Moments",
+      date: "Forever Cute",
+      image: "Bunny 🐰🫠/1008491785303523870.jpg",
+      images: [
+        "Bunny 🐰🫠/1008491785303523870.jpg",
+        "Bunny 🐰🫠/IMG_20261024_230550.jpg",
+        "Bunny 🐰🫠/c80ea4c095284c3d8efe2831807c3eaa.webp"
+      ],
       likes: 1888
     },
     {
       id: 5,
       type: "image",
-      title: "Endless Laughter",
+      title: "Late Night Talks & Smiles 💬",
       date: "Together Always",
-      image: "A Bhabhi/img 7.jpeg",
-      images: ["A Bhabhi/img 7.jpeg", "A Bhabhi/img 8.jpeg", "A Bhabhi/img 9.jpeg"],
+      image: "Bunny 🐰🫠/Screenshot_20261023_213400.jpg",
+      images: [
+        "Bunny 🐰🫠/Screenshot_20261023_213400.jpg",
+        "Bunny 🐰🫠/Screenshot_20261023_213410.jpg",
+        "Bunny 🐰🫠/Screenshot_20261023_213432.jpg"
+      ],
       likes: 1750
     },
     {
       id: 6,
-      type: "video",
-      title: "Pure Joy & Love ✨",
+      type: "image",
+      title: "Every Day With You 💖",
       date: "Always & Forever",
-      video: "A Bhabhi/v-3.mp4",
+      image: "Bunny 🐰🫠/Screenshot_20260910_222931.jpg",
+      images: [
+        "Bunny 🐰🫠/Screenshot_20260910_222931.jpg",
+        "Bunny 🐰🫠/Screenshot_20260910_222936.jpg",
+        "Bunny 🐰🫠/Screenshot_20260910_222131.jpg"
+      ],
       likes: 2400
     },
     {
       id: 7,
       type: "image",
-      title: "Brightest Star",
+      title: "Heartfelt Memories 🌸",
       date: "Magic Moments",
-      image: "A Bhabhi/img 10.jpeg",
-      images: ["A Bhabhi/img 10.jpeg", "A Bhabhi/img 11.jpeg", "A Bhabhi/img 12.jpeg"],
+      image: "Bunny 🐰🫠/Screenshot_20260528_224529.jpg",
+      images: [
+        "Bunny 🐰🫠/Screenshot_20260528_224529.jpg",
+        "Bunny 🐰🫠/Screenshot_20260503_001433.jpg",
+        "Bunny 🐰🫠/Screenshot_20260503_001449.jpg"
+      ],
       likes: 1999
     },
     {
       id: 8,
       type: "image",
-      title: "Unconditional Love",
+      title: "Endless Laughter & Love 🥰",
       date: "Forever With You",
-      image: "A Bhabhi/img 13.jpeg",
-      images: ["A Bhabhi/img 13.jpeg", "A Bhabhi/img 14.jpeg", "A Bhabhi/img 15.jpeg"],
+      image: "Bunny 🐰🫠/Screenshot_20260111_233402.jpg",
+      images: [
+        "Bunny 🐰🫠/Screenshot_20260111_233402.jpg",
+        "Bunny 🐰🫠/Screenshot_20260111_233403.jpg",
+        "Bunny 🐰🫠/Screenshot_20260106_134951.jpg"
+      ],
       likes: 2500
     },
     {
       id: 9,
       type: "image",
-      title: "My Favorite Story",
+      title: "Our Beautiful Story 📖",
       date: "Every Single Day",
-      image: "A Bhabhi/img 3.jpeg",
-      images: ["A Bhabhi/img 3.jpeg", "A Bhabhi/img 8.jpeg", "A Bhabhi/img 12.jpeg"],
+      image: "Bunny 🐰🫠/Screenshot_20251215_214740.jpg",
+      images: [
+        "Bunny 🐰🫠/Screenshot_20251215_214740.jpg",
+        "Bunny 🐰🫠/Screenshot_20251029_190841.jpg",
+        "Bunny 🐰🫠/Screenshot_20251019_003608.jpg"
+      ],
       likes: 3100
     }
   ]
