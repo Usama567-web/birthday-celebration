@@ -8,14 +8,15 @@ A romantic, interactive, and personalized birthday celebration website for Shais
 
 1. **Scene 1: Cover & Secure Alphanumeric Password Lock**
    - Polaroid-style couple photo frame with realistic tilt, subtle ribbon bow, and washi tape details.
+   - **5s Auto-Swapping Cover Photos:** Cycles through the personal photos from `s` every 5 seconds with a smooth Ken Burns scale and crossfade animation, complete with dot indicators.
    - Smooth 3D card flip when tapped to reveal a frosted glassmorphic alphanumeric keypad (letters, numbers, space, shift, and unlock button).
    - Secret Password: **`Bunny 22 11`** (with error shake animation and hint toggle).
    - Transitions directly into the Interactive Heart Messages Canvas.
 
-2. **Scene 2: Floral Background & Interactive Elements**
-   - Soft pastel pink, lavender, and peach ambient mesh gradient with animated watercolor floral borders and drifting hearts.
-   - Interactive pull cord with realistic drag / tap physics and spring snap.
-   - Pulling the cord illuminates fairy lights, reveals celebratory wishes, and unlocks the Cake scene.
+2. **Scene 2: Cute Lamp & Twinkle Lights with Custom Portrait Background**
+   - Full-screen couple portrait background (`s u/WhatsApp Image 2026-11-20 at 2.30.27 PM (1).jpeg`).
+   - Twinkling overhead fairy lights and cute interactive hanging lamp.
+   - Dragging the string cord turns on the glowing lamp and reveals the 🔥 action button.
 
 3. **Scene 3: Swipe / Slice the Cake Feature**
    - A multi-tiered strawberry shortcake with cream layers and animated flickering candles.
@@ -23,6 +24,15 @@ A romantic, interactive, and personalized birthday celebration website for Shais
    - Cake smoothly splits into two halves, accompanied by a realistic slice whoosh and a colorful multi-burst confetti cannon explosion.
 
 4. **Scene 4: Heartfelt Typed Letter Modal**
+   - Nostalgic wax seal opening animation.
+   - Romantic letter for Shaista from Usama with typewriter effect.
+   - Proceeding re-activates Scene 2 outro: pulling the string cord shuts off the lights into a dark cosmos.
+
+5. **Scene 5: Starry Space Gallery (All 53 Memories from Bunny 🐰🫠)**
+   - Complete collection of **53 photos** mapped across 18 floating space cards.
+   - **Dynamic Auto-Swapping:** Each space card continuously auto-swaps its photos every 4.5s–6.5s with smooth crossfade and shimmer.
+   - **Interactive 3D Parallax Tilt:** Moving the cursor over any card tilts and scales it in 3D perspective with glowing rose borders.
+   - **Full Lightbox Modal:** Tap any card to view photos in high resolution with auto-swap, thumbnails, like button, and card navigation.
    - A 3D realistic vintage envelope sealed with a red wax heart.
    - Tapping the wax seal cracks it open, folds the top flap up in 3D perspective, and unfurls an authentic parchment love letter.
    - Smooth typewriter effect typing out heartfelt birthday wishes with soft mechanical key clicks and a blinking calligraphy pen cursor.
