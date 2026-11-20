@@ -6,11 +6,11 @@ A romantic, interactive, and personalized birthday celebration website for Shais
 
 ## 🎬 Interactive Storyline & Features (5 Sequential Scenes)
 
-1. **Scene 1: Cover & Secure Passcode Lock**
+1. **Scene 1: Cover & Secure Alphanumeric Password Lock**
    - Polaroid-style couple photo frame with realistic tilt, subtle ribbon bow, and washi tape details.
-   - Smooth 3D card flip when tapped to reveal a glassmorphic 4-digit numeric PIN pad.
-   - Default passcode: **`0910`** (with error shake animation and hint toggle).
-   - Golden ripple transition upon unlocking.
+   - Smooth 3D card flip when tapped to reveal a frosted glassmorphic alphanumeric keypad (letters, numbers, space, shift, and unlock button).
+   - Secret Password: **`Bunny 22 11`** (with error shake animation and hint toggle).
+   - Transitions directly into the Interactive Heart Messages Canvas.
 
 2. **Scene 2: Floral Background & Interactive Elements**
    - Soft pastel pink, lavender, and peach ambient mesh gradient with animated watercolor floral borders and drifting hearts.
