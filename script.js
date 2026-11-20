@@ -10,8 +10,8 @@
 const DEFAULT_CONFIG = {
   partnerName: "Shaista",
   senderName: "Usama",
-  passcode: "0910",
-  passcodeHint: "✨ Tap card to enter passcode • 0910",
+  passcode: "Bunny 22 11",
+  passcodeHint: "✨ Tap card to enter password • Bunny 22 11",
   letterDate: "October 9th, 2026",
   letterBody: `Happiest Birthday, my wonderful Shaista! 🥳👸💖
 
