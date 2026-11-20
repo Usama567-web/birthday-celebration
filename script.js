@@ -1119,7 +1119,7 @@ function setupScene4() {
   if (gotoStarryBtn) {
     gotoStarryBtn.addEventListener('click', () => {
       sounds.playClick();
-      switchScene('scene-4', 'scene-2', { onEnter: () => setupScene2('outro') });
+      switchScene('scene-4', 'scene-5', { onEnter: setupScene5 });
     });
   }
 }

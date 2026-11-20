@@ -284,43 +284,28 @@ body::before { /* soft colour blobs */
   background: radial-gradient(circle at 50% 55%, #fff7d6 0, #ffb347 20%, #ff5a1f 45%, #7a1c00 75%, #2a0a00 100%);
 }
 
-/* Scene 2: Cute Lantern & Pull Cord */
-.lantern-rod { width: 2px; height: 60px; background: #b07a8c; margin: 0 auto; }
-.lantern-cap { width: 26px; height: 10px; border-radius: 3px; background: #c48aa0; margin: 0 auto; }
-.lantern {
-  position: relative;
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  margin: 0 auto;
-  background: radial-gradient(circle at 35% 30%, #fff 0, #fde4ee 45%, #f9c6d8 100%);
-  box-shadow: 0 10px 30px rgba(244,114,182,.35), inset -6px -8px 14px rgba(244,114,182,.25);
+/* Scene 2: Heart Messages Canvas */
+#scene-2 {
+  background: radial-gradient(circle at 50% 50%, #0d0614 0%, #050208 60%, #000000 100%);
 }
-.lantern .eye { position: absolute; top: 44px; width: 7px; height: 8px; border-radius: 50%; background: #6b3a4a; }
-.lantern .eye.l { left: 30px; }
-.lantern .eye.r { right: 30px; }
-.lantern .cheek { position: absolute; top: 54px; width: 14px; height: 9px; border-radius: 50%; background: rgba(255,120,150,.35); }
-.lantern .cheek.l { left: 16px; }
-.lantern .cheek.r { right: 16px; }
-.lantern .smile {
-  position: absolute;
-  left: 50%;
-  top: 56px;
-  width: 18px;
-  height: 9px;
-  transform: translateX(-50%);
-  border-bottom: 2px solid #6b3a4a;
-  border-radius: 0 0 18px 18px;
+
+#heart-canvas {
+  touch-action: none;
 }
-.chain { width: 8px; height: 110px; background: repeating-linear-gradient(#0000 0 6px, #b07a8c 6px 8px); margin: 0 auto; }
-.knob { width: 14px; height: 14px; border-radius: 50%; background: #8a5a6b; margin: 0 auto; }
-.pull-text {
-  position: absolute;
-  bottom: 18%;
-  font-family: 'Cormorant Garamond', serif;
-  letter-spacing: .2em;
-  font-size: .7rem;
-  color: #e6b4c6;
+
+@keyframes heartGlowPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(244, 63, 94, 0.4), 0 0 30px rgba(236, 72, 153, 0.2);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(244, 63, 94, 0.7), 0 0 45px rgba(236, 72, 153, 0.4);
+    transform: scale(1.05);
+  }
+}
+
+.heart-pulse-glow {
+  animation: heartGlowPulse 2s infinite ease-in-out;
 }
 .fire-btn {
   width: 96px;
