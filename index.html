@@ -93,18 +93,21 @@
     <!-- ========================================================================= -->
     <!-- SCENE 1: Cover & Secure Passcode Lock                                     -->
     <!-- ========================================================================= -->
+    <!-- ========================================================================= -->
+    <!-- SCENE 1: 3D Flip Card - Front: Vintage Polaroid, Back: Alphanumeric Keypad -->
+    <!-- ========================================================================= -->
     <section id="scene-1" class="scene active relative flex items-center justify-center min-h-screen px-4 z-20">
-      <div class="flip-card-perspective relative w-full max-w-xs">
+      <div class="flip-card-perspective relative w-full max-w-[360px] sm:max-w-sm">
         <div id="card-flipper" class="flip-card-inner">
 
           <!-- FRONT FACE: Vintage Polaroid Card -->
           <div id="photo-panel" class="flip-card-face flip-card-front">
-            <div id="card-front" class="polaroid cursor-pointer select-none" title="Tap card to enter passcode">
+            <div id="card-front" class="polaroid cursor-pointer select-none" title="Tap card to enter password">
               <div class="bow">🎀</div>
               <img id="cover-photo" src="Bunny 🐰🫠/IMG_20260528_224653.jpg" alt="Shaista">
               <h1 id="recipient-title">Happy Birthday Shaista!</h1>
               <p id="sender-subtitle" class="text-xs text-pink-600/85 font-medium">With Love from Usama 💖</p>
-              <p id="passcode-hint" class="hint mt-1">✨ Tap card to enter passcode • 0910</p>
+              <p id="passcode-hint" class="hint mt-1">✨ Tap card to enter password • Bunny 22 11</p>
               <div class="mt-2.5 inline-flex items-center gap-1.5 text-[11px] font-semibold text-pink-700 bg-pink-100/70 hover:bg-pink-100 px-3 py-1 rounded-full border border-pink-200/60 shadow-xs transition-all hover:scale-105 tap-hint-shimmer">
                 <span>Tap to unlock</span>
                 <span class="inline-block">↻</span>
@@ -112,10 +115,10 @@
             </div>
           </div>
 
-          <!-- BACK FACE: Frosted Glassmorphic PIN Pad -->
+          <!-- BACK FACE: Frosted Glassmorphic Alphanumeric Keypad -->
           <div id="pin-panel" class="flip-card-face flip-card-back glassmorphic-panel select-none">
             <!-- Header bar with flip back button -->
-            <div class="flex items-center justify-between w-full px-1">
+            <div class="flex items-center justify-between w-full px-1 mb-1">
               <span class="text-[11px] font-bold tracking-widest uppercase text-pink-700/80">Secret Access</span>
               <button id="flip-back-btn" type="button" class="flex items-center gap-1 text-[11px] font-semibold text-pink-700 hover:text-pink-900 bg-white/70 hover:bg-white/95 border border-pink-200/70 px-2.5 py-1 rounded-full shadow-xs transition-all cursor-pointer" title="Flip back to photo">
                 <span>↻ Photo</span>
@@ -124,47 +127,104 @@
 
             <!-- Title & Subtitle -->
             <div class="text-center my-0.5">
-              <h2 class="f-serif text-3xl font-bold text-[#7a2d4f] leading-none">Enter Passcode</h2>
-              <p class="text-[11px] text-[#9c5a75] mt-1 font-medium">Enter the 4-digit secret key</p>
+              <h2 class="f-serif text-2xl sm:text-3xl font-bold text-[#7a2d4f] leading-tight">Enter Password</h2>
+              <p class="text-[11px] text-[#9c5a75] font-medium">Type secret key: <span class="font-semibold text-pink-700">Bunny 22 11</span></p>
             </div>
 
-            <!-- PIN Dot Indicators -->
-            <div id="pin-display" class="flex gap-3 my-0.5">
-              <div class="pin-dot"></div>
-              <div class="pin-dot"></div>
-              <div class="pin-dot"></div>
-              <div class="pin-dot"></div>
+            <!-- Password Display Box -->
+            <div id="password-display-box" class="pass-display-box relative w-full flex items-center justify-between px-3 py-2 rounded-xl bg-white/80 backdrop-blur-md border-2 border-pink-200/90 shadow-inner my-1.5 transition-all">
+              <div class="flex items-center gap-1 flex-1 overflow-x-auto overflow-y-hidden scrollbar-none min-h-[26px]">
+                <span id="password-text" class="font-mono text-sm sm:text-base tracking-wider font-bold text-[#7a2d4f] select-none whitespace-pre"></span>
+                <span id="password-cursor" class="inline-block w-[2px] h-4 bg-pink-500 animate-pulse"></span>
+                <span id="password-placeholder" class="text-xs text-pink-400/80 font-medium select-none pointer-events-none">Type password...</span>
+              </div>
+              <div class="flex items-center gap-1.5 ml-1.5 shrink-0">
+                <button id="toggle-visibility-btn" type="button" class="text-pink-500 hover:text-pink-700 p-1 text-xs transition-colors cursor-pointer" title="Toggle Show/Hide Password">👁</button>
+                <button id="quick-clear-btn" type="button" class="text-pink-400 hover:text-rose-500 p-1 text-xs transition-colors cursor-pointer hidden" title="Clear All">✕</button>
+              </div>
+              <!-- Hidden accessible input to capture physical keyboard smoothly -->
+              <input type="text" id="passcode-input" class="absolute inset-0 opacity-0 cursor-text pointer-events-auto" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="text" aria-label="Password">
             </div>
 
-            <!-- Glassmorphic Keypad (3x4) -->
-            <div class="grid grid-cols-3 gap-2.5 my-0.5">
-              <button class="key-btn" data-key="1">1</button>
-              <button class="key-btn" data-key="2">2</button>
-              <button class="key-btn" data-key="3">3</button>
-              <button class="key-btn" data-key="4">4</button>
-              <button class="key-btn" data-key="5">5</button>
-              <button class="key-btn" data-key="6">6</button>
-              <button class="key-btn" data-key="7">7</button>
-              <button class="key-btn" data-key="8">8</button>
-              <button class="key-btn" data-key="9">9</button>
-              <button class="key-btn text-xs font-bold text-pink-600/80" data-action="clear" title="Clear All">C</button>
-              <button class="key-btn" data-key="0">0</button>
-              <button class="key-btn text-sm font-semibold text-pink-700" data-action="delete" title="Backspace">⌫</button>
+            <!-- Alphanumeric Keypad -->
+            <div id="alpha-keypad" class="w-full flex flex-col gap-1.5 my-1">
+              <!-- Row 1: Numbers (1-0) -->
+              <div class="flex justify-between gap-1 w-full">
+                <button class="key-btn num-key" data-key="1">1</button>
+                <button class="key-btn num-key" data-key="2">2</button>
+                <button class="key-btn num-key" data-key="3">3</button>
+                <button class="key-btn num-key" data-key="4">4</button>
+                <button class="key-btn num-key" data-key="5">5</button>
+                <button class="key-btn num-key" data-key="6">6</button>
+                <button class="key-btn num-key" data-key="7">7</button>
+                <button class="key-btn num-key" data-key="8">8</button>
+                <button class="key-btn num-key" data-key="9">9</button>
+                <button class="key-btn num-key" data-key="0">0</button>
+              </div>
+
+              <!-- Row 2: Letters Q-P -->
+              <div class="flex justify-between gap-1 w-full">
+                <button class="key-btn letter-key" data-key="Q">Q</button>
+                <button class="key-btn letter-key" data-key="W">W</button>
+                <button class="key-btn letter-key" data-key="E">E</button>
+                <button class="key-btn letter-key" data-key="R">R</button>
+                <button class="key-btn letter-key" data-key="T">T</button>
+                <button class="key-btn letter-key" data-key="Y">Y</button>
+                <button class="key-btn letter-key" data-key="U">U</button>
+                <button class="key-btn letter-key" data-key="I">I</button>
+                <button class="key-btn letter-key" data-key="O">O</button>
+                <button class="key-btn letter-key" data-key="P">P</button>
+              </div>
+
+              <!-- Row 3: Letters A-L -->
+              <div class="flex justify-center gap-1 w-full px-2">
+                <button class="key-btn letter-key" data-key="A">A</button>
+                <button class="key-btn letter-key" data-key="S">S</button>
+                <button class="key-btn letter-key" data-key="D">D</button>
+                <button class="key-btn letter-key" data-key="F">F</button>
+                <button class="key-btn letter-key" data-key="G">G</button>
+                <button class="key-btn letter-key" data-key="H">H</button>
+                <button class="key-btn letter-key" data-key="J">J</button>
+                <button class="key-btn letter-key" data-key="K">K</button>
+                <button class="key-btn letter-key" data-key="L">L</button>
+              </div>
+
+              <!-- Row 4: Shift + Z-M + Backspace -->
+              <div class="flex justify-between gap-1 w-full">
+                <button id="shift-key-btn" class="key-btn action-key flex-[1.2] text-[11px] font-bold text-pink-700" data-action="shift" title="Shift / Uppercase">⇧</button>
+                <button class="key-btn letter-key" data-key="Z">Z</button>
+                <button class="key-btn letter-key" data-key="X">X</button>
+                <button class="key-btn letter-key" data-key="C">C</button>
+                <button class="key-btn letter-key" data-key="V">V</button>
+                <button class="key-btn letter-key" data-key="B">B</button>
+                <button class="key-btn letter-key" data-key="N">N</button>
+                <button class="key-btn letter-key" data-key="M">M</button>
+                <button class="key-btn action-key flex-[1.2] text-xs font-bold text-pink-700" data-action="delete" title="Backspace">⌫</button>
+              </div>
+
+              <!-- Row 5: Clear + Space + Unlock Action -->
+              <div class="flex justify-between gap-1.5 w-full mt-0.5">
+                <button class="key-btn action-key px-3 text-[11px] font-bold text-pink-700" data-action="clear" title="Clear Input">Clear</button>
+                <button class="key-btn space-key flex-1 text-xs font-semibold text-pink-800" data-key=" " title="Space Bar">␣ Space</button>
+                <button id="unlock-submit-btn" class="key-btn unlock-btn px-3.5 text-xs font-bold text-white bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-600 shadow-md shadow-pink-500/25 border-pink-400" data-action="submit" title="Unlock with Password">
+                  <span>Unlock 💖</span>
+                </button>
+              </div>
             </div>
 
             <!-- Error Notification -->
-            <div id="passcode-error" class="text-xs font-semibold text-rose-500 opacity-0 transition-opacity min-h-[16px] text-center">
-              Incorrect passcode, try again!
+            <div id="passcode-error" class="text-xs font-semibold text-rose-500 opacity-0 transition-opacity min-h-[16px] text-center my-0.5">
+              Incorrect password, try again!
             </div>
 
             <!-- Hint Toggle & Collapsible Badge -->
-            <div class="flex flex-col items-center gap-1.5 w-full mt-0.5">
+            <div class="flex flex-col items-center gap-1 w-full mt-0.5">
               <button id="hint-toggle-btn" type="button" class="flex items-center gap-1.5 text-[11px] font-semibold text-pink-700 hover:text-pink-900 transition-all px-3 py-1 rounded-full bg-white/60 hover:bg-white/90 border border-pink-200/70 shadow-xs cursor-pointer">
                 <span>💡</span>
                 <span id="hint-toggle-label">Need a hint?</span>
               </button>
               <div id="hint-bubble" class="hint-bubble hidden text-[11px] font-bold text-[#7a2d4f] bg-pink-100/90 border border-pink-200/90 px-3.5 py-1 rounded-full shadow-xs">
-                <span id="hint-bubble-text">✨ Passcode: 0910</span>
+                <span id="hint-bubble-text">✨ Password: Bunny 22 11</span>
               </div>
             </div>
           </div>
