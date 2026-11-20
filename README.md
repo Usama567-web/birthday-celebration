@@ -1,6 +1,6 @@
-# ✨ Cinematic Birthday Web Application 💖 (For Amna from Noor ul Hassan)
+# ✨ Cinematic Birthday Web Application 💖 (For Shaista from Usama)
 
-A romantic, interactive, and personalized birthday celebration website for Amna, crafted with love by Noor ul Hassan with custom animations, continuous background music (`W-Audio.mpeg`), and starry memory gallery.
+A romantic, interactive, and personalized birthday celebration website for Shaista, crafted with love by Usama with custom animations, continuous background music (`W-Audio.mpeg`), and starry memory gallery.
 
 ---
 
@@ -107,7 +107,7 @@ Open [`script.js`](file:///c:/Users/hp/Desktop/New%20folder%20%282%29/script.js)
 ├── script.js        # Scene state machine, Web Audio synth, touch gestures & canvas
 ├── README.md        # Deployment and customization documentation
 ├── W-Audio.mpeg     # Background romantic song (continuous repeat loop)
-├── A Bhabhi/        # Personal photos (img 1-15) and videos (v 1-3)
+├── Bunny 🐰🫠/        # Personal photos & memories
 └── assets/          # Generated romantic polaroid and memory photos
     ├── cover-1.jpg  # Main cover picture
     ├── cover.jpg

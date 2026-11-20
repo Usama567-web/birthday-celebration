@@ -162,7 +162,7 @@ function loadSavedConfig() {
 
 function saveConfig(newConfig) {
   try {
-    APP_CONFIG = { ...APP_CONFIG, ...newConfig, partnerName: "Amna", senderName: "Noor ul Hassan", passcode: "0910" };
+    APP_CONFIG = { ...APP_CONFIG, ...newConfig, partnerName: "Shaista", senderName: "Usama", passcode: "0910" };
     applyConfigToDOM();
   } catch (e) {
     console.error("Failed to save config:", e);
@@ -1361,13 +1361,13 @@ function spawnKissHearts() {
 
 function applyConfigToDOM() {
   const recipientTitle = document.getElementById('recipient-title');
-  if (recipientTitle) recipientTitle.textContent = `Happy Birthday ${APP_CONFIG.partnerName || 'Amna'}!`;
+  if (recipientTitle) recipientTitle.textContent = `Happy Birthday ${APP_CONFIG.partnerName || 'Shaista'}!`;
 
   const senderSubtitle = document.getElementById('sender-subtitle');
-  if (senderSubtitle) senderSubtitle.textContent = `With Love from ${APP_CONFIG.senderName || 'Noor ul Hassan'} 💖`;
+  if (senderSubtitle) senderSubtitle.textContent = `With Love from ${APP_CONFIG.senderName || 'Usama'} 💖`;
 
   const letterGreeting = document.getElementById('letter-greeting');
-  if (letterGreeting) letterGreeting.textContent = `Happy Birthday ${APP_CONFIG.partnerName || 'Amna'} ✨`;
+  if (letterGreeting) letterGreeting.textContent = `Happy Birthday ${APP_CONFIG.partnerName || 'Shaista'} ✨`;
 
   const passcodeHint = document.getElementById('passcode-hint');
   if (passcodeHint) passcodeHint.textContent = APP_CONFIG.passcodeHint;
