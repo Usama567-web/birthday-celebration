@@ -440,8 +440,8 @@ function switchScene(fromSceneId, toSceneId, options = {}) {
   const toEl = document.getElementById(toSceneId);
   if (!fromEl || !toEl) return;
 
-  const targetSceneNum = parseInt(toSceneId.replace('scene-', '')) || 1;
-  currentScene = targetSceneNum;
+  let sceneMap = { 'scene-1': 1, 'scene-hearts': 2, 'scene-2': 3, 'scene-3': 4, 'scene-4': 5, 'scene-5': 6 };
+  currentScene = sceneMap[toSceneId] || 1;
   setSceneProgress(currentScene);
 
   if (window.gsap) {
@@ -637,10 +637,10 @@ function setupScene1() {
         });
       }
 
-      // Smooth direct transition into Scene 2: Cute Lantern & Twinkle Lights (No flower screen)
+      // Smooth transition into Heart Messages Canvas Particle Animation (Replaces Flower Image!)
       setTimeout(() => {
-        switchScene('scene-1', 'scene-2', {
-          onEnter: setupScene2
+        switchScene('scene-1', 'scene-hearts', {
+          onEnter: setupSceneHearts
         });
       }, 500);
 
@@ -663,85 +663,85 @@ function setupScene1() {
 }
 
 // ----------------------------------------------------------------------------
-// 5. SCENE 2: CUTE LANTERN & TWINKLING FAIRY LIGHTS ("LAMP LITE TWINK")
+// 5. SCENE 2: CUTE LAMP & TWINKLE LIGHT ANIMATION (Intro & Outro)
 // ----------------------------------------------------------------------------
-function setupScene2() {
-  const wrap = document.getElementById('pull-cord-wrapper');
-  const stage = document.getElementById('lantern-stage');
-  const txt = document.getElementById('pull-text');
-  const lantern = document.getElementById('lamp-lantern');
-  const wishes = document.getElementById('lantern-wishes');
-  const gotoHeartsBtn = document.getElementById('goto-hearts-btn');
-
+function setupScene2(mode = 'intro') {
+  const $ = id => document.getElementById(id);
+  const wrap = $('pull-cord-wrapper'), 
+        stage = $('lantern-stage'), 
+        txt = $('pull-text'),
+        lantern = $('lamp-lantern'),
+        fireBtn = $('fire-btn'), 
+        wash = $('scene2-wash');
   let pulled = false, startY = 0, drag = false;
 
   if (lantern) lantern.classList.remove('lit');
-  if (wishes) wishes.classList.add('hidden');
-  if (txt) txt.style.opacity = '1';
-  if (stage) stage.style.opacity = '1';
+  gsap.set([stage, txt], { opacity: 1 }); 
+  gsap.set(wash, { opacity: 0 });
+  if (fireBtn) fireBtn.classList.add('hidden');
 
   const pull = () => {
-    if (pulled) return;
+    if (pulled) return; 
     pulled = true;
     sounds.playPullString();
 
-    // Cord pull and elastic spring bounce animation
-    if (window.gsap && wrap) {
-      gsap.timeline()
-        .to(wrap, { y: 45, duration: 0.15 })
-        .to(wrap, { y: 0, duration: 0.8, ease: 'elastic.out(1.2, 0.3)' });
-    }
+    if (lantern) lantern.classList.add('lit');
 
-    // Light up lantern & fairy lights
-    setTimeout(() => {
-      sounds.playSuccessChime();
-      if (lantern) lantern.classList.add('lit');
-      if (txt) gsap.to(txt, { opacity: 0, duration: 0.4 });
-      if (wishes) {
-        wishes.classList.remove('hidden');
-        if (window.gsap) {
-          gsap.fromTo(wishes, 
-            { opacity: 0, y: 20, scale: 0.9 }, 
-            { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "back.out(1.4)" }
-          );
+    gsap.timeline()
+      .to(wrap, { y: 40, duration: .15 })
+      .to(wrap, { y: 0, duration: .7, ease: 'elastic.out(1.2,.3)' });
+
+    if (mode === 'intro') {
+      // Intro: pulling string lights up the lamp and reveals 🔥 button to proceed to Cake!
+      gsap.to([stage, txt], { opacity: 0, duration: .8, delay: .3 });
+      gsap.to(wash, { opacity: 1, duration: 1, delay: .3, onComplete: () => {
+        if (fireBtn) {
+          fireBtn.classList.remove('hidden');
+          gsap.from(fireBtn, { scale: .6, opacity: 0, duration: .6 });
         }
+      }});
+    } else { 
+      // Outro (before the cards): lights go out, then transition smoothly into the cards gallery!
+      const f = $('flash-overlay');
+      if (f) {
+        f.style.background = '#000'; 
+        f.style.transition = 'opacity 1.4s'; 
+        f.style.opacity = '1';
+        setTimeout(() => switchScene('scene-2', 'scene-5', { onEnter: setupScene5 }), 1500);
+        setTimeout(() => { f.style.opacity = '0'; }, 2000);
+        setTimeout(() => { f.style.background = ''; f.style.transition = ''; }, 3500);
+      } else {
+        switchScene('scene-2', 'scene-5', { onEnter: setupScene5 });
       }
-      if (window.confetti) {
-        confetti({
-          particleCount: 60,
-          spread: 80,
-          origin: { y: 0.4 }
-        });
-      }
-    }, 200);
+    }
   };
 
   if (wrap) {
     wrap.onclick = pull;
-    wrap.onpointerdown = e => {
-      startY = e.clientY;
-      drag = true;
-      wrap.setPointerCapture(e.pointerId);
+    wrap.onpointerdown = e => { 
+      startY = e.clientY; 
+      drag = true; 
+      wrap.setPointerCapture(e.pointerId); 
     };
-    wrap.onpointermove = e => {
-      if (drag && e.clientY - startY > 35) {
-        drag = false;
-        pull();
-      }
+    wrap.onpointermove = e => { 
+      if (drag && e.clientY - startY > 35) { 
+        drag = false; 
+        pull(); 
+      } 
     };
     wrap.onpointerup = () => { drag = false; };
   }
 
-  if (gotoHeartsBtn) {
-    gotoHeartsBtn.onclick = () => {
-      sounds.playClick();
-      switchScene('scene-2', 'scene-hearts', { onEnter: setupSceneHearts });
+  if (fireBtn) {
+    fireBtn.onclick = () => {
+      sounds.playConfettiFanfare();
+      playFireTransition(() => switchScene('scene-2', 'scene-3', { onEnter: setupScene3 }));
     };
   }
 }
 
 // ----------------------------------------------------------------------------
-// 5B. SCENE HEARTS: HEART MESSAGES CANVAS PARTICLE ANIMATION ENGINE
+// 5B. SCENE HEARTS: HEART MESSAGES CANVAS PARTICLE ANIMATION (Replaces Flower Image)
 // ----------------------------------------------------------------------------
 const PARTICLES_PER_HEART_BURST = 60;
 const TRAIL_THROTTLE_MS = 25;
@@ -765,7 +765,7 @@ let heartMessageIndex = 0;
 
 function setupSceneHearts() {
   const canvas = document.getElementById('heart-canvas');
-  const toCakeBtn = document.getElementById('heart-to-cake-btn');
+  const toLampBtn = document.getElementById('heart-to-lamp-btn');
   if (!canvas) return;
 
   const ctx = canvas.getContext('2d');
@@ -909,15 +909,15 @@ function setupSceneHearts() {
     spawnTrailHeartParticle(x, y);
   };
 
-  if (toCakeBtn) {
-    toCakeBtn.onclick = (e) => {
+  if (toLampBtn) {
+    toLampBtn.onclick = (e) => {
       e.stopPropagation();
-      sounds.playConfettiFanfare();
+      sounds.playClick();
       if (heartCanvasAnimationId) {
         cancelAnimationFrame(heartCanvasAnimationId);
       }
-      playFireTransition(() => {
-        switchScene('scene-hearts', 'scene-3', { onEnter: setupScene3 });
+      switchScene('scene-hearts', 'scene-2', {
+        onEnter: () => setupScene2('intro')
       });
     };
   }
@@ -1171,7 +1171,7 @@ function setupScene4() {
   if (gotoStarryBtn) {
     gotoStarryBtn.addEventListener('click', () => {
       sounds.playClick();
-      switchScene('scene-4', 'scene-5', { onEnter: setupScene5 });
+      switchScene('scene-4', 'scene-2', { onEnter: () => setupScene2('outro') });
     });
   }
 }
