@@ -29,124 +29,328 @@ With all my love forever and always,
 Your Usama 💖`,
   memories: [
     {
-      id: 1,
-      type: "image",
-      title: "My Beautiful Queen 👸",
-      date: "Special Times",
-      image: "Bunny 🐰🫠/IMG_20260528_224653.jpg",
-      images: [
-        "Bunny 🐰🫠/IMG_20260528_224653.jpg",
-        "Bunny 🐰🫠/IMG_20261024_230626.jpg",
-        "Bunny 🐰🫠/IMG_20261024_230635.jpg"
-      ],
-      likes: 1314
+        "id": 1,
+        "type": "image",
+        "title": "My Beautiful Queen 👸",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-01.jpg",
+        "images": [
+            "assets/bunny/photo-01.jpg",
+            "assets/bunny/photo-02.webp",
+            "assets/bunny/photo-03.webp"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/1008491785303523870.jpg",
+            "Bunny 🐰🫠/628d4aa916bd651a96166df8ef53eda6.webp",
+            "Bunny 🐰🫠/7f37829e5a49445ba7e50f02306296ed.webp"
+        ],
+        "likes": 1200
     },
     {
-      id: 2,
-      type: "image",
-      title: "Dua-e-Khair & Blessings ✨",
-      date: "Blessed Moments",
-      image: "Bunny 🐰🫠/IMG_20261024_230614.jpg",
-      images: [
-        "Bunny 🐰🫠/IMG_20261024_230614.jpg",
-        "Bunny 🐰🫠/IMG_20261024_230602.jpg",
-        "Bunny 🐰🫠/IMG_20261024_230537.jpg"
-      ],
-      likes: 2026
+        "id": 2,
+        "type": "image",
+        "title": "Dua-e-Khair & Blessings ✨",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-04.webp",
+        "images": [
+            "assets/bunny/photo-04.webp",
+            "assets/bunny/photo-05.webp",
+            "assets/bunny/photo-06.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/c80ea4c095284c3d8efe2831807c3eaa.webp",
+            "Bunny 🐰🫠/cef12d4bdfe041d5b9ea7718636effa6.webp",
+            "Bunny 🐰🫠/IMG_20260528_224653.jpg"
+        ],
+        "likes": 1315
     },
     {
-      id: 3,
-      type: "image",
-      title: "Sweet Surprises & Roses 🌹",
-      date: "Beautiful Days",
-      image: "Bunny 🐰🫠/IMG_20260901_104957.jpg",
-      images: [
-        "Bunny 🐰🫠/IMG_20260901_104957.jpg",
-        "Bunny 🐰🫠/IMG_20260831_174941.jpg",
-        "Bunny 🐰🫠/IMG_20260831_175014.jpg"
-      ],
-      likes: 1520
+        "id": 3,
+        "type": "image",
+        "title": "Sweet Surprises & Roses 🌹",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-07.jpg",
+        "images": [
+            "assets/bunny/photo-07.jpg",
+            "assets/bunny/photo-08.jpg",
+            "assets/bunny/photo-09.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/IMG_20260831_174941.jpg",
+            "Bunny 🐰🫠/IMG_20260831_175014.jpg",
+            "Bunny 🐰🫠/IMG_20260901_104957.jpg"
+        ],
+        "likes": 1430
     },
     {
-      id: 4,
-      type: "image",
-      title: "Our Bunny 🐰 Moments",
-      date: "Forever Cute",
-      image: "Bunny 🐰🫠/1008491785303523870.jpg",
-      images: [
-        "Bunny 🐰🫠/1008491785303523870.jpg",
-        "Bunny 🐰🫠/IMG_20261024_230550.jpg",
-        "Bunny 🐰🫠/c80ea4c095284c3d8efe2831807c3eaa.webp"
-      ],
-      likes: 1888
+        "id": 4,
+        "type": "image",
+        "title": "Our Bunny 🐰 Moments",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-10.jpg",
+        "images": [
+            "assets/bunny/photo-10.jpg",
+            "assets/bunny/photo-11.jpg",
+            "assets/bunny/photo-12.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/IMG_20261024_230537.jpg",
+            "Bunny 🐰🫠/IMG_20261024_230550.jpg",
+            "Bunny 🐰🫠/IMG_20261024_230602.jpg"
+        ],
+        "likes": 1545
     },
     {
-      id: 5,
-      type: "image",
-      title: "Late Night Talks & Smiles 💬",
-      date: "Together Always",
-      image: "Bunny 🐰🫠/Screenshot_20261023_213400.jpg",
-      images: [
-        "Bunny 🐰🫠/Screenshot_20261023_213400.jpg",
-        "Bunny 🐰🫠/Screenshot_20261023_213410.jpg",
-        "Bunny 🐰🫠/Screenshot_20261023_213432.jpg"
-      ],
-      likes: 1750
+        "id": 5,
+        "type": "image",
+        "title": "Late Night Talks & Smiles 💬",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-13.jpg",
+        "images": [
+            "assets/bunny/photo-13.jpg",
+            "assets/bunny/photo-14.jpg",
+            "assets/bunny/photo-15.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/IMG_20261024_230614.jpg",
+            "Bunny 🐰🫠/IMG_20261024_230626.jpg",
+            "Bunny 🐰🫠/IMG_20261024_230635.jpg"
+        ],
+        "likes": 1660
     },
     {
-      id: 6,
-      type: "image",
-      title: "Every Day With You 💖",
-      date: "Always & Forever",
-      image: "Bunny 🐰🫠/Screenshot_20260910_222931.jpg",
-      images: [
-        "Bunny 🐰🫠/Screenshot_20260910_222931.jpg",
-        "Bunny 🐰🫠/Screenshot_20260910_222936.jpg",
-        "Bunny 🐰🫠/Screenshot_20260910_222131.jpg"
-      ],
-      likes: 2400
+        "id": 6,
+        "type": "image",
+        "title": "Every Day With You 💖",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-16.jpg",
+        "images": [
+            "assets/bunny/photo-16.jpg",
+            "assets/bunny/photo-17.jpg",
+            "assets/bunny/photo-18.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/Screenshot_20251019_003608.jpg",
+            "Bunny 🐰🫠/Screenshot_20251029_190841.jpg",
+            "Bunny 🐰🫠/Screenshot_20251029_213615.jpg"
+        ],
+        "likes": 1775
     },
     {
-      id: 7,
-      type: "image",
-      title: "Heartfelt Memories 🌸",
-      date: "Magic Moments",
-      image: "Bunny 🐰🫠/Screenshot_20260528_224529.jpg",
-      images: [
-        "Bunny 🐰🫠/Screenshot_20260528_224529.jpg",
-        "Bunny 🐰🫠/Screenshot_20260503_001433.jpg",
-        "Bunny 🐰🫠/Screenshot_20260503_001449.jpg"
-      ],
-      likes: 1999
+        "id": 7,
+        "type": "image",
+        "title": "Heartfelt Memories 🌸",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-19.jpg",
+        "images": [
+            "assets/bunny/photo-19.jpg",
+            "assets/bunny/photo-20.jpg",
+            "assets/bunny/photo-21.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/Screenshot_20251118_180906.jpg",
+            "Bunny 🐰🫠/Screenshot_20251213_221110.jpg",
+            "Bunny 🐰🫠/Screenshot_20251215_214724.jpg"
+        ],
+        "likes": 1890
     },
     {
-      id: 8,
-      type: "image",
-      title: "Endless Laughter & Love 🥰",
-      date: "Forever With You",
-      image: "Bunny 🐰🫠/Screenshot_20260111_233402.jpg",
-      images: [
-        "Bunny 🐰🫠/Screenshot_20260111_233402.jpg",
-        "Bunny 🐰🫠/Screenshot_20260111_233403.jpg",
-        "Bunny 🐰🫠/Screenshot_20260106_134951.jpg"
-      ],
-      likes: 2500
+        "id": 8,
+        "type": "image",
+        "title": "Endless Laughter & Love 🥰",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-22.jpg",
+        "images": [
+            "assets/bunny/photo-22.jpg",
+            "assets/bunny/photo-23.jpg",
+            "assets/bunny/photo-24.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/Screenshot_20251215_214740.jpg",
+            "Bunny 🐰🫠/Screenshot_20251215_215623.jpg",
+            "Bunny 🐰🫠/Screenshot_20260102_114212.jpg"
+        ],
+        "likes": 2005
     },
     {
-      id: 9,
-      type: "image",
-      title: "Our Beautiful Story 📖",
-      date: "Every Single Day",
-      image: "Bunny 🐰🫠/Screenshot_20251215_214740.jpg",
-      images: [
-        "Bunny 🐰🫠/Screenshot_20251215_214740.jpg",
-        "Bunny 🐰🫠/Screenshot_20251029_190841.jpg",
-        "Bunny 🐰🫠/Screenshot_20251019_003608.jpg"
-      ],
-      likes: 3100
+        "id": 9,
+        "type": "image",
+        "title": "Our Beautiful Story 📖",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-25.jpg",
+        "images": [
+            "assets/bunny/photo-25.jpg",
+            "assets/bunny/photo-26.jpg",
+            "assets/bunny/photo-27.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/Screenshot_20260102_114220.jpg",
+            "Bunny 🐰🫠/Screenshot_20260105_223927.jpg",
+            "Bunny 🐰🫠/Screenshot_20260106_134951.jpg"
+        ],
+        "likes": 2120
+    },
+    {
+        "id": 10,
+        "type": "image",
+        "title": "Purest Sunshine ☀️",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-28.jpg",
+        "images": [
+            "assets/bunny/photo-28.jpg",
+            "assets/bunny/photo-29.jpg",
+            "assets/bunny/photo-30.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/Screenshot_20260108_170754.jpg",
+            "Bunny 🐰🫠/Screenshot_20260111_233402.jpg",
+            "Bunny 🐰🫠/Screenshot_20260111_233403.jpg"
+        ],
+        "likes": 2235
+    },
+    {
+        "id": 11,
+        "type": "image",
+        "title": "Precious Smile 💫",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-31.jpg",
+        "images": [
+            "assets/bunny/photo-31.jpg",
+            "assets/bunny/photo-32.jpg",
+            "assets/bunny/photo-33.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/Screenshot_20260326_002439.jpg",
+            "Bunny 🐰🫠/Screenshot_20260419_231006.jpg",
+            "Bunny 🐰🫠/Screenshot_20260426_003950.jpg"
+        ],
+        "likes": 2350
+    },
+    {
+        "id": 12,
+        "type": "image",
+        "title": "Unforgettable Days 🌟",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-34.jpg",
+        "images": [
+            "assets/bunny/photo-34.jpg",
+            "assets/bunny/photo-35.jpg",
+            "assets/bunny/photo-36.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/Screenshot_20260426_004005.jpg",
+            "Bunny 🐰🫠/Screenshot_20260503_001433.jpg",
+            "Bunny 🐰🫠/Screenshot_20260503_001449.jpg"
+        ],
+        "likes": 2465
+    },
+    {
+        "id": 13,
+        "type": "image",
+        "title": "Forever and Always 🤍",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-37.jpg",
+        "images": [
+            "assets/bunny/photo-37.jpg",
+            "assets/bunny/photo-38.jpg",
+            "assets/bunny/photo-39.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/Screenshot_20260503_001536.jpg",
+            "Bunny 🐰🫠/Screenshot_20260503_001553.jpg",
+            "Bunny 🐰🫠/Screenshot_20260528_224529.jpg"
+        ],
+        "likes": 2580
+    },
+    {
+        "id": 14,
+        "type": "image",
+        "title": "Special Adventures 🌺",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-40.jpg",
+        "images": [
+            "assets/bunny/photo-40.jpg",
+            "assets/bunny/photo-41.jpg",
+            "assets/bunny/photo-42.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/Screenshot_20260909_185352.jpg",
+            "Bunny 🐰🫠/Screenshot_20260910_183847.jpg",
+            "Bunny 🐰🫠/Screenshot_20260910_222131.jpg"
+        ],
+        "likes": 2695
+    },
+    {
+        "id": 15,
+        "type": "image",
+        "title": "Cherished Moments 💞",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-43.jpg",
+        "images": [
+            "assets/bunny/photo-43.jpg",
+            "assets/bunny/photo-44.jpg",
+            "assets/bunny/photo-45.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/Screenshot_20260910_222931.jpg",
+            "Bunny 🐰🫠/Screenshot_20260910_222936.jpg",
+            "Bunny 🐰🫠/Screenshot_20261023_184224.jpg"
+        ],
+        "likes": 2810
+    },
+    {
+        "id": 16,
+        "type": "image",
+        "title": "My Whole World 👑",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-46.jpg",
+        "images": [
+            "assets/bunny/photo-46.jpg",
+            "assets/bunny/photo-47.jpg",
+            "assets/bunny/photo-48.jpg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/Screenshot_20261023_213400.jpg",
+            "Bunny 🐰🫠/Screenshot_20261023_213410.jpg",
+            "Bunny 🐰🫠/Screenshot_20261023_213432.jpg"
+        ],
+        "likes": 2925
+    },
+    {
+        "id": 17,
+        "type": "image",
+        "title": "Sweetest Soul 🌷",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-49.jpeg",
+        "images": [
+            "assets/bunny/photo-49.jpeg",
+            "assets/bunny/photo-50.jpeg",
+            "assets/bunny/photo-51.jpeg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/WhatsApp Image 2026-11-20 at 2.30.24 PM (1).jpeg",
+            "Bunny 🐰🫠/WhatsApp Image 2026-11-20 at 2.30.24 PM.jpeg",
+            "Bunny 🐰🫠/WhatsApp Image 2026-11-20 at 2.30.26 PM.jpeg"
+        ],
+        "likes": 3040
+    },
+    {
+        "id": 18,
+        "type": "image",
+        "title": "Love of My Life 💍",
+        "date": "Forever & Always",
+        "image": "assets/bunny/photo-52.jpeg",
+        "images": [
+            "assets/bunny/photo-52.jpeg",
+            "assets/bunny/photo-53.jpeg"
+        ],
+        "fallbackImages": [
+            "Bunny 🐰🫠/WhatsApp Image 2026-11-20 at 2.30.27 PM (1).jpeg",
+            "Bunny 🐰🫠/WhatsApp Image 2026-11-20 at 2.30.27 PM.jpeg"
+        ],
+        "likes": 3155
     }
-  ]
-};
+]};
 
 // Load saved config or fall back to default
 let APP_CONFIG = loadSavedConfig();
@@ -556,7 +760,59 @@ let enteredPin = "";
 let isPasswordMasked = false;
 let isShiftActive = false;
 
+let coverSlideIndex = 0;
+let coverSlideTimer = null;
+
+function setupCoverSlideshow() {
+  const slides = [
+    document.getElementById('cover-photo-1'),
+    document.getElementById('cover-photo-2'),
+    document.getElementById('cover-photo-3')
+  ].filter(Boolean);
+
+  const dots = document.querySelectorAll('.cover-dot');
+  if (slides.length === 0) return;
+
+  function showSlide(idx) {
+    coverSlideIndex = (idx + slides.length) % slides.length;
+    slides.forEach((slide, i) => {
+      if (i === coverSlideIndex) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+
+    dots.forEach((dot, i) => {
+      if (i === coverSlideIndex) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+  }
+
+  dots.forEach((dot) => {
+    dot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const targetIdx = parseInt(dot.dataset.index, 10);
+      showSlide(targetIdx);
+      restartCoverTimer();
+    });
+  });
+
+  function restartCoverTimer() {
+    if (coverSlideTimer) clearInterval(coverSlideTimer);
+    coverSlideTimer = setInterval(() => {
+      showSlide(coverSlideIndex + 1);
+    }, 5000);
+  }
+
+  restartCoverTimer();
+}
+
 function setupScene1() {
+  setupCoverSlideshow();
   const cardFlipper = document.getElementById('card-flipper');
   const cardFront = document.getElementById('card-front');
   const flipBackBtn = document.getElementById('flip-back-btn');
@@ -1403,38 +1659,74 @@ function renderPolaroidGallery() {
   const gallery = document.getElementById('polaroid-gallery');
   if (!gallery) return;
   gallery.innerHTML = '';
-  const pos = [[8,6],[58,10],[30,30],[68,38],[6,52],[44,58],[72,70],[20,78],[50,84]];
-  pos.forEach(([x, y], i) => {
-    const idx = i % APP_CONFIG.memories.length;
-    const mem = APP_CONFIG.memories[idx];
+
+  const pos = [
+    [6, 3],   [58, 5],   [32, 13],
+    [76, 19], [10, 26],  [50, 33],
+    [74, 40], [14, 47],  [44, 54],
+    [78, 62], [8, 69],   [52, 76],
+    [26, 84], [72, 91],  [12, 99],
+    [54, 107],[76, 115], [28, 123]
+  ];
+
+  APP_CONFIG.memories.forEach((mem, i) => {
+    const [x, y] = pos[i % pos.length];
     const card = document.createElement('div');
     card.className = 'space-card';
-    card.style.cssText = `left:${x}%;top:${y}%;--r:${(i % 2 ? 1 : -1) * (4 + i % 4 * 3)}deg;` +
-                         `animation-duration:${9 + i}s;animation-delay:-${i * 2}s`;
-    
-    if (mem.type === 'video') {
-      // 3 video cards that play continuously until page is closed
-      card.innerHTML = `
-        <video src="${encodeURI(mem.video)}" autoplay loop muted playsinline class="w-full h-full object-cover pointer-events-none"></video>
-        <div class="video-card-badge">
-          <span>▶ Video</span>
+    card.style.cssText = `left:${x}%;top:${y}%;--r:${(i % 2 ? 1 : -1) * (3 + (i % 5) * 2)}deg;` +
+                         `animation-duration:${8 + (i % 6)}s;animation-delay:-${i * 1.5}s`;
+
+    let currentPhotoIdx = 0;
+    const photoCount = mem.images ? mem.images.length : 1;
+
+    card.innerHTML = `
+      <div class="space-card-inner relative w-full h-full overflow-hidden">
+        <img class="space-card-img w-full h-full object-cover transition-all duration-700 ease-out" src="${encodeURI(mem.images[0])}" alt="${mem.title}">
+        <div class="space-card-badge">
+          <span>${photoCount} Photos 📷</span>
         </div>
-      `;
-      // Ensure video plays continuously
-      const v = card.querySelector('video');
-      if (v) {
-        v.play().catch(() => {});
-      }
-    } else {
-      card.innerHTML = `
-        <img src="${encodeURI(mem.image)}" alt="${mem.title}" class="w-full h-full object-cover">
-        <div class="photo-card-badge">
-          <span>3 Photos 📷</span>
-        </div>
-      `;
+        <div class="space-card-shimmer"></div>
+      </div>
+    `;
+
+    if (photoCount > 1) {
+      setInterval(() => {
+        const s5 = document.getElementById('scene-5');
+        if (!s5 || s5.classList.contains('hidden')) return;
+        currentPhotoIdx = (currentPhotoIdx + 1) % photoCount;
+        const img = card.querySelector('.space-card-img');
+        if (img) {
+          img.style.opacity = '0.35';
+          img.style.transform = 'scale(1.06)';
+          setTimeout(() => {
+            img.src = encodeURI(mem.images[currentPhotoIdx]);
+            img.style.opacity = '1';
+            img.style.transform = 'scale(1)';
+          }, 320);
+        }
+      }, 4500 + (i % 5) * 600);
     }
 
-    card.onclick = () => { sounds.playClick(); openPhotoModal(idx); };
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / (rect.width / 2);
+      const dy = (e.clientY - cy) / (rect.height / 2);
+      card.style.transform = `scale(1.12) rotateX(${-dy * 14}deg) rotateY(${dx * 14}deg)`;
+      card.style.zIndex = '50';
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+      card.style.zIndex = '';
+    });
+
+    card.onclick = () => {
+      sounds.playClick();
+      openPhotoModal(i);
+    };
+
     gallery.appendChild(card);
   });
 }
