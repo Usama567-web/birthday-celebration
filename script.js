@@ -1847,7 +1847,7 @@ function applyConfigToDOM() {
   if (passcodeHint) passcodeHint.textContent = APP_CONFIG.passcodeHint;
 
   const hintBubbleText = document.getElementById('hint-bubble-text');
-  if (hintBubbleText) hintBubbleText.textContent = `✨ Passcode: ${APP_CONFIG.passcode}`;
+  if (hintBubbleText) hintBubbleText.textContent = `✨ Password: ${APP_CONFIG.passcode}`;
 }
 
 function setupInteractiveClickSparkles() {
