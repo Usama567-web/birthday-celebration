@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Happy Birthday Shaista! 💖 | A Special Celebration by Usama</title>
-  <meta name="description" content="A secret cinematic birthday celebration website for Shaista, crafted with love by Usama.">
+  <meta name="description"
+    content="A secret cinematic birthday celebration website for Shaista, crafted with love by Usama.">
   <meta name="theme-color" content="#fde2ec">
 
   <!-- Open Graph / Social Meta -->
   <meta property="og:title" content="Happy Birthday Shaista! ✨ With Love from Usama">
-  <meta property="og:description" content="A secret cinematic birthday celebration crafted with love by Usama for Shaista.">
+  <meta property="og:description"
+    content="A secret cinematic birthday celebration crafted with love by Usama for Shaista.">
   <meta property="og:image" content="Bunny 🐰🫠/IMG_20260528_224653.jpg">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@400;500;600;700&family=Gaegu:wght@400;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@400;500;600;700&family=Gaegu:wght@400;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:wght@700&display=swap"
+    rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -46,6 +51,7 @@
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="overflow-x-hidden selection:bg-pink-300 selection:text-pink-900 min-h-screen">
 
   <!-- Background Audio (3 Rotating Romantic Songs in Series) -->
@@ -55,8 +61,10 @@
   </audio>
 
   <!-- Ambient Audio & Sound Control Pill -->
-  <div id="sound-control" class="fixed top-4 right-4 z-50 flex items-center gap-2 bg-white/70 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-lg border border-pink-200/50 transition-all hover:scale-105 select-none">
-    <button id="toggle-audio-btn" class="flex items-center gap-2 text-xs font-medium text-pink-700 focus:outline-none" title="Toggle Romantic Ambient Music">
+  <div id="sound-control"
+    class="fixed top-4 right-4 z-50 flex items-center gap-2 bg-white/70 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-lg border border-pink-200/50 transition-all hover:scale-105 select-none">
+    <button id="toggle-audio-btn" class="flex items-center gap-2 text-xs font-medium text-pink-700 focus:outline-none"
+      title="Toggle Romantic Ambient Music">
       <div id="equalizer-bars" class="flex items-end gap-0.5 h-3.5 w-3.5">
         <span class="eq-bar w-0.5 bg-pink-500 rounded-full h-2"></span>
         <span class="eq-bar w-0.5 bg-pink-500 rounded-full h-3.5"></span>
@@ -64,18 +72,22 @@
       </div>
       <span id="audio-label" class="hidden sm:inline">Music: On</span>
     </button>
-    <button id="skip-audio-btn" class="text-pink-600 hover:text-pink-800 transition-colors p-0.5 text-xs cursor-pointer" title="Switch to Next Song in Series">
+    <button id="skip-audio-btn" class="text-pink-600 hover:text-pink-800 transition-colors p-0.5 text-xs cursor-pointer"
+      title="Switch to Next Song in Series">
       ⏭
     </button>
     <div class="h-3 w-[1px] bg-pink-200"></div>
-    <button id="toggle-sfx-btn" class="text-pink-600 hover:text-pink-800 transition-colors p-0.5 cursor-pointer" title="Mute/Unmute Sound FX">
+    <button id="toggle-sfx-btn" class="text-pink-600 hover:text-pink-800 transition-colors p-0.5 cursor-pointer"
+      title="Mute/Unmute Sound FX">
       <i data-lucide="volume-2" class="w-4 h-4"></i>
     </button>
   </div>
 
   <!-- Progress Bar (Scene Tracker) -->
   <div class="fixed top-0 left-0 w-full h-1 z-50 bg-pink-100/30">
-    <div id="scene-progress" class="h-full bg-gradient-to-r from-pink-400 via-rose-400 to-purple-400 transition-all duration-700 w-1/5 shadow-sm"></div>
+    <div id="scene-progress"
+      class="h-full bg-gradient-to-r from-pink-400 via-rose-400 to-purple-400 transition-all duration-700 w-1/5 shadow-sm">
+    </div>
   </div>
 
   <!-- Global Canvas for Ambient Floating Hearts & Particles -->
@@ -85,7 +97,8 @@
   <div id="fire-overlay" class="fixed inset-0 z-[60] opacity-0 pointer-events-none fire-bg"></div>
 
   <!-- Flash Overlay for Transitions -->
-  <div id="flash-overlay" class="fixed inset-0 bg-white pointer-events-none z-50 opacity-0 transition-opacity duration-500"></div>
+  <div id="flash-overlay"
+    class="fixed inset-0 bg-white pointer-events-none z-50 opacity-0 transition-opacity duration-500"></div>
 
   <!-- MAIN SCENE CONTAINER -->
   <main id="app-container" class="relative w-full min-h-screen overflow-hidden">
@@ -105,20 +118,24 @@
             <div id="card-front" class="polaroid cursor-pointer select-none" title="Tap card to enter password">
               <div class="bow">🎀</div>
               <!-- 5s Auto-Swapping Cover Photo Slideshow: 4 Pics from folder 's' -->
-              <div class="cover-slideshow-wrapper relative w-full aspect-[3/4] overflow-hidden rounded-md shadow-inner bg-pink-50">
-                <img id="cover-photo-1" class="cover-slide active" src="assets/cover-slides/slide-1.jpg" alt="Shaista 1">
+              <div
+                class="cover-slideshow-wrapper relative w-full aspect-[3/4] overflow-hidden rounded-md shadow-inner bg-pink-50">
+                <img id="cover-photo-1" class="cover-slide active" src="assets/cover-slides/slide-1.jpg"
+                  alt="Shaista 1">
                 <img id="cover-photo-2" class="cover-slide" src="assets/cover-slides/slide-2.jpg" alt="Shaista 2">
                 <img id="cover-photo-3" class="cover-slide" src="assets/cover-slides/slide-3.jpeg" alt="Shaista 3">
                 <img id="cover-photo-4" class="cover-slide" src="assets/cover-slides/slide-4.jpeg" alt="Shaista 4">
                 <!-- 4 Auto-swap indicator dots -->
-                <div id="cover-dots" class="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-xs border border-white/30">
+                <div id="cover-dots"
+                  class="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-xs border border-white/30">
                   <span class="cover-dot active" data-index="0"></span>
                   <span class="cover-dot" data-index="1"></span>
                   <span class="cover-dot" data-index="2"></span>
                   <span class="cover-dot" data-index="3"></span>
                 </div>
                 <!-- Mini swap badge -->
-                <div class="absolute top-2.5 right-2.5 z-10 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/45 backdrop-blur-xs border border-white/25 text-[10px] text-pink-200 font-semibold pointer-events-none">
+                <div
+                  class="absolute top-2.5 right-2.5 z-10 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/45 backdrop-blur-xs border border-white/25 text-[10px] text-pink-200 font-semibold pointer-events-none">
                   <span class="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse"></span>
                   <span>4 Photos • 5s Auto</span>
                 </div>
@@ -126,7 +143,8 @@
               <h1 id="recipient-title">Happy Birthday Shaista!</h1>
               <p id="sender-subtitle" class="text-xs text-pink-600/85 font-medium">With Love from Usama 💖</p>
               <p id="passcode-hint" class="hint mt-1">✨ Tap card to enter password • Bunny 22 11</p>
-              <div class="mt-2.5 inline-flex items-center gap-1.5 text-[11px] font-semibold text-pink-700 bg-pink-100/70 hover:bg-pink-100 px-3 py-1 rounded-full border border-pink-200/60 shadow-xs transition-all hover:scale-105 tap-hint-shimmer">
+              <div
+                class="mt-2.5 inline-flex items-center gap-1.5 text-[11px] font-semibold text-pink-700 bg-pink-100/70 hover:bg-pink-100 px-3 py-1 rounded-full border border-pink-200/60 shadow-xs transition-all hover:scale-105 tap-hint-shimmer">
                 <span>Tap to unlock</span>
                 <span class="inline-block">↻</span>
               </div>
@@ -138,7 +156,9 @@
             <!-- Header bar with flip back button -->
             <div class="flex items-center justify-between w-full px-1 mb-1">
               <span class="text-[11px] font-bold tracking-widest uppercase text-pink-700/80">Secret Access</span>
-              <button id="flip-back-btn" type="button" class="flex items-center gap-1 text-[11px] font-semibold text-pink-700 hover:text-pink-900 bg-white/70 hover:bg-white/95 border border-pink-200/70 px-2.5 py-1 rounded-full shadow-xs transition-all cursor-pointer" title="Flip back to photo">
+              <button id="flip-back-btn" type="button"
+                class="flex items-center gap-1 text-[11px] font-semibold text-pink-700 hover:text-pink-900 bg-white/70 hover:bg-white/95 border border-pink-200/70 px-2.5 py-1 rounded-full shadow-xs transition-all cursor-pointer"
+                title="Flip back to photo">
                 <span>↻ Photo</span>
               </button>
             </div>
@@ -146,22 +166,31 @@
             <!-- Title & Subtitle -->
             <div class="text-center my-0.5">
               <h2 class="f-serif text-2xl sm:text-3xl font-bold text-[#7a2d4f] leading-tight">Enter Password</h2>
-              <p class="text-[11px] text-[#9c5a75] font-medium">Type secret key: <span class="font-semibold text-pink-700">Bunny 22 11</span></p>
+              <p class="text-[11px] text-[#9c5a75] font-medium">Type secret key: <span
+                  class="font-semibold text-pink-700">Bunny 22 11</span></p>
             </div>
 
             <!-- Password Display Box -->
-            <div id="password-display-box" class="pass-display-box relative w-full flex items-center justify-between px-3 py-2 rounded-xl bg-white/80 backdrop-blur-md border-2 border-pink-200/90 shadow-inner my-1.5 transition-all">
+            <div id="password-display-box"
+              class="pass-display-box relative w-full flex items-center justify-between px-3 py-2 rounded-xl bg-white/80 backdrop-blur-md border-2 border-pink-200/90 shadow-inner my-1.5 transition-all">
               <div class="flex items-center gap-1 flex-1 overflow-x-auto overflow-y-hidden scrollbar-none min-h-[26px]">
-                <span id="password-text" class="font-mono text-sm sm:text-base tracking-wider font-bold text-[#7a2d4f] select-none whitespace-pre"></span>
+                <span id="password-text"
+                  class="font-mono text-sm sm:text-base tracking-wider font-bold text-[#7a2d4f] select-none whitespace-pre"></span>
                 <span id="password-cursor" class="inline-block w-[2px] h-4 bg-pink-500 animate-pulse"></span>
-                <span id="password-placeholder" class="text-xs text-pink-400/80 font-medium select-none pointer-events-none">Type password...</span>
+                <span id="password-placeholder"
+                  class="text-xs text-pink-400/80 font-medium select-none pointer-events-none">Type password...</span>
               </div>
               <div class="flex items-center gap-1.5 ml-1.5 shrink-0">
-                <button id="toggle-visibility-btn" type="button" class="text-pink-500 hover:text-pink-700 p-1 text-xs transition-colors cursor-pointer" title="Toggle Show/Hide Password">👁</button>
-                <button id="quick-clear-btn" type="button" class="text-pink-400 hover:text-rose-500 p-1 text-xs transition-colors cursor-pointer hidden" title="Clear All">✕</button>
+                <button id="toggle-visibility-btn" type="button"
+                  class="text-pink-500 hover:text-pink-700 p-1 text-xs transition-colors cursor-pointer"
+                  title="Toggle Show/Hide Password">👁</button>
+                <button id="quick-clear-btn" type="button"
+                  class="text-pink-400 hover:text-rose-500 p-1 text-xs transition-colors cursor-pointer hidden"
+                  title="Clear All">✕</button>
               </div>
               <!-- Hidden accessible input to capture physical keyboard smoothly -->
-              <input type="text" id="passcode-input" class="absolute inset-0 opacity-0 cursor-text pointer-events-auto" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="text" aria-label="Password">
+              <input type="text" id="passcode-input" class="absolute inset-0 opacity-0 cursor-text pointer-events-auto"
+                autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="text" aria-label="Password">
             </div>
 
             <!-- Alphanumeric Keypad -->
@@ -209,7 +238,8 @@
 
               <!-- Row 4: Shift + Z-M + Backspace -->
               <div class="flex justify-between gap-1 w-full">
-                <button id="shift-key-btn" class="key-btn action-key flex-[1.2] text-[11px] font-bold text-pink-700" data-action="shift" title="Shift / Uppercase">⇧</button>
+                <button id="shift-key-btn" class="key-btn action-key flex-[1.2] text-[11px] font-bold text-pink-700"
+                  data-action="shift" title="Shift / Uppercase">⇧</button>
                 <button class="key-btn letter-key" data-key="Z">Z</button>
                 <button class="key-btn letter-key" data-key="X">X</button>
                 <button class="key-btn letter-key" data-key="C">C</button>
@@ -217,31 +247,39 @@
                 <button class="key-btn letter-key" data-key="B">B</button>
                 <button class="key-btn letter-key" data-key="N">N</button>
                 <button class="key-btn letter-key" data-key="M">M</button>
-                <button class="key-btn action-key flex-[1.2] text-xs font-bold text-pink-700" data-action="delete" title="Backspace">⌫</button>
+                <button class="key-btn action-key flex-[1.2] text-xs font-bold text-pink-700" data-action="delete"
+                  title="Backspace">⌫</button>
               </div>
 
               <!-- Row 5: Clear + Space + Unlock Action -->
               <div class="flex justify-between gap-1.5 w-full mt-0.5">
-                <button class="key-btn action-key px-3 text-[11px] font-bold text-pink-700" data-action="clear" title="Clear Input">Clear</button>
-                <button class="key-btn space-key flex-1 text-xs font-semibold text-pink-800" data-key=" " title="Space Bar">␣ Space</button>
-                <button id="unlock-submit-btn" class="key-btn unlock-btn px-3.5 text-xs font-bold text-white bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-600 shadow-md shadow-pink-500/25 border-pink-400" data-action="submit" title="Unlock with Password">
+                <button class="key-btn action-key px-3 text-[11px] font-bold text-pink-700" data-action="clear"
+                  title="Clear Input">Clear</button>
+                <button class="key-btn space-key flex-1 text-xs font-semibold text-pink-800" data-key=" "
+                  title="Space Bar">␣ Space</button>
+                <button id="unlock-submit-btn"
+                  class="key-btn unlock-btn px-3.5 text-xs font-bold text-white bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-600 shadow-md shadow-pink-500/25 border-pink-400"
+                  data-action="submit" title="Unlock with Password">
                   <span>Unlock 💖</span>
                 </button>
               </div>
             </div>
 
             <!-- Error Notification -->
-            <div id="passcode-error" class="text-xs font-semibold text-rose-500 opacity-0 transition-opacity min-h-[16px] text-center my-0.5">
+            <div id="passcode-error"
+              class="text-xs font-semibold text-rose-500 opacity-0 transition-opacity min-h-[16px] text-center my-0.5">
               Incorrect password, try again!
             </div>
 
             <!-- Hint Toggle & Collapsible Badge -->
             <div class="flex flex-col items-center gap-1 w-full mt-0.5">
-              <button id="hint-toggle-btn" type="button" class="flex items-center gap-1.5 text-[11px] font-semibold text-pink-700 hover:text-pink-900 transition-all px-3 py-1 rounded-full bg-white/60 hover:bg-white/90 border border-pink-200/70 shadow-xs cursor-pointer">
+              <button id="hint-toggle-btn" type="button"
+                class="flex items-center gap-1.5 text-[11px] font-semibold text-pink-700 hover:text-pink-900 transition-all px-3 py-1 rounded-full bg-white/60 hover:bg-white/90 border border-pink-200/70 shadow-xs cursor-pointer">
                 <span>💡</span>
                 <span id="hint-toggle-label">Need a hint?</span>
               </button>
-              <div id="hint-bubble" class="hint-bubble hidden text-[11px] font-bold text-[#7a2d4f] bg-pink-100/90 border border-pink-200/90 px-3.5 py-1 rounded-full shadow-xs">
+              <div id="hint-bubble"
+                class="hint-bubble hidden text-[11px] font-bold text-[#7a2d4f] bg-pink-100/90 border border-pink-200/90 px-3.5 py-1 rounded-full shadow-xs">
                 <span id="hint-bubble-text">✨ Password: Bunny 22 11</span>
               </div>
             </div>
@@ -254,19 +292,23 @@
     <!-- ========================================================================= -->
     <!-- SCENE HEARTS: Heart Messages Particle Canvas (Replaces Flower Image)       -->
     <!-- ========================================================================= -->
-    <section id="scene-hearts" class="scene hidden relative w-full min-h-screen z-20 overflow-hidden bg-black select-none">
+    <section id="scene-hearts"
+      class="scene hidden relative w-full min-h-screen z-20 overflow-hidden bg-black select-none">
       <canvas id="heart-canvas" class="absolute inset-0 w-full h-full cursor-pointer"></canvas>
-      
+
       <!-- Top Tag -->
       <div class="absolute top-5 left-1/2 -translate-x-1/2 z-30 pointer-events-none text-center">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-950/40 backdrop-blur-md border border-pink-500/30 text-[11px] font-medium text-pink-200 tracking-wider uppercase shadow-md">
+        <span
+          class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-950/40 backdrop-blur-md border border-pink-500/30 text-[11px] font-medium text-pink-200 tracking-wider uppercase shadow-md">
           <span>💖</span> Sweet Whispers
         </span>
       </div>
 
       <!-- Action Button to Progress to Lamp Scene -->
       <div class="absolute top-5 right-4 sm:right-8 z-30">
-        <button id="heart-to-lamp-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-700 text-white text-xs font-semibold shadow-lg shadow-pink-500/40 border border-white/20 transition-all hover:scale-105 cursor-pointer" title="Proceed to Light the Lamp">
+        <button id="heart-to-lamp-btn"
+          class="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-700 text-white text-xs font-semibold shadow-lg shadow-pink-500/40 border border-white/20 transition-all hover:scale-105 cursor-pointer"
+          title="Proceed to Light the Lamp">
           <span>Next: Light the Lamp 🏮</span>
           <span>→</span>
         </button>
@@ -274,7 +316,8 @@
 
       <!-- UI Hint (Bottom Center) -->
       <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 pointer-events-none text-center w-full px-4">
-        <p class="f-script italic text-2xl sm:text-3xl text-pink-200/90 drop-shadow-[0_2px_12px_rgba(244,63,94,0.7)] animate-pulse">
+        <p
+          class="f-script italic text-2xl sm:text-3xl text-pink-200/90 drop-shadow-[0_2px_12px_rgba(244,63,94,0.7)] animate-pulse">
           Click anywhere to send heart ✨
         </p>
       </div>
@@ -283,10 +326,12 @@
     <!-- ========================================================================= -->
     <!-- SCENE 2: Cute Lamp & Twinkle Light Animation (Intro & Outro)              -->
     <!-- ========================================================================= -->
-    <section id="scene-2" class="scene hidden relative flex flex-col items-center min-h-screen z-20 overflow-hidden select-none">
-      
+    <section id="scene-2"
+      class="scene hidden relative flex flex-col items-center min-h-screen z-20 overflow-hidden select-none">
+
       <!-- Overhead Twinkling Fairy Lights -->
-      <div id="fairy-lights" class="absolute top-0 left-0 w-full flex justify-around px-2 sm:px-6 pointer-events-none z-30">
+      <div id="fairy-lights"
+        class="absolute top-0 left-0 w-full flex justify-around px-2 sm:px-6 pointer-events-none z-30">
         <span class="fairy-bulb b-1"></span>
         <span class="fairy-bulb b-2"></span>
         <span class="fairy-bulb b-3"></span>
@@ -302,7 +347,10 @@
       <div id="lantern-stage" class="flex flex-col items-center z-30 pt-4 mt-8">
         <div class="lantern-rod"></div>
         <div class="lantern-cap"></div>
-        <div id="lamp-lantern" class="lantern"><i class="eye l"></i><i class="eye r"></i><i class="cheek l"></i><i class="cheek r"></i><div class="smile"></div></div>
+        <div id="lamp-lantern" class="lantern"><i class="eye l"></i><i class="eye r"></i><i class="cheek l"></i><i
+            class="cheek r"></i>
+          <div class="smile"></div>
+        </div>
         <div id="pull-cord-wrapper" class="flex flex-col items-center cursor-grab select-none touch-none pb-6">
           <div class="lantern-cap" style="width:14px;height:6px"></div>
           <div class="chain"></div>
@@ -321,9 +369,11 @@
     <!-- ========================================================================= -->
     <!-- SCENE 3: Swipe / Slice the Cake Feature                                   -->
     <!-- ========================================================================= -->
-    <section id="scene-3" class="scene hidden relative flex flex-col items-center justify-center gap-6 min-h-screen px-4 z-20 select-none overflow-hidden">
+    <section id="scene-3"
+      class="scene hidden relative flex flex-col items-center justify-center gap-6 min-h-screen px-4 z-20 select-none overflow-hidden">
       <div class="text-center">
-        <h2 id="cake-title" class="f-playfair text-4xl font-bold text-[#a8667a] leading-tight">Swipe to Cut the Cake! 🎂</h2>
+        <h2 id="cake-title" class="f-playfair text-4xl font-bold text-[#a8667a] leading-tight">Swipe to Cut the Cake! 🎂
+        </h2>
         <p id="cake-sub" class="mt-2 text-sm text-pink-400">Drag your finger/cursor to slice</p>
       </div>
       <div id="cake-interactive-box" class="touch-none cursor-crosshair">
@@ -331,26 +381,32 @@
       </div>
       <div class="relative w-14 h-14">
         <svg viewBox="0 0 60 60" class="-rotate-90 w-full h-full">
-          <circle cx="30" cy="30" r="26" fill="none" stroke="#f3c4cf" stroke-width="4"/>
+          <circle cx="30" cy="30" r="26" fill="none" stroke="#f3c4cf" stroke-width="4" />
           <circle id="slice-ring-fg" cx="30" cy="30" r="26" fill="none" stroke="#d98aa0" stroke-width="4"
-                  stroke-linecap="round" stroke-dasharray="163.36" stroke-dashoffset="163.36"/>
+            stroke-linecap="round" stroke-dasharray="163.36" stroke-dashoffset="163.36" />
         </svg>
-        <span id="slice-pct" class="absolute inset-0 flex items-center justify-center text-[11px] font-semibold text-[#c9788f]">0%</span>
+        <span id="slice-pct"
+          class="absolute inset-0 flex items-center justify-center text-[11px] font-semibold text-[#c9788f]">0%</span>
       </div>
-      <button id="goto-letter-btn" class="next-btn opacity-0 pointer-events-none transition-opacity duration-700">Next Scene →</button>
+      <button id="goto-letter-btn" class="next-btn opacity-0 pointer-events-none transition-opacity duration-700">Next
+        Scene →</button>
     </section>
 
     <!-- ========================================================================= -->
     <!-- SCENE 4: Romantic Unfolding Letter                                        -->
     <!-- ========================================================================= -->
-    <section id="scene-4" class="scene hidden relative flex flex-col items-center justify-center gap-6 min-h-screen px-4 py-8 z-20 overflow-hidden">
+    <section id="scene-4"
+      class="scene hidden relative flex flex-col items-center justify-center gap-6 min-h-screen px-4 py-8 z-20 overflow-hidden">
       <div id="envelope-wrapper" class="flex flex-col items-center text-center">
         <h2 class="text-2xl font-bold text-[#e0568f]">A Letter, Just For You</h2>
         <p class="f-serif italic text-pink-300 text-sm">Tap the envelope to unseal</p>
         <div id="envelope-box" class="envelope">
           <div id="envelope-top-flap" class="env-flap"></div>
           <button id="wax-seal" class="env-seal">✦</button>
-          <div class="env-label"><div class="f-serif italic">For Dearest Shaista</div><small class="text-[9px] tracking-widest">FROM USAMA ♡</small></div>
+          <div class="env-label">
+            <div class="f-serif italic">For Dearest Shaista</div><small class="text-[9px] tracking-widest">FROM USAMA
+              ♡</small>
+          </div>
         </div>
       </div>
       <div id="letter-modal" class="hidden letter-card">
@@ -358,7 +414,8 @@
         <h3 id="letter-greeting">Happy Birthday Shaista ✨</h3>
         <p class="sub">With All My Love • Usama ♡</p>
         <div class="letter-paper-content custom-scrollbar">
-          <div id="typewriter-body"></div><span id="typewriter-cursor" class="inline-block w-0.5 h-5 bg-rose-500 animate-pulse"></span>
+          <div id="typewriter-body"></div><span id="typewriter-cursor"
+            class="inline-block w-0.5 h-5 bg-rose-500 animate-pulse"></span>
         </div>
       </div>
       <button id="goto-starry-btn" class="next-btn hidden">Next →</button>
@@ -367,12 +424,14 @@
     <!-- ========================================================================= -->
     <!-- SCENE 5: Space Drift Photo Gallery (All 53 Memories from Bunny 🐰🫠)       -->
     <!-- ========================================================================= -->
-    <section id="scene-5" class="scene hidden relative min-h-screen z-20 overflow-y-auto overflow-x-hidden bg-black custom-scrollbar">
+    <section id="scene-5"
+      class="scene hidden relative min-h-screen z-20 overflow-y-auto overflow-x-hidden bg-black custom-scrollbar">
       <canvas id="starry-canvas" class="fixed inset-0 pointer-events-none"></canvas>
 
       <!-- Floating Cosmic Gallery Header Pill -->
       <div class="sticky top-4 left-0 w-full flex justify-center z-40 px-4 pointer-events-none">
-        <div class="pointer-events-auto inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-black/65 backdrop-blur-md border border-pink-500/35 shadow-lg shadow-pink-500/20 text-xs text-pink-200 font-medium">
+        <div
+          class="pointer-events-auto inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-black/65 backdrop-blur-md border border-pink-500/35 shadow-lg shadow-pink-500/20 text-xs text-pink-200 font-medium">
           <span class="text-sm">🌌</span>
           <span>Our Sweet Memories • <strong class="text-pink-400 font-bold">53 Photos</strong></span>
           <span class="text-white/40">•</span>
@@ -388,47 +447,63 @@
   <!-- ========================================================================= -->
   <!-- LIGHTBOX / EXPANDED PHOTO & VIDEO MODAL                                    -->
   <!-- ========================================================================= -->
-  <div id="photo-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-    <button id="close-modal-btn" class="absolute top-5 right-5 text-white/80 hover:text-white text-3xl font-light z-20 transition-transform hover:scale-110 cursor-pointer">✕</button>
+  <div id="photo-modal"
+    class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <button id="close-modal-btn"
+      class="absolute top-5 right-5 text-white/80 hover:text-white text-3xl font-light z-20 transition-transform hover:scale-110 cursor-pointer">✕</button>
 
-    <div class="relative w-full max-w-sm bg-[#1a1722]/95 border border-pink-500/25 rounded-3xl p-3.5 space-y-3 shadow-2xl overflow-hidden backdrop-blur-xl">
-      
+    <div
+      class="relative w-full max-w-sm bg-[#1a1722]/95 border border-pink-500/25 rounded-3xl p-3.5 space-y-3 shadow-2xl overflow-hidden backdrop-blur-xl">
+
       <!-- PHOTO CONTAINER (3 Images with Auto-Swap) -->
-      <div id="modal-img-container" class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden bg-black/60 shadow-inner group">
-        <img id="modal-img" src="" alt="Memory" class="w-full h-full object-cover rounded-2xl transition-opacity duration-500 ease-in-out">
-        
+      <div id="modal-img-container"
+        class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden bg-black/60 shadow-inner group">
+        <img id="modal-img" src="" alt="Memory"
+          class="w-full h-full object-cover rounded-2xl transition-opacity duration-500 ease-in-out">
+
         <!-- Slide Indicators (1, 2, 3) -->
-        <div id="modal-slide-dots" class="absolute top-3 right-3 flex gap-1.5 z-10 bg-black/50 backdrop-blur-sm px-2.5 py-1 rounded-full border border-white/15">
+        <div id="modal-slide-dots"
+          class="absolute top-3 right-3 flex gap-1.5 z-10 bg-black/50 backdrop-blur-sm px-2.5 py-1 rounded-full border border-white/15">
           <span class="slide-dot w-2 h-2 rounded-full bg-white/40 transition-all cursor-pointer" data-slide="0"></span>
           <span class="slide-dot w-2 h-2 rounded-full bg-white/40 transition-all cursor-pointer" data-slide="1"></span>
           <span class="slide-dot w-2 h-2 rounded-full bg-white/40 transition-all cursor-pointer" data-slide="2"></span>
         </div>
 
         <!-- Auto-Swap Tag Badge -->
-        <div id="modal-swap-badge" class="absolute bottom-3 left-3 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm text-[10px] font-medium text-pink-200 px-2.5 py-0.5 rounded-full border border-pink-400/25 pointer-events-none">
+        <div id="modal-swap-badge"
+          class="absolute bottom-3 left-3 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm text-[10px] font-medium text-pink-200 px-2.5 py-0.5 rounded-full border border-pink-400/25 pointer-events-none">
           <span class="inline-block w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse"></span>
           <span id="modal-swap-label">Auto-swapping 3 photos</span>
         </div>
 
         <!-- Previous / Next Arrow Controls -->
-        <button id="modal-slide-prev" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all z-10 text-xs backdrop-blur-xs cursor-pointer">❮</button>
-        <button id="modal-slide-next" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all z-10 text-xs backdrop-blur-xs cursor-pointer">❯</button>
+        <button id="modal-slide-prev"
+          class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all z-10 text-xs backdrop-blur-xs cursor-pointer">❮</button>
+        <button id="modal-slide-next"
+          class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all z-10 text-xs backdrop-blur-xs cursor-pointer">❯</button>
       </div>
 
       <!-- VIDEO CONTAINER (For Video Cards) -->
-      <div id="modal-video-container" class="hidden relative w-full aspect-[3/4] rounded-2xl overflow-hidden bg-black/90 shadow-inner">
+      <div id="modal-video-container"
+        class="hidden relative w-full aspect-[3/4] rounded-2xl overflow-hidden bg-black/90 shadow-inner">
         <video id="modal-video" src="" class="w-full h-full object-cover rounded-2xl" playsinline loop controls></video>
       </div>
 
       <!-- 3-Image Thumbnail Strip in Single Photo Modal -->
       <div id="modal-thumbnails" class="grid grid-cols-3 gap-2">
-        <div class="thumb-item cursor-pointer rounded-xl overflow-hidden aspect-[4/3] border-2 border-transparent transition-all hover:scale-105" data-thumb="0">
+        <div
+          class="thumb-item cursor-pointer rounded-xl overflow-hidden aspect-[4/3] border-2 border-transparent transition-all hover:scale-105"
+          data-thumb="0">
           <img class="thumb-img w-full h-full object-cover" src="" alt="Photo 1">
         </div>
-        <div class="thumb-item cursor-pointer rounded-xl overflow-hidden aspect-[4/3] border-2 border-transparent transition-all hover:scale-105" data-thumb="1">
+        <div
+          class="thumb-item cursor-pointer rounded-xl overflow-hidden aspect-[4/3] border-2 border-transparent transition-all hover:scale-105"
+          data-thumb="1">
           <img class="thumb-img w-full h-full object-cover" src="" alt="Photo 2">
         </div>
-        <div class="thumb-item cursor-pointer rounded-xl overflow-hidden aspect-[4/3] border-2 border-transparent transition-all hover:scale-105" data-thumb="2">
+        <div
+          class="thumb-item cursor-pointer rounded-xl overflow-hidden aspect-[4/3] border-2 border-transparent transition-all hover:scale-105"
+          data-thumb="2">
           <img class="thumb-img w-full h-full object-cover" src="" alt="Photo 3">
         </div>
       </div>
@@ -436,7 +511,9 @@
       <!-- Memory Info Header -->
       <div class="flex items-center justify-between px-1">
         <div class="flex items-center gap-2">
-          <button id="modal-prev-btn" class="text-[11px] font-medium text-pink-300 hover:text-white px-2 py-0.5 rounded-lg bg-white/10 hover:bg-white/20 transition-all cursor-pointer" title="Previous Memory Card">❮ Card</button>
+          <button id="modal-prev-btn"
+            class="text-[11px] font-medium text-pink-300 hover:text-white px-2 py-0.5 rounded-lg bg-white/10 hover:bg-white/20 transition-all cursor-pointer"
+            title="Previous Memory Card">❮ Card</button>
           <div>
             <h4 id="modal-title" class="text-sm font-bold text-pink-100">Our Sweet Moments</h4>
             <p id="modal-date" class="text-[11px] text-pink-300/70">Special Times</p>
@@ -444,16 +521,20 @@
         </div>
         <div class="flex items-center gap-2">
           <div id="modal-like-count" class="text-xs text-pink-300 font-semibold">1,314 Likes</div>
-          <button id="modal-next-btn" class="text-[11px] font-medium text-pink-300 hover:text-white px-2 py-0.5 rounded-lg bg-white/10 hover:bg-white/20 transition-all cursor-pointer" title="Next Memory Card">Card ❯</button>
+          <button id="modal-next-btn"
+            class="text-[11px] font-medium text-pink-300 hover:text-white px-2 py-0.5 rounded-lg bg-white/10 hover:bg-white/20 transition-all cursor-pointer"
+            title="Next Memory Card">Card ❯</button>
         </div>
       </div>
 
       <!-- Actions: Download & Like -->
       <div class="flex gap-2 pt-1">
-        <a id="modal-download" href="#" download class="flex-1 text-center py-2.5 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-700 text-white text-xs font-semibold shadow-lg shadow-pink-500/25 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+        <a id="modal-download" href="#" download
+          class="flex-1 text-center py-2.5 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-700 text-white text-xs font-semibold shadow-lg shadow-pink-500/25 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
           <span>⬇</span> Download
         </a>
-        <button id="modal-like-btn" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-rose-400 hover:text-rose-300 text-sm font-semibold transition-all flex items-center justify-center gap-1 cursor-pointer">
+        <button id="modal-like-btn"
+          class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-rose-400 hover:text-rose-300 text-sm font-semibold transition-all flex items-center justify-center gap-1 cursor-pointer">
           <span>♡</span>
         </button>
       </div>
@@ -466,4 +547,5 @@
   <!-- Custom Logic & Animation Engine -->
   <script src="script.js"></script>
 </body>
+
 </html>
