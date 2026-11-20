@@ -660,25 +660,54 @@ body::before { /* soft colour blobs */
 /* Scene 5: Space Gallery & Floating Cards */
 .space-card {
   position: absolute;
-  width: 26vw;
-  max-width: 130px;
+  width: 25vw;
+  max-width: 135px;
   aspect-ratio: 3/4;
   border-radius: 12px;
   background: #18141f;
-  border: 1px solid rgba(255,255,255,.18);
-  box-shadow: 0 10px 25px rgba(0,0,0,.5), 0 0 15px rgba(244,63,94,.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6), 0 0 18px rgba(244, 63, 94, 0.18);
   overflow: hidden;
   cursor: pointer;
   transform: rotate(var(--r, 0deg));
   animation: drift 10s ease-in-out infinite alternate;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  perspective: 800px;
+  will-change: transform;
 }
 
 .space-card:hover {
-  transform: scale(1.1) rotate(0deg) !important;
-  z-index: 40;
-  border-color: rgba(244, 63, 94, 0.7);
-  box-shadow: 0 15px 35px rgba(244, 63, 94, 0.4);
+  transform: scale(1.12) rotate(0deg) !important;
+  z-index: 45;
+  border-color: rgba(244, 63, 94, 0.85);
+  box-shadow: 0 20px 45px rgba(244, 63, 94, 0.5), 0 0 25px rgba(236, 72, 153, 0.35);
+}
+
+.space-card-shimmer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 50%, rgba(244,63,94,0.12) 100%);
+  opacity: 0.8;
+}
+
+.space-card-badge {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }
 
 .space-card img,
