@@ -173,9 +173,38 @@
     </section>
 
     <!-- ========================================================================= -->
-    <!-- SCENE 2: Cute Lantern & Twinkling Fairy Lights                            -->
+    <!-- SCENE HEARTS: Heart Messages Particle Canvas (Replaces Flower Image)       -->
     <!-- ========================================================================= -->
-    <section id="scene-2" class="scene hidden relative flex flex-col items-center justify-between min-h-screen z-20 overflow-hidden bg-gradient-to-b from-[#180b1a] via-[#2a1023] to-[#0d0510] select-none py-6">
+    <section id="scene-hearts" class="scene hidden relative w-full min-h-screen z-20 overflow-hidden bg-black select-none">
+      <canvas id="heart-canvas" class="absolute inset-0 w-full h-full cursor-pointer"></canvas>
+      
+      <!-- Top Tag -->
+      <div class="absolute top-5 left-1/2 -translate-x-1/2 z-30 pointer-events-none text-center">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-950/40 backdrop-blur-md border border-pink-500/30 text-[11px] font-medium text-pink-200 tracking-wider uppercase shadow-md">
+          <span>💖</span> Sweet Whispers
+        </span>
+      </div>
+
+      <!-- Action Button to Progress to Lamp Scene -->
+      <div class="absolute top-5 right-4 sm:right-8 z-30">
+        <button id="heart-to-lamp-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-700 text-white text-xs font-semibold shadow-lg shadow-pink-500/40 border border-white/20 transition-all hover:scale-105 cursor-pointer" title="Proceed to Light the Lamp">
+          <span>Next: Light the Lamp 🏮</span>
+          <span>→</span>
+        </button>
+      </div>
+
+      <!-- UI Hint (Bottom Center) -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 pointer-events-none text-center w-full px-4">
+        <p class="f-script italic text-2xl sm:text-3xl text-pink-200/90 drop-shadow-[0_2px_12px_rgba(244,63,94,0.7)] animate-pulse">
+          Click anywhere to send heart ✨
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 2: Cute Lamp & Twinkle Light Animation (Intro & Outro)              -->
+    <!-- ========================================================================= -->
+    <section id="scene-2" class="scene hidden relative flex flex-col items-center min-h-screen z-20 overflow-hidden bg-gradient-to-b from-[#180b1a] via-[#2a1023] to-[#0d0510] select-none">
       
       <!-- Overhead Twinkling Fairy Lights -->
       <div id="fairy-lights" class="absolute top-0 left-0 w-full flex justify-around px-2 sm:px-6 pointer-events-none z-30">
@@ -189,68 +218,24 @@
         <span class="fairy-bulb b-8"></span>
       </div>
 
-      <!-- Cute Smiling Lantern & Pull Cord Stage -->
-      <div id="lantern-stage" class="flex flex-col items-center z-30 pt-4 mt-6">
+      <div id="scene2-wash" class="absolute inset-0 bg-white/70 opacity-0 pointer-events-none"></div>
+
+      <div id="lantern-stage" class="flex flex-col items-center z-30 pt-4 mt-8">
         <div class="lantern-rod"></div>
         <div class="lantern-cap"></div>
         <div id="lamp-lantern" class="lantern"><i class="eye l"></i><i class="eye r"></i><i class="cheek l"></i><i class="cheek r"></i><div class="smile"></div></div>
-        <div id="pull-cord-wrapper" class="flex flex-col items-center cursor-grab select-none touch-none pb-4" title="Drag string down to light the lamp">
+        <div id="pull-cord-wrapper" class="flex flex-col items-center cursor-grab select-none touch-none pb-6">
           <div class="lantern-cap" style="width:14px;height:6px"></div>
           <div class="chain"></div>
           <div class="knob"></div>
-          <div class="text-pink-300 text-sm mt-1 animate-bounce">↓</div>
+          <div class="text-pink-300 text-xs mt-2 animate-bounce">↓</div>
         </div>
       </div>
 
-      <!-- Prompt Instruction Text -->
-      <p id="pull-text" class="pull-text z-30 tracking-widest text-xs uppercase text-pink-300/80 my-2">DRAG THE STRING DOWN TO PULL</p>
+      <p id="pull-text" class="pull-text z-30">DRAG THE STRING DOWN TO PULL</p>
 
-      <!-- Illuminated Message & Action Card (Reveals upon pulling cord) -->
-      <div id="lantern-wishes" class="hidden flex flex-col items-center text-center gap-3 z-30 px-4 my-auto max-w-sm">
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-500/20 border border-pink-400/40 text-[11px] font-semibold text-pink-200">
-          <span>✨</span> Lit With Love
-        </div>
-        <h2 class="f-serif text-3xl sm:text-4xl font-bold text-pink-100 drop-shadow-[0_2px_15px_rgba(244,114,182,0.9)] leading-tight">
-          Happy Birthday Shaista! 💖
-        </h2>
-        <p class="text-xs text-pink-200/90 font-medium leading-relaxed">
-          May your life shine as bright, warm, and beautiful as this light ✨
-        </p>
-        <button id="goto-hearts-btn" class="mt-2 flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-700 text-white text-xs font-semibold shadow-xl shadow-pink-500/40 border border-white/20 transition-all hover:scale-105 cursor-pointer">
-          <span>Send Heart Whispers 💖</span>
-          <span>→</span>
-        </button>
-      </div>
-
-      <div class="h-6"></div>
-    </section>
-
-    <!-- ========================================================================= -->
-    <!-- SCENE HEARTS: Heart Messages Canvas Particle Animation                    -->
-    <!-- ========================================================================= -->
-    <section id="scene-hearts" class="scene hidden relative w-full min-h-screen z-20 overflow-hidden bg-black select-none">
-      <canvas id="heart-canvas" class="absolute inset-0 w-full h-full cursor-pointer"></canvas>
-      
-      <!-- Top Tag -->
-      <div class="absolute top-5 left-1/2 -translate-x-1/2 z-30 pointer-events-none text-center">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-950/40 backdrop-blur-md border border-pink-500/30 text-[11px] font-medium text-pink-200 tracking-wider uppercase shadow-md">
-          <span>💖</span> Sweet Whispers
-        </span>
-      </div>
-
-      <!-- Action Button to Progress to Scene 3 (Cake Slicing) -->
-      <div class="absolute top-5 right-4 sm:right-8 z-30">
-        <button id="heart-to-cake-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-700 text-white text-xs font-semibold shadow-lg shadow-pink-500/40 border border-white/20 transition-all hover:scale-105 cursor-pointer" title="Proceed to the Birthday Cake">
-          <span>Cut the Cake 🎂</span>
-          <span>→</span>
-        </button>
-      </div>
-
-      <!-- UI Hint (Bottom Center) -->
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 pointer-events-none text-center w-full px-4">
-        <p class="f-script italic text-2xl sm:text-3xl text-pink-200/90 drop-shadow-[0_2px_12px_rgba(244,63,94,0.7)] animate-pulse">
-          Click anywhere to send heart ✨
-        </p>
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
+        <button id="fire-btn" class="fire-btn hidden pointer-events-auto">🔥</button>
       </div>
     </section>
 
