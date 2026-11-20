@@ -363,11 +363,22 @@
     </section>
 
     <!-- ========================================================================= -->
-    <!-- SCENE 5: Space Drift Photo Gallery                                        -->
+    <!-- SCENE 5: Space Drift Photo Gallery (All 53 Memories from Bunny 🐰🫠)       -->
     <!-- ========================================================================= -->
-    <section id="scene-5" class="scene hidden relative min-h-screen z-20 overflow-hidden bg-black">
-      <canvas id="starry-canvas" class="absolute inset-0 pointer-events-none"></canvas>
-      <div id="polaroid-gallery" class="absolute inset-0"></div>
+    <section id="scene-5" class="scene hidden relative min-h-screen z-20 overflow-y-auto overflow-x-hidden bg-black custom-scrollbar">
+      <canvas id="starry-canvas" class="fixed inset-0 pointer-events-none"></canvas>
+
+      <!-- Floating Cosmic Gallery Header Pill -->
+      <div class="sticky top-4 left-0 w-full flex justify-center z-40 px-4 pointer-events-none">
+        <div class="pointer-events-auto inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-black/65 backdrop-blur-md border border-pink-500/35 shadow-lg shadow-pink-500/20 text-xs text-pink-200 font-medium">
+          <span class="text-sm">🌌</span>
+          <span>Our Sweet Memories • <strong class="text-pink-400 font-bold">53 Photos</strong></span>
+          <span class="text-white/40">•</span>
+          <span class="text-[11px] text-pink-300/85">Tap any card to view</span>
+        </div>
+      </div>
+
+      <div id="polaroid-gallery" class="relative w-full min-h-[175vh] p-4 pb-20"></div>
     </section>
 
   </main>
