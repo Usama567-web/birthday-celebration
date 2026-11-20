@@ -162,7 +162,7 @@ function loadSavedConfig() {
 
 function saveConfig(newConfig) {
   try {
-    APP_CONFIG = { ...APP_CONFIG, ...newConfig, partnerName: "Shaista", senderName: "Usama", passcode: "0910" };
+    APP_CONFIG = { ...APP_CONFIG, ...newConfig, partnerName: "Shaista", senderName: "Usama", passcode: "Bunny 22 11" };
     applyConfigToDOM();
   } catch (e) {
     console.error("Failed to save config:", e);
