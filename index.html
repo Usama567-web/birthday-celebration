@@ -104,21 +104,23 @@
           <div id="photo-panel" class="flip-card-face flip-card-front">
             <div id="card-front" class="polaroid cursor-pointer select-none" title="Tap card to enter password">
               <div class="bow">🎀</div>
-              <!-- 5s Auto-Swapping Cover Photo Slideshow from folder 's' -->
+              <!-- 5s Auto-Swapping Cover Photo Slideshow: 4 Pics from folder 's' -->
               <div class="cover-slideshow-wrapper relative w-full aspect-[3/4] overflow-hidden rounded-md shadow-inner bg-pink-50">
-                <img id="cover-photo-1" class="cover-slide active" src="assets/cover-slides/slide-1.jpg" alt="Shaista">
-                <img id="cover-photo-2" class="cover-slide" src="assets/cover-slides/slide-2.jpeg" alt="Shaista">
-                <img id="cover-photo-3" class="cover-slide" src="assets/cover-slides/slide-3.jpeg" alt="Shaista">
-                <!-- 5s Auto-swap indicator dots -->
+                <img id="cover-photo-1" class="cover-slide active" src="assets/cover-slides/slide-1.jpg" alt="Shaista 1">
+                <img id="cover-photo-2" class="cover-slide" src="assets/cover-slides/slide-2.jpg" alt="Shaista 2">
+                <img id="cover-photo-3" class="cover-slide" src="assets/cover-slides/slide-3.jpeg" alt="Shaista 3">
+                <img id="cover-photo-4" class="cover-slide" src="assets/cover-slides/slide-4.jpeg" alt="Shaista 4">
+                <!-- 4 Auto-swap indicator dots -->
                 <div id="cover-dots" class="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-xs border border-white/30">
                   <span class="cover-dot active" data-index="0"></span>
                   <span class="cover-dot" data-index="1"></span>
                   <span class="cover-dot" data-index="2"></span>
+                  <span class="cover-dot" data-index="3"></span>
                 </div>
                 <!-- Mini swap badge -->
-                <div class="absolute top-2.5 right-2.5 z-10 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/45 backdrop-blur-xs border border-white/25 text-[10px] text-pink-200 font-medium pointer-events-none">
+                <div class="absolute top-2.5 right-2.5 z-10 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/45 backdrop-blur-xs border border-white/25 text-[10px] text-pink-200 font-semibold pointer-events-none">
                   <span class="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse"></span>
-                  <span>5s Swap</span>
+                  <span>4 Photos • 5s Auto</span>
                 </div>
               </div>
               <h1 id="recipient-title">Happy Birthday Shaista!</h1>
