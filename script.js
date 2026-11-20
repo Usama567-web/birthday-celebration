@@ -550,17 +550,26 @@ function switchScene(fromSceneId, toSceneId, options = {}) {
 }
 
 // ----------------------------------------------------------------------------
-// 4. SCENE 1: COVER POLAROID & SECURE PASSCODE LOGIC
+// 4. SCENE 1: COVER POLAROID & SECURE ALPHANUMERIC PASSWORD LOGIC
 // ----------------------------------------------------------------------------
 let enteredPin = "";
+let isPasswordMasked = false;
+let isShiftActive = false;
 
 function setupScene1() {
   const cardFlipper = document.getElementById('card-flipper');
   const cardFront = document.getElementById('card-front');
   const flipBackBtn = document.getElementById('flip-back-btn');
-  const pinDisplay = document.getElementById('pin-display');
-  const pinDots = document.querySelectorAll('#pin-display .pin-dot');
-  const keyBtns = document.querySelectorAll('.key-btn');
+  const passDisplayBox = document.getElementById('password-display-box');
+  const passText = document.getElementById('password-text');
+  const passPlaceholder = document.getElementById('password-placeholder');
+  const passInput = document.getElementById('passcode-input');
+  const toggleVisBtn = document.getElementById('toggle-visibility-btn');
+  const quickClearBtn = document.getElementById('quick-clear-btn');
+  const shiftBtn = document.getElementById('shift-key-btn');
+  const unlockSubmitBtn = document.getElementById('unlock-submit-btn');
+  const keyBtns = document.querySelectorAll('#alpha-keypad .key-btn');
+  const letterKeys = document.querySelectorAll('#alpha-keypad .letter-key');
   const errorMsg = document.getElementById('passcode-error');
   const passcodeHint = document.getElementById('passcode-hint');
   const hintToggleBtn = document.getElementById('hint-toggle-btn');
@@ -572,7 +581,7 @@ function setupScene1() {
     passcodeHint.textContent = APP_CONFIG.passcodeHint;
   }
   if (hintBubbleText) {
-    hintBubbleText.textContent = `✨ Passcode: ${APP_CONFIG.passcode}`;
+    hintBubbleText.textContent = `✨ Password: ${APP_CONFIG.passcode}`;
   }
 
   // Interactive Hint Toggle on PIN Pad
@@ -601,6 +610,9 @@ function setupScene1() {
       if (cardFlipper) {
         cardFlipper.classList.add('is-flipped');
       }
+      setTimeout(() => {
+        if (passInput) passInput.focus();
+      }, 350);
     });
   }
 
@@ -616,7 +628,62 @@ function setupScene1() {
     });
   }
 
-  // Keypad clicks
+  // Focus box when clicked
+  if (passDisplayBox && passInput) {
+    passDisplayBox.addEventListener('click', () => {
+      passInput.focus();
+      passDisplayBox.classList.add('focused');
+    });
+    passInput.addEventListener('focus', () => passDisplayBox.classList.add('focused'));
+    passInput.addEventListener('blur', () => passDisplayBox.classList.remove('focused'));
+  }
+
+  // Toggle Masked vs Plain Text
+  if (toggleVisBtn) {
+    toggleVisBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sounds.playClick();
+      isPasswordMasked = !isPasswordMasked;
+      toggleVisBtn.textContent = isPasswordMasked ? '🙈' : '👁';
+      toggleVisBtn.title = isPasswordMasked ? 'Show Password' : 'Hide Password';
+      renderPassword();
+    });
+  }
+
+  // Quick Clear button on input display
+  if (quickClearBtn) {
+    quickClearBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sounds.playClick();
+      resetPin();
+    });
+  }
+
+  // Shift Key toggle
+  if (shiftBtn) {
+    shiftBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sounds.playClick();
+      isShiftActive = !isShiftActive;
+      updateShiftState();
+    });
+  }
+
+  function updateShiftState() {
+    if (shiftBtn) {
+      if (isShiftActive) {
+        shiftBtn.classList.add('active-shift');
+      } else {
+        shiftBtn.classList.remove('active-shift');
+      }
+    }
+    letterKeys.forEach(k => {
+      const orig = k.dataset.key;
+      k.textContent = isShiftActive ? orig.toUpperCase() : orig.toLowerCase();
+    });
+  }
+
+  // On-screen Virtual Keypad clicks
   keyBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -633,80 +700,141 @@ function setupScene1() {
         if (enteredPin.length > 0) {
           sounds.playClick();
           enteredPin = enteredPin.slice(0, -1);
-          updatePinDisplay();
+          renderPassword();
         }
       } else if (action === 'clear') {
         if (enteredPin.length > 0) {
           sounds.playClick();
           resetPin();
         }
+      } else if (action === 'shift') {
+        // Handled above in shiftBtn listener
+      } else if (action === 'submit') {
+        sounds.playClick();
+        validatePin();
       } else if (key !== undefined) {
-        if (enteredPin.length < 4) {
-          sounds.playKeypadBeep(key);
-          enteredPin += key;
-          updatePinDisplay();
-
-          if (enteredPin.length === 4) {
-            validatePin();
-          }
+        sounds.playKeypadBeep(key);
+        let charToAdd = key;
+        if (btn.classList.contains('letter-key')) {
+          charToAdd = isShiftActive ? key.toUpperCase() : key.toLowerCase();
         }
+        enteredPin += charToAdd;
+        renderPassword();
+
+        // Check if exact password typed
+        checkAutoUnlock();
       }
     });
   });
 
-  // Physical keyboard navigation for desktop users
+  // Physical keyboard typing (desktop) & mobile input synchronization
+  if (passInput) {
+    passInput.addEventListener('input', () => {
+      enteredPin = passInput.value;
+      renderPassword();
+      checkAutoUnlock();
+    });
+  }
+
   window.addEventListener('keydown', (e) => {
     const scene1 = document.getElementById('scene-1');
     if (!scene1 || !scene1.classList.contains('active')) return;
     if (!cardFlipper || !cardFlipper.classList.contains('is-flipped')) return;
 
-    if (e.key >= '0' && e.key <= '9') {
-      if (enteredPin.length < 4) {
-        sounds.init();
-        sounds.playKeypadBeep(e.key);
-        enteredPin += e.key;
-        updatePinDisplay();
-        if (enteredPin.length === 4) {
-          validatePin();
-        }
-      }
-    } else if (e.key === 'Backspace') {
-      if (enteredPin.length > 0) {
-        sounds.playClick();
-        enteredPin = enteredPin.slice(0, -1);
-        updatePinDisplay();
-      }
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      sounds.playClick();
+      validatePin();
     } else if (e.key === 'Escape') {
       if (cardFlipper) {
         sounds.playWhoosh();
         cardFlipper.classList.remove('is-flipped');
         resetPin();
       }
+    } else if (e.target !== passInput) {
+      if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        sounds.init();
+        if (!sounds.isMusicPlaying) sounds.startBGM();
+        sounds.playKeypadBeep(e.key);
+        enteredPin += e.key;
+        renderPassword();
+        checkAutoUnlock();
+      } else if (e.key === 'Backspace') {
+        if (enteredPin.length > 0) {
+          sounds.playClick();
+          enteredPin = enteredPin.slice(0, -1);
+          renderPassword();
+        }
+      }
     }
   });
 
-  function updatePinDisplay() {
-    pinDots.forEach((dot, idx) => {
-      if (idx < enteredPin.length) {
-        dot.classList.add('filled');
+  function renderPassword() {
+    if (passInput && passInput.value !== enteredPin) {
+      passInput.value = enteredPin;
+    }
+
+    if (passText) {
+      if (isPasswordMasked) {
+        passText.textContent = '•'.repeat(enteredPin.length);
       } else {
-        dot.classList.remove('filled');
+        passText.textContent = enteredPin;
       }
-    });
+    }
+
+    if (passPlaceholder) {
+      if (enteredPin.length > 0) {
+        passPlaceholder.classList.add('hidden');
+      } else {
+        passPlaceholder.classList.remove('hidden');
+      }
+    }
+
+    if (quickClearBtn) {
+      if (enteredPin.length > 0) {
+        quickClearBtn.classList.remove('hidden');
+      } else {
+        quickClearBtn.classList.add('hidden');
+      }
+    }
+
     if (errorMsg) errorMsg.style.opacity = '0';
+    if (passDisplayBox) {
+      passDisplayBox.classList.remove('error');
+    }
   }
 
   function resetPin() {
     enteredPin = "";
-    updatePinDisplay();
+    renderPassword();
+  }
+
+  function checkAutoUnlock() {
+    const norm = enteredPin.trim().toLowerCase().replace(/\s+/g, ' ');
+    if (norm === 'bunny 22 11' || norm === 'bunny2211') {
+      setTimeout(() => validatePin(), 180);
+    }
   }
 
   function validatePin() {
     sounds.startBGM();
-    if (enteredPin === APP_CONFIG.passcode) {
+    const raw = enteredPin.trim();
+    const norm = raw.toLowerCase().replace(/\s+/g, ' ');
+    const compact = raw.toLowerCase().replace(/\s+/g, '');
+
+    const isMatch = (
+      raw === APP_CONFIG.passcode ||
+      norm === 'bunny 22 11' ||
+      compact === 'bunny2211'
+    );
+
+    if (isMatch) {
       sounds.playSuccessChime();
-      pinDots.forEach(dot => dot.classList.add('success'));
-      
+      if (passDisplayBox) {
+        passDisplayBox.classList.remove('error');
+        passDisplayBox.classList.add('success');
+      }
+
       if (window.confetti) {
         confetti({
           particleCount: 50,
@@ -715,27 +843,29 @@ function setupScene1() {
         });
       }
 
-      // Smooth transition into Heart Messages Canvas Particle Animation (Replaces Flower Image!)
+      // Smooth transition into Heart Messages Canvas Particle Animation
       setTimeout(() => {
         switchScene('scene-1', 'scene-hearts', {
           onEnter: setupSceneHearts
         });
-      }, 500);
+      }, 550);
 
     } else {
       sounds.playError();
-      pinDots.forEach(dot => dot.classList.add('error'));
-      if (pinDisplay) pinDisplay.classList.add('pin-shake');
-      if (errorMsg) errorMsg.style.opacity = '1';
+      if (passDisplayBox) {
+        passDisplayBox.classList.add('error');
+        passDisplayBox.classList.add('pin-shake');
+      }
+      if (errorMsg) {
+        errorMsg.textContent = "Incorrect password! Hint: Bunny 22 11";
+        errorMsg.style.opacity = '1';
+      }
 
       setTimeout(() => {
-        pinDots.forEach(dot => {
-          dot.classList.remove('error');
-          dot.classList.remove('success');
-        });
-        if (pinDisplay) pinDisplay.classList.remove('pin-shake');
-        resetPin();
-      }, 700);
+        if (passDisplayBox) {
+          passDisplayBox.classList.remove('pin-shake');
+        }
+      }, 500);
     }
   }
 }
