@@ -48,12 +48,10 @@
 </head>
 <body class="overflow-x-hidden selection:bg-pink-300 selection:text-pink-900 min-h-screen">
 
-  <!-- Background Audio (W-Audio.mpeg on continuous repeat) -->
-  <audio id="bgm-music" loop preload="auto" playsinline>
-    <source src="W-Audio.mpeg" type="audio/mpeg">
+  <!-- Background Audio (3 Rotating Romantic Songs in Series) -->
+  <audio id="bgm-music" preload="auto" playsinline>
     <source src="assets/W-Audio.mpeg" type="audio/mpeg">
-    <source src="W-Audio.mp3" type="audio/mp3">
-    <source src="assets/W-Audio.mp3" type="audio/mp3">
+    <source src="W-Audio.mpeg" type="audio/mpeg">
   </audio>
 
   <!-- Ambient Audio & Sound Control Pill -->
@@ -66,8 +64,11 @@
       </div>
       <span id="audio-label" class="hidden sm:inline">Music: On</span>
     </button>
+    <button id="skip-audio-btn" class="text-pink-600 hover:text-pink-800 transition-colors p-0.5 text-xs cursor-pointer" title="Switch to Next Song in Series">
+      ⏭
+    </button>
     <div class="h-3 w-[1px] bg-pink-200"></div>
-    <button id="toggle-sfx-btn" class="text-pink-600 hover:text-pink-800 transition-colors p-0.5" title="Mute/Unmute Sound FX">
+    <button id="toggle-sfx-btn" class="text-pink-600 hover:text-pink-800 transition-colors p-0.5 cursor-pointer" title="Mute/Unmute Sound FX">
       <i data-lucide="volume-2" class="w-4 h-4"></i>
     </button>
   </div>
