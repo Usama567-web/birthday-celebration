@@ -414,16 +414,7 @@ function setSceneProgress(sceneNum) {
 }
 
 function playFlowerTransition(mid) {
-  const o = document.getElementById('flower-overlay');
-  if (!o) { mid(); return; }
-  gsap.to(o, {
-    opacity: 1,
-    duration: .5,
-    onComplete: () => {
-      mid();
-      gsap.to(o, { opacity: 0, delay: 0.4, duration: .6 });
-    }
-  });
+  if (mid) mid();
 }
 
 function playFireTransition(mid) {
@@ -646,12 +637,10 @@ function setupScene1() {
         });
       }
 
-      // Smooth flower transition into Scene 2 (intro)
+      // Smooth direct transition into Scene 2: Cute Lantern & Twinkle Lights (No flower screen)
       setTimeout(() => {
-        playFlowerTransition(() => {
-          switchScene('scene-1', 'scene-2', {
-            onEnter: () => setupScene2('intro')
-          });
+        switchScene('scene-1', 'scene-2', {
+          onEnter: setupScene2
         });
       }, 500);
 
@@ -674,7 +663,85 @@ function setupScene1() {
 }
 
 // ----------------------------------------------------------------------------
-// 5. SCENE 2: HEART MESSAGES CANVAS PARTICLE ANIMATION ENGINE
+// 5. SCENE 2: CUTE LANTERN & TWINKLING FAIRY LIGHTS ("LAMP LITE TWINK")
+// ----------------------------------------------------------------------------
+function setupScene2() {
+  const wrap = document.getElementById('pull-cord-wrapper');
+  const stage = document.getElementById('lantern-stage');
+  const txt = document.getElementById('pull-text');
+  const lantern = document.getElementById('lamp-lantern');
+  const wishes = document.getElementById('lantern-wishes');
+  const gotoHeartsBtn = document.getElementById('goto-hearts-btn');
+
+  let pulled = false, startY = 0, drag = false;
+
+  if (lantern) lantern.classList.remove('lit');
+  if (wishes) wishes.classList.add('hidden');
+  if (txt) txt.style.opacity = '1';
+  if (stage) stage.style.opacity = '1';
+
+  const pull = () => {
+    if (pulled) return;
+    pulled = true;
+    sounds.playPullString();
+
+    // Cord pull and elastic spring bounce animation
+    if (window.gsap && wrap) {
+      gsap.timeline()
+        .to(wrap, { y: 45, duration: 0.15 })
+        .to(wrap, { y: 0, duration: 0.8, ease: 'elastic.out(1.2, 0.3)' });
+    }
+
+    // Light up lantern & fairy lights
+    setTimeout(() => {
+      sounds.playSuccessChime();
+      if (lantern) lantern.classList.add('lit');
+      if (txt) gsap.to(txt, { opacity: 0, duration: 0.4 });
+      if (wishes) {
+        wishes.classList.remove('hidden');
+        if (window.gsap) {
+          gsap.fromTo(wishes, 
+            { opacity: 0, y: 20, scale: 0.9 }, 
+            { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "back.out(1.4)" }
+          );
+        }
+      }
+      if (window.confetti) {
+        confetti({
+          particleCount: 60,
+          spread: 80,
+          origin: { y: 0.4 }
+        });
+      }
+    }, 200);
+  };
+
+  if (wrap) {
+    wrap.onclick = pull;
+    wrap.onpointerdown = e => {
+      startY = e.clientY;
+      drag = true;
+      wrap.setPointerCapture(e.pointerId);
+    };
+    wrap.onpointermove = e => {
+      if (drag && e.clientY - startY > 35) {
+        drag = false;
+        pull();
+      }
+    };
+    wrap.onpointerup = () => { drag = false; };
+  }
+
+  if (gotoHeartsBtn) {
+    gotoHeartsBtn.onclick = () => {
+      sounds.playClick();
+      switchScene('scene-2', 'scene-hearts', { onEnter: setupSceneHearts });
+    };
+  }
+}
+
+// ----------------------------------------------------------------------------
+// 5B. SCENE HEARTS: HEART MESSAGES CANVAS PARTICLE ANIMATION ENGINE
 // ----------------------------------------------------------------------------
 const PARTICLES_PER_HEART_BURST = 60;
 const TRAIL_THROTTLE_MS = 25;
@@ -696,7 +763,7 @@ let ambientBokeh = [];
 let lastTrailTime = 0;
 let heartMessageIndex = 0;
 
-function setupScene2() {
+function setupSceneHearts() {
   const canvas = document.getElementById('heart-canvas');
   const toCakeBtn = document.getElementById('heart-to-cake-btn');
   if (!canvas) return;
@@ -724,12 +791,12 @@ function setupScene2() {
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
-  // Initialize subtle ambient background bokeh particles (blue, cyan, soft pink, violet)
+  // Subtle ambient background bokeh particles in blue, cyan, soft pink, violet
   const BOKEH_COLORS = [
-    'rgba(56, 189, 248, ',  // soft blue
+    'rgba(56, 189, 248, ',  // blue
     'rgba(34, 211, 238, ',  // cyan
     'rgba(244, 114, 182, ', // soft pink
-    'rgba(192, 132, 252, '  // soft violet
+    'rgba(192, 132, 252, '  // violet
   ];
   for (let i = 0; i < 50; i++) {
     ambientBokeh.push({
@@ -746,7 +813,6 @@ function setupScene2() {
     });
   }
 
-  // Trigger Heart Burst along parametric heart curve
   function triggerHeartBurst(x, y) {
     const BURST_COLORS = [
       '#ff4b8b', '#ff69b4', '#f43f5e', '#fb7185',
@@ -754,7 +820,6 @@ function setupScene2() {
     ];
     for (let i = 0; i < PARTICLES_PER_HEART_BURST; i++) {
       const t = (i / PARTICLES_PER_HEART_BURST) * Math.PI * 2;
-      // Parametric heart: x = 16*sin^3(t), y = -(13*cos(t) - 5*cos(2t) - 2*cos(3t) - cos(4t))
       const hx = 16 * Math.pow(Math.sin(t), 3);
       const hy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
       
@@ -784,7 +849,6 @@ function setupScene2() {
     }
   }
 
-  // Spawn trail heart particle throttled by TRAIL_THROTTLE_MS
   function spawnTrailHeartParticle(x, y) {
     const now = performance.now();
     if (now - lastTrailTime < TRAIL_THROTTLE_MS) return;
@@ -811,7 +875,6 @@ function setupScene2() {
     }
   }
 
-  // Push new floating heart message near (x, y - 10)
   function addHeartMessage(x, y) {
     const text = HEART_MESSAGES_LIST[heartMessageIndex % HEART_MESSAGES_LIST.length];
     heartMessageIndex++;
@@ -828,8 +891,7 @@ function setupScene2() {
     });
   }
 
-  // Handle Canvas Interaction
-  const handlePointerDown = (e) => {
+  canvas.onpointerdown = (e) => {
     sounds.init();
     sounds.playHeartPop();
     const rect = canvas.getBoundingClientRect();
@@ -840,17 +902,13 @@ function setupScene2() {
     addHeartMessage(x, y);
   };
 
-  const handlePointerMove = (e) => {
+  canvas.onpointermove = (e) => {
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     spawnTrailHeartParticle(x, y);
   };
 
-  canvas.onpointerdown = handlePointerDown;
-  canvas.onpointermove = handlePointerMove;
-
-  // Next Step Transition to Scene 3 (Cake Slicing)
   if (toCakeBtn) {
     toCakeBtn.onclick = (e) => {
       e.stopPropagation();
@@ -859,22 +917,19 @@ function setupScene2() {
         cancelAnimationFrame(heartCanvasAnimationId);
       }
       playFireTransition(() => {
-        switchScene('scene-2', 'scene-3', { onEnter: setupScene3 });
+        switchScene('scene-hearts', 'scene-3', { onEnter: setupScene3 });
       });
     };
   }
 
-  // Main Render Loop
   let tick = 0;
   function animate() {
     tick++;
     ctx.clearRect(0, 0, width, height);
 
-    // Deep dark background
     ctx.fillStyle = '#06040a';
     ctx.fillRect(0, 0, width, height);
 
-    // Subtle radial ambient glow
     const grad = ctx.createRadialGradient(width / 2, height / 2, 20, width / 2, height / 2, Math.max(width, height) * 0.65);
     grad.addColorStop(0, 'rgba(45, 15, 35, 0.45)');
     grad.addColorStop(0.5, 'rgba(15, 10, 25, 0.3)');
@@ -882,7 +937,6 @@ function setupScene2() {
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, width, height);
 
-    // Ambient background bokeh particles (blue, cyan, pink, violet)
     ambientBokeh.forEach(b => {
       b.x += b.vx;
       b.y += b.vy;
@@ -900,7 +954,6 @@ function setupScene2() {
       ctx.fill();
     });
 
-    // Update and draw Heart Particles
     ctx.save();
     for (let i = heartParticles.length - 1; i >= 0; i--) {
       const p = heartParticles[i];
@@ -909,7 +962,7 @@ function setupScene2() {
       p.vx *= p.damping;
       p.vy *= p.damping;
       if (!p.formsHeartShape) {
-        p.vy -= 0.035; // gentle upward drift for trail
+        p.vy -= 0.035;
       }
       p.life--;
       p.alpha = Math.max(0, p.life / p.maxLife);
@@ -929,7 +982,6 @@ function setupScene2() {
     }
     ctx.restore();
 
-    // Update and draw Floating Heart Messages
     ctx.save();
     ctx.font = '600 18px "Dancing Script", "Quicksand", cursive, sans-serif';
     ctx.textAlign = 'center';
