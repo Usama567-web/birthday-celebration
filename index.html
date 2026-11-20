@@ -80,8 +80,7 @@
   <!-- Global Canvas for Ambient Floating Hearts & Particles -->
   <canvas id="ambient-canvas" class="fixed inset-0 pointer-events-none z-10"></canvas>
 
-  <!-- Flower and Fire Cinematic Overlays -->
-  <div id="flower-overlay" class="fixed inset-0 z-[60] opacity-0 pointer-events-none flower-bg"></div>
+  <!-- Fire Cinematic Overlay -->
   <div id="fire-overlay" class="fixed inset-0 z-[60] opacity-0 pointer-events-none fire-bg"></div>
 
   <!-- Flash Overlay for Transitions -->
@@ -174,9 +173,62 @@
     </section>
 
     <!-- ========================================================================= -->
-    <!-- SCENE 2: Heart Messages Canvas Particle Animation                         -->
+    <!-- SCENE 2: Cute Lantern & Twinkling Fairy Lights                            -->
     <!-- ========================================================================= -->
-    <section id="scene-2" class="scene hidden relative w-full min-h-screen z-20 overflow-hidden bg-black select-none">
+    <section id="scene-2" class="scene hidden relative flex flex-col items-center justify-between min-h-screen z-20 overflow-hidden bg-gradient-to-b from-[#180b1a] via-[#2a1023] to-[#0d0510] select-none py-6">
+      
+      <!-- Overhead Twinkling Fairy Lights -->
+      <div id="fairy-lights" class="absolute top-0 left-0 w-full flex justify-around px-2 sm:px-6 pointer-events-none z-30">
+        <span class="fairy-bulb b-1"></span>
+        <span class="fairy-bulb b-2"></span>
+        <span class="fairy-bulb b-3"></span>
+        <span class="fairy-bulb b-4"></span>
+        <span class="fairy-bulb b-5"></span>
+        <span class="fairy-bulb b-6"></span>
+        <span class="fairy-bulb b-7"></span>
+        <span class="fairy-bulb b-8"></span>
+      </div>
+
+      <!-- Cute Smiling Lantern & Pull Cord Stage -->
+      <div id="lantern-stage" class="flex flex-col items-center z-30 pt-4 mt-6">
+        <div class="lantern-rod"></div>
+        <div class="lantern-cap"></div>
+        <div id="lamp-lantern" class="lantern"><i class="eye l"></i><i class="eye r"></i><i class="cheek l"></i><i class="cheek r"></i><div class="smile"></div></div>
+        <div id="pull-cord-wrapper" class="flex flex-col items-center cursor-grab select-none touch-none pb-4" title="Drag string down to light the lamp">
+          <div class="lantern-cap" style="width:14px;height:6px"></div>
+          <div class="chain"></div>
+          <div class="knob"></div>
+          <div class="text-pink-300 text-sm mt-1 animate-bounce">↓</div>
+        </div>
+      </div>
+
+      <!-- Prompt Instruction Text -->
+      <p id="pull-text" class="pull-text z-30 tracking-widest text-xs uppercase text-pink-300/80 my-2">DRAG THE STRING DOWN TO PULL</p>
+
+      <!-- Illuminated Message & Action Card (Reveals upon pulling cord) -->
+      <div id="lantern-wishes" class="hidden flex flex-col items-center text-center gap-3 z-30 px-4 my-auto max-w-sm">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-500/20 border border-pink-400/40 text-[11px] font-semibold text-pink-200">
+          <span>✨</span> Lit With Love
+        </div>
+        <h2 class="f-serif text-3xl sm:text-4xl font-bold text-pink-100 drop-shadow-[0_2px_15px_rgba(244,114,182,0.9)] leading-tight">
+          Happy Birthday Shaista! 💖
+        </h2>
+        <p class="text-xs text-pink-200/90 font-medium leading-relaxed">
+          May your life shine as bright, warm, and beautiful as this light ✨
+        </p>
+        <button id="goto-hearts-btn" class="mt-2 flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-700 text-white text-xs font-semibold shadow-xl shadow-pink-500/40 border border-white/20 transition-all hover:scale-105 cursor-pointer">
+          <span>Send Heart Whispers 💖</span>
+          <span>→</span>
+        </button>
+      </div>
+
+      <div class="h-6"></div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE HEARTS: Heart Messages Canvas Particle Animation                    -->
+    <!-- ========================================================================= -->
+    <section id="scene-hearts" class="scene hidden relative w-full min-h-screen z-20 overflow-hidden bg-black select-none">
       <canvas id="heart-canvas" class="absolute inset-0 w-full h-full cursor-pointer"></canvas>
       
       <!-- Top Tag -->
