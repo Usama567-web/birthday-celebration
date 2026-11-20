@@ -418,10 +418,10 @@ function playFlowerTransition(mid) {
   if (!o) { mid(); return; }
   gsap.to(o, {
     opacity: 1,
-    duration: .6,
+    duration: .5,
     onComplete: () => {
       mid();
-      gsap.to(o, { opacity: 0, delay: 2.4, duration: .8 });
+      gsap.to(o, { opacity: 0, delay: 0.4, duration: .6 });
     }
   });
 }
