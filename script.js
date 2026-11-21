@@ -763,68 +763,53 @@ let isShiftActive = false;
 let coverSlideIndex = 0;
 let coverSlideTimer = null;
 
+const COVER_PICS = [
+  "s/1.jpg",
+  "s/IMG_20260528_224653.jpg",
+  "s/WhatsApp Image 2026-11-20 at 2.30.27 PM (1).jpeg",
+  "s/WhatsApp Image 2026-11-20 at 2.30.27 PM.jpeg"
+];
+
+const COVER_FALLBACKS = [
+  "assets/cover-slides/slide-1.jpg",
+  "assets/cover-slides/slide-2.jpg",
+  "assets/cover-slides/slide-3.jpeg",
+  "assets/cover-slides/slide-4.jpeg"
+];
+
+// Preload all 4 images immediately into memory
+COVER_PICS.forEach((src, i) => {
+  const p = new Image();
+  p.src = encodeURI(src);
+  p.onerror = () => {
+    p.src = encodeURI(COVER_FALLBACKS[i]);
+  };
+});
+
 function setupCoverSlideshow() {
-  const slides = document.querySelectorAll('.cover-slide');
-  const dots = document.querySelectorAll('.cover-dot');
-  if (!slides || slides.length === 0) return;
+  const coverImg = document.getElementById('cover-photo');
+  if (!coverImg) return;
 
-  const fallbacks = [
-    's/1.jpg',
-    's/IMG_20260528_224653.jpg',
-    's/WhatsApp Image 2026-11-20 at 2.30.27 PM (1).jpeg',
-    's/WhatsApp Image 2026-11-20 at 2.30.27 PM.jpeg'
-  ];
+  function showNextCover() {
+    coverSlideIndex = (coverSlideIndex + 1) % COVER_PICS.length;
+    const targetSrc = COVER_PICS[coverSlideIndex];
+    const fallbackSrc = COVER_FALLBACKS[coverSlideIndex];
 
-  slides.forEach((slide, i) => {
-    slide.addEventListener('error', () => {
-      if (fallbacks[i] && !slide.src.includes(encodeURI(fallbacks[i]))) {
-        slide.src = encodeURI(fallbacks[i]);
-      }
-    });
-  });
-
-  function showSlide(idx) {
-    coverSlideIndex = (idx + slides.length) % slides.length;
-    slides.forEach((slide, i) => {
-      if (i === coverSlideIndex) {
-        slide.classList.add('active');
-        slide.style.opacity = '1';
-        slide.style.zIndex = '2';
-      } else {
-        slide.classList.remove('active');
-        slide.style.opacity = '0';
-        slide.style.zIndex = '1';
-      }
-    });
-
-    dots.forEach((dot, i) => {
-      if (i === coverSlideIndex) {
-        dot.className = 'cover-dot active';
-      } else {
-        dot.className = 'cover-dot';
-      }
-    });
+    coverImg.style.opacity = '0.15';
+    coverImg.style.transform = 'scale(0.97)';
+    setTimeout(() => {
+      coverImg.onerror = () => {
+        coverImg.onerror = null;
+        coverImg.src = encodeURI(fallbackSrc);
+      };
+      coverImg.src = encodeURI(targetSrc);
+      coverImg.style.opacity = '1';
+      coverImg.style.transform = 'scale(1)';
+    }, 350);
   }
 
-  dots.forEach((dot) => {
-    dot.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const targetIdx = parseInt(dot.dataset.index, 10);
-      showSlide(targetIdx);
-      restartCoverTimer();
-    });
-  });
-
-  function restartCoverTimer() {
-    if (coverSlideTimer) clearInterval(coverSlideTimer);
-    coverSlideTimer = setInterval(() => {
-      showSlide(coverSlideIndex + 1);
-    }, 5000);
-  }
-
-  // Auto-start immediately with first slide active and 5s timer
-  showSlide(0);
-  restartCoverTimer();
+  if (coverSlideTimer) clearInterval(coverSlideTimer);
+  coverSlideTimer = setInterval(showNextCover, 5000);
 }
 
 function setupScene1() {
