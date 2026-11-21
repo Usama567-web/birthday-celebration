@@ -142,7 +142,26 @@ body::before { /* soft colour blobs */
   text-align: center;
   animation: cardFloating 5s ease-in-out infinite alternate;
 }
-.polaroid img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 6px; }
+.polaroid img,
+.polaroid-img-frame img,
+#cover-photo {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+  transition: opacity 0.45s ease-in-out, transform 0.45s ease-in-out;
+  will-change: opacity, transform;
+}
+
+.polaroid-img-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #fdf2f8;
+}
 
 /* 5s Auto-Swapping Cover Slideshow */
 .cover-slideshow-wrapper {
