@@ -525,8 +525,59 @@
     </div>
   </div>
 
-  <!-- Custom Logic & Animation Engine -->
-  <script src="script.js"></script>
+  <!-- Custom Logic & Animation Engine with Cache-Buster -->
+  <script src="script.js?v=20261121_0625"></script>
+
+  <!-- Instant Self-Contained 5s Auto-Swapper for the 4 Photos from folder 's' -->
+  <script>
+    (function() {
+      const pics = [
+        "s/1.jpg",
+        "s/IMG_20260528_224653.jpg",
+        "s/WhatsApp Image 2026-11-20 at 2.30.27 PM (1).jpeg",
+        "s/WhatsApp Image 2026-11-20 at 2.30.27 PM.jpeg"
+      ];
+      const fallbacks = [
+        "assets/cover-slides/slide-1.jpg",
+        "assets/cover-slides/slide-2.jpg",
+        "assets/cover-slides/slide-3.jpeg",
+        "assets/cover-slides/slide-4.jpeg"
+      ];
+
+      // Preload all 4 images immediately
+      pics.forEach(function(src, i) {
+        var p = new Image();
+        p.src = encodeURI(src);
+        p.onerror = function() {
+          p.src = encodeURI(fallbacks[i]);
+        };
+      });
+
+      let idx = 0;
+      function autoSwap() {
+        const el = document.getElementById('cover-photo');
+        if (!el) return;
+        idx = (idx + 1) % pics.length;
+        const target = pics[idx];
+        const fb = fallbacks[idx];
+
+        el.style.opacity = '0.15';
+        el.style.transform = 'scale(0.97)';
+        setTimeout(function() {
+          el.onerror = function() {
+            el.onerror = null;
+            el.src = encodeURI(fb);
+          };
+          el.src = encodeURI(target);
+          el.style.opacity = '1';
+          el.style.transform = 'scale(1)';
+        }, 350);
+      }
+
+      // Auto starts immediately every 5 seconds!
+      setInterval(autoSwap, 5000);
+    })();
+  </script>
 </body>
 
 </html>
