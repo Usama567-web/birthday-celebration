@@ -1,3 +1,51 @@
+
+// ----------------------------------------------------------------------------
+// TOAST NOTIFICATIONS & DIRECT ONE-CLICK DOWNLOAD
+// ----------------------------------------------------------------------------
+function showToast(msg) {
+  const toast = document.getElementById('toast-notify');
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2600);
+}
+
+async function downloadImage(url, filename) {
+  if (!url) return;
+  showToast('Downloading photo... 💖');
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Fetch failed with status ' + res.status);
+    const blob = await res.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = filename || url.split('/').pop() || 'Shaista_Bunny_Memory.jpeg';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+    }, 1200);
+    showToast('Photo downloaded successfully! ✨');
+  } catch (e) {
+    console.warn('Blob download fallback:', e);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || url.split('/').pop() || 'Shaista_Bunny_Memory.jpeg';
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+    }, 500);
+    showToast('Photo opened for download! ✨');
+  }
+}
+
 /**
  * ============================================================================
  * CINEMATIC BIRTHDAY WEB APPLICATION - CORE LOGIC & ANIMATION ENGINE
@@ -27,7 +75,327 @@ Thank you for being in my life and for being the most precious part of it. Wishi
 
 With all my love forever and always,
 Your Usama 💖`,
-  memories: [
+  allBunnyPhotos: [
+  {
+    "index": 1,
+    "original": "Bunny 🐰🫠/1008491785303523870.jpg",
+    "clean": "assets/bunny/photo-01.jpg",
+    "filename": "1008491785303523870.jpg"
+  },
+  {
+    "index": 2,
+    "original": "Bunny 🐰🫠/628d4aa916bd651a96166df8ef53eda6.webp",
+    "clean": "assets/bunny/photo-02.webp",
+    "filename": "628d4aa916bd651a96166df8ef53eda6.webp"
+  },
+  {
+    "index": 3,
+    "original": "Bunny 🐰🫠/7f37829e5a49445ba7e50f02306296ed.webp",
+    "clean": "assets/bunny/photo-03.webp",
+    "filename": "7f37829e5a49445ba7e50f02306296ed.webp"
+  },
+  {
+    "index": 4,
+    "original": "Bunny 🐰🫠/c80ea4c095284c3d8efe2831807c3eaa.webp",
+    "clean": "assets/bunny/photo-04.webp",
+    "filename": "c80ea4c095284c3d8efe2831807c3eaa.webp"
+  },
+  {
+    "index": 5,
+    "original": "Bunny 🐰🫠/cef12d4bdfe041d5b9ea7718636effa6.webp",
+    "clean": "assets/bunny/photo-05.webp",
+    "filename": "cef12d4bdfe041d5b9ea7718636effa6.webp"
+  },
+  {
+    "index": 6,
+    "original": "Bunny 🐰🫠/IMG_20260528_224653.jpg",
+    "clean": "assets/bunny/photo-06.jpg",
+    "filename": "IMG_20260528_224653.jpg"
+  },
+  {
+    "index": 7,
+    "original": "Bunny 🐰🫠/IMG_20260831_174941.jpg",
+    "clean": "assets/bunny/photo-07.jpg",
+    "filename": "IMG_20260831_174941.jpg"
+  },
+  {
+    "index": 8,
+    "original": "Bunny 🐰🫠/IMG_20260831_175014.jpg",
+    "clean": "assets/bunny/photo-08.jpg",
+    "filename": "IMG_20260831_175014.jpg"
+  },
+  {
+    "index": 9,
+    "original": "Bunny 🐰🫠/IMG_20260901_104957.jpg",
+    "clean": "assets/bunny/photo-09.jpg",
+    "filename": "IMG_20260901_104957.jpg"
+  },
+  {
+    "index": 10,
+    "original": "Bunny 🐰🫠/IMG_20261024_230537.jpg",
+    "clean": "assets/bunny/photo-10.jpg",
+    "filename": "IMG_20261024_230537.jpg"
+  },
+  {
+    "index": 11,
+    "original": "Bunny 🐰🫠/IMG_20261024_230550.jpg",
+    "clean": "assets/bunny/photo-11.jpg",
+    "filename": "IMG_20261024_230550.jpg"
+  },
+  {
+    "index": 12,
+    "original": "Bunny 🐰🫠/IMG_20261024_230602.jpg",
+    "clean": "assets/bunny/photo-12.jpg",
+    "filename": "IMG_20261024_230602.jpg"
+  },
+  {
+    "index": 13,
+    "original": "Bunny 🐰🫠/IMG_20261024_230614.jpg",
+    "clean": "assets/bunny/photo-13.jpg",
+    "filename": "IMG_20261024_230614.jpg"
+  },
+  {
+    "index": 14,
+    "original": "Bunny 🐰🫠/IMG_20261024_230626.jpg",
+    "clean": "assets/bunny/photo-14.jpg",
+    "filename": "IMG_20261024_230626.jpg"
+  },
+  {
+    "index": 15,
+    "original": "Bunny 🐰🫠/IMG_20261024_230635.jpg",
+    "clean": "assets/bunny/photo-15.jpg",
+    "filename": "IMG_20261024_230635.jpg"
+  },
+  {
+    "index": 16,
+    "original": "Bunny 🐰🫠/Screenshot_20251019_003608.jpg",
+    "clean": "assets/bunny/photo-16.jpg",
+    "filename": "Screenshot_20251019_003608.jpg"
+  },
+  {
+    "index": 17,
+    "original": "Bunny 🐰🫠/Screenshot_20251029_190841.jpg",
+    "clean": "assets/bunny/photo-17.jpg",
+    "filename": "Screenshot_20251029_190841.jpg"
+  },
+  {
+    "index": 18,
+    "original": "Bunny 🐰🫠/Screenshot_20251029_213615.jpg",
+    "clean": "assets/bunny/photo-18.jpg",
+    "filename": "Screenshot_20251029_213615.jpg"
+  },
+  {
+    "index": 19,
+    "original": "Bunny 🐰🫠/Screenshot_20251118_180906.jpg",
+    "clean": "assets/bunny/photo-19.jpg",
+    "filename": "Screenshot_20251118_180906.jpg"
+  },
+  {
+    "index": 20,
+    "original": "Bunny 🐰🫠/Screenshot_20251213_221110.jpg",
+    "clean": "assets/bunny/photo-20.jpg",
+    "filename": "Screenshot_20251213_221110.jpg"
+  },
+  {
+    "index": 21,
+    "original": "Bunny 🐰🫠/Screenshot_20251215_214724.jpg",
+    "clean": "assets/bunny/photo-21.jpg",
+    "filename": "Screenshot_20251215_214724.jpg"
+  },
+  {
+    "index": 22,
+    "original": "Bunny 🐰🫠/Screenshot_20251215_214740.jpg",
+    "clean": "assets/bunny/photo-22.jpg",
+    "filename": "Screenshot_20251215_214740.jpg"
+  },
+  {
+    "index": 23,
+    "original": "Bunny 🐰🫠/Screenshot_20251215_215623.jpg",
+    "clean": "assets/bunny/photo-23.jpg",
+    "filename": "Screenshot_20251215_215623.jpg"
+  },
+  {
+    "index": 24,
+    "original": "Bunny 🐰🫠/Screenshot_20260102_114212.jpg",
+    "clean": "assets/bunny/photo-24.jpg",
+    "filename": "Screenshot_20260102_114212.jpg"
+  },
+  {
+    "index": 25,
+    "original": "Bunny 🐰🫠/Screenshot_20260102_114220.jpg",
+    "clean": "assets/bunny/photo-25.jpg",
+    "filename": "Screenshot_20260102_114220.jpg"
+  },
+  {
+    "index": 26,
+    "original": "Bunny 🐰🫠/Screenshot_20260105_223927.jpg",
+    "clean": "assets/bunny/photo-26.jpg",
+    "filename": "Screenshot_20260105_223927.jpg"
+  },
+  {
+    "index": 27,
+    "original": "Bunny 🐰🫠/Screenshot_20260106_134951.jpg",
+    "clean": "assets/bunny/photo-27.jpg",
+    "filename": "Screenshot_20260106_134951.jpg"
+  },
+  {
+    "index": 28,
+    "original": "Bunny 🐰🫠/Screenshot_20260108_170754.jpg",
+    "clean": "assets/bunny/photo-28.jpg",
+    "filename": "Screenshot_20260108_170754.jpg"
+  },
+  {
+    "index": 29,
+    "original": "Bunny 🐰🫠/Screenshot_20260111_233402.jpg",
+    "clean": "assets/bunny/photo-29.jpg",
+    "filename": "Screenshot_20260111_233402.jpg"
+  },
+  {
+    "index": 30,
+    "original": "Bunny 🐰🫠/Screenshot_20260111_233403.jpg",
+    "clean": "assets/bunny/photo-30.jpg",
+    "filename": "Screenshot_20260111_233403.jpg"
+  },
+  {
+    "index": 31,
+    "original": "Bunny 🐰🫠/Screenshot_20260326_002439.jpg",
+    "clean": "assets/bunny/photo-31.jpg",
+    "filename": "Screenshot_20260326_002439.jpg"
+  },
+  {
+    "index": 32,
+    "original": "Bunny 🐰🫠/Screenshot_20260419_231006.jpg",
+    "clean": "assets/bunny/photo-32.jpg",
+    "filename": "Screenshot_20260419_231006.jpg"
+  },
+  {
+    "index": 33,
+    "original": "Bunny 🐰🫠/Screenshot_20260426_003950.jpg",
+    "clean": "assets/bunny/photo-33.jpg",
+    "filename": "Screenshot_20260426_003950.jpg"
+  },
+  {
+    "index": 34,
+    "original": "Bunny 🐰🫠/Screenshot_20260426_004005.jpg",
+    "clean": "assets/bunny/photo-34.jpg",
+    "filename": "Screenshot_20260426_004005.jpg"
+  },
+  {
+    "index": 35,
+    "original": "Bunny 🐰🫠/Screenshot_20260503_001433.jpg",
+    "clean": "assets/bunny/photo-35.jpg",
+    "filename": "Screenshot_20260503_001433.jpg"
+  },
+  {
+    "index": 36,
+    "original": "Bunny 🐰🫠/Screenshot_20260503_001449.jpg",
+    "clean": "assets/bunny/photo-36.jpg",
+    "filename": "Screenshot_20260503_001449.jpg"
+  },
+  {
+    "index": 37,
+    "original": "Bunny 🐰🫠/Screenshot_20260503_001536.jpg",
+    "clean": "assets/bunny/photo-37.jpg",
+    "filename": "Screenshot_20260503_001536.jpg"
+  },
+  {
+    "index": 38,
+    "original": "Bunny 🐰🫠/Screenshot_20260503_001553.jpg",
+    "clean": "assets/bunny/photo-38.jpg",
+    "filename": "Screenshot_20260503_001553.jpg"
+  },
+  {
+    "index": 39,
+    "original": "Bunny 🐰🫠/Screenshot_20260528_224529.jpg",
+    "clean": "assets/bunny/photo-39.jpg",
+    "filename": "Screenshot_20260528_224529.jpg"
+  },
+  {
+    "index": 40,
+    "original": "Bunny 🐰🫠/Screenshot_20260909_185352.jpg",
+    "clean": "assets/bunny/photo-40.jpg",
+    "filename": "Screenshot_20260909_185352.jpg"
+  },
+  {
+    "index": 41,
+    "original": "Bunny 🐰🫠/Screenshot_20260910_183847.jpg",
+    "clean": "assets/bunny/photo-41.jpg",
+    "filename": "Screenshot_20260910_183847.jpg"
+  },
+  {
+    "index": 42,
+    "original": "Bunny 🐰🫠/Screenshot_20260910_222131.jpg",
+    "clean": "assets/bunny/photo-42.jpg",
+    "filename": "Screenshot_20260910_222131.jpg"
+  },
+  {
+    "index": 43,
+    "original": "Bunny 🐰🫠/Screenshot_20260910_222931.jpg",
+    "clean": "assets/bunny/photo-43.jpg",
+    "filename": "Screenshot_20260910_222931.jpg"
+  },
+  {
+    "index": 44,
+    "original": "Bunny 🐰🫠/Screenshot_20260910_222936.jpg",
+    "clean": "assets/bunny/photo-44.jpg",
+    "filename": "Screenshot_20260910_222936.jpg"
+  },
+  {
+    "index": 45,
+    "original": "Bunny 🐰🫠/Screenshot_20261023_184224.jpg",
+    "clean": "assets/bunny/photo-45.jpg",
+    "filename": "Screenshot_20261023_184224.jpg"
+  },
+  {
+    "index": 46,
+    "original": "Bunny 🐰🫠/Screenshot_20261023_213400.jpg",
+    "clean": "assets/bunny/photo-46.jpg",
+    "filename": "Screenshot_20261023_213400.jpg"
+  },
+  {
+    "index": 47,
+    "original": "Bunny 🐰🫠/Screenshot_20261023_213410.jpg",
+    "clean": "assets/bunny/photo-47.jpg",
+    "filename": "Screenshot_20261023_213410.jpg"
+  },
+  {
+    "index": 48,
+    "original": "Bunny 🐰🫠/Screenshot_20261023_213432.jpg",
+    "clean": "assets/bunny/photo-48.jpg",
+    "filename": "Screenshot_20261023_213432.jpg"
+  },
+  {
+    "index": 49,
+    "original": "Bunny 🐰🫠/WhatsApp Image 2026-11-20 at 2.30.24 PM (1).jpeg",
+    "clean": "assets/bunny/photo-49.jpeg",
+    "filename": "WhatsApp Image 2026-11-20 at 2.30.24 PM (1).jpeg"
+  },
+  {
+    "index": 50,
+    "original": "Bunny 🐰🫠/WhatsApp Image 2026-11-20 at 2.30.24 PM.jpeg",
+    "clean": "assets/bunny/photo-50.jpeg",
+    "filename": "WhatsApp Image 2026-11-20 at 2.30.24 PM.jpeg"
+  },
+  {
+    "index": 51,
+    "original": "Bunny 🐰🫠/WhatsApp Image 2026-11-20 at 2.30.26 PM.jpeg",
+    "clean": "assets/bunny/photo-51.jpeg",
+    "filename": "WhatsApp Image 2026-11-20 at 2.30.26 PM.jpeg"
+  },
+  {
+    "index": 52,
+    "original": "Bunny 🐰🫠/WhatsApp Image 2026-11-20 at 2.30.27 PM (1).jpeg",
+    "clean": "assets/bunny/photo-52.jpeg",
+    "filename": "WhatsApp Image 2026-11-20 at 2.30.27 PM (1).jpeg"
+  },
+  {
+    "index": 53,
+    "original": "Bunny 🐰🫠/WhatsApp Image 2026-11-20 at 2.30.27 PM.jpeg",
+    "clean": "assets/bunny/photo-53.jpeg",
+    "filename": "WhatsApp Image 2026-11-20 at 2.30.27 PM.jpeg"
+  }
+],
+    memories: [
     {
         "id": 1,
         "type": "image",
@@ -1648,6 +2016,8 @@ let activeModalMemoryIndex = 0;
 let starryCanvasAnimationId = null;
 
 function setupScene5() {
+  setupUniverseControls();
+  render53PhotosGrid();
   renderPolaroidGallery();
   initStarryCanvas();
   setupPhotoModal();
@@ -1661,7 +2031,8 @@ function renderPolaroidGallery() {
   if (!gallery) return;
   gallery.innerHTML = '';
 
-  const pos = [
+  const isMobile = window.innerWidth <= 640;
+  const rawPos = [
     [6, 3],   [58, 5],   [32, 13],
     [76, 19], [10, 26],  [50, 33],
     [74, 40], [14, 47],  [44, 54],
@@ -1669,6 +2040,14 @@ function renderPolaroidGallery() {
     [26, 84], [72, 91],  [12, 99],
     [54, 107],[76, 115], [28, 123]
   ];
+  const pos = rawPos.map(([rx, ry], idx) => {
+    if (isMobile) {
+      // Keep strictly within 4% and 64% so no cards overflow on small screens
+      const clampedX = Math.min(64, Math.max(4, (rx * 0.72) + (idx % 2 === 0 ? 0 : 4)));
+      return [clampedX, ry];
+    }
+    return [rx, ry];
+  });
 
   APP_CONFIG.memories.forEach((mem, i) => {
     const [x, y] = pos[i % pos.length];
@@ -2011,33 +2390,178 @@ function initStarryCanvas() {
     height = canvas.height = window.innerHeight;
   });
 
+  // Multi-colored celestial star palette
+  const starColors = [
+    'rgba(255, 255, 255, ',   // Pure White
+    'rgba(255, 215, 235, ',   // Soft Rose
+    'rgba(254, 240, 138, ',   // Warm Gold
+    'rgba(192, 132, 252, ',   // Lavender Violet
+    'rgba(103, 232, 249, ',   // Celestial Cyan
+    'rgba(251, 146, 60, '     // Cosmic Amber
+  ];
+
   const stars = [];
-  const starCount = Math.floor((width * height) / 3500);
+  const starCount = Math.min(220, Math.floor((width * height) / 3200));
   for (let i = 0; i < starCount; i++) {
     stars.push({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 1.6 + 0.4,
-      alpha: Math.random() * 0.8 + 0.2,
-      twinkleSpeed: (Math.random() * 0.02 + 0.005) * (Math.random() > 0.5 ? 1 : -1)
+      size: Math.random() * 1.8 + 0.4,
+      alpha: Math.random() * 0.75 + 0.25,
+      twinkleSpeed: (Math.random() * 0.02 + 0.006) * (Math.random() > 0.5 ? 1 : -1),
+      colorPrefix: starColors[Math.floor(Math.random() * starColors.length)],
+      hasCrossFlare: Math.random() < 0.15
     });
   }
 
+  // Shooting Stars / Meteors
+  const meteors = [];
+  function spawnMeteor() {
+    meteors.push({
+      x: Math.random() * (width * 0.9),
+      y: Math.random() * (height * 0.45),
+      length: Math.random() * 90 + 60,
+      speed: Math.random() * 7 + 8,
+      angle: (Math.PI / 4) + (Math.random() - 0.5) * 0.2,
+      alpha: 1,
+      fade: Math.random() * 0.016 + 0.012,
+      color: Math.random() > 0.45 ? '#f472b6' : '#67e8f9'
+    });
+  }
+
+  // Pulsing Cosmic Nebulae
+  const nebulae = [
+    { x: width * 0.25, y: height * 0.28, r: Math.min(width, height) * 0.42, color: 'rgba(236, 72, 153, 0.05)', phase: 0 },
+    { x: width * 0.75, y: height * 0.65, r: Math.min(width, height) * 0.48, color: 'rgba(147, 51, 234, 0.045)', phase: 1.8 },
+    { x: width * 0.5, y: height * 0.15, r: Math.min(width, height) * 0.38, color: 'rgba(59, 130, 246, 0.038)', phase: 3.2 }
+  ];
+
+  // Interactive Stardust Particles on Move
+  const stardust = [];
+  function addStardust(px, py) {
+    if (stardust.length > 40) stardust.shift();
+    for (let k = 0; k < 2; k++) {
+      stardust.push({
+        x: px + (Math.random() - 0.5) * 12,
+        y: py + (Math.random() - 0.5) * 12,
+        vx: (Math.random() - 0.5) * 1.2,
+        vy: (Math.random() - 0.5) * 1.2 - 0.3,
+        alpha: 0.9,
+        size: Math.random() * 2.2 + 0.8,
+        color: Math.random() > 0.5 ? '#f472b6' : '#fef08a'
+      });
+    }
+  }
+
+  window.addEventListener('pointermove', (e) => {
+    const s5 = document.getElementById('scene-5');
+    if (s5 && !s5.classList.contains('hidden')) {
+      addStardust(e.clientX, e.clientY);
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    const s5 = document.getElementById('scene-5');
+    if (s5 && !s5.classList.contains('hidden') && e.touches[0]) {
+      addStardust(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, { passive: true });
+
+  let lastMeteorTime = 0;
+
   function drawStarfield(t) {
-    ctx.fillStyle = '#000';
+    ctx.fillStyle = '#05020a';
     ctx.fillRect(0, 0, width, height);
+
+    // 1. Draw Pulsing Cosmic Nebulae
+    nebulae.forEach(neb => {
+      neb.phase += 0.008;
+      const pulse = 1 + Math.sin(neb.phase) * 0.18;
+      const grad = ctx.createRadialGradient(neb.x, neb.y, 0, neb.x, neb.y, neb.r * pulse);
+      grad.addColorStop(0, neb.color);
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(neb.x, neb.y, neb.r * pulse, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // 2. Cyber wireframe grid
     drawWire(ctx, width, height, t);
 
+    // 3. Multi-colored Twinkling Stars
     stars.forEach(star => {
       star.alpha += star.twinkleSpeed;
       if (star.alpha > 0.95 || star.alpha < 0.2) {
         star.twinkleSpeed = -star.twinkleSpeed;
       }
-      ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+      ctx.fillStyle = `${star.colorPrefix}${star.alpha})`;
       ctx.beginPath();
       ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
       ctx.fill();
+
+      // Subtle 4-point flare on brighter stars
+      if (star.hasCrossFlare && star.alpha > 0.75) {
+        ctx.strokeStyle = `${star.colorPrefix}${star.alpha * 0.4})`;
+        ctx.lineWidth = 0.6;
+        ctx.beginPath();
+        ctx.moveTo(star.x - star.size * 3, star.y);
+        ctx.lineTo(star.x + star.size * 3, star.y);
+        ctx.moveTo(star.x, star.y - star.size * 3);
+        ctx.lineTo(star.x, star.y + star.size * 3);
+        ctx.stroke();
+      }
     });
+
+    // 4. Shooting Stars (Meteors)
+    if (t - lastMeteorTime > 2600 && Math.random() < 0.35) {
+      spawnMeteor();
+      lastMeteorTime = t;
+    }
+
+    for (let m = meteors.length - 1; m >= 0; m--) {
+      const met = meteors[m];
+      met.x += Math.cos(met.angle) * met.speed;
+      met.y += Math.sin(met.angle) * met.speed;
+      met.alpha -= met.fade;
+
+      if (met.alpha <= 0 || met.x > width + 100 || met.y > height + 100) {
+        meteors.splice(m, 1);
+        continue;
+      }
+
+      const tailX = met.x - Math.cos(met.angle) * met.length;
+      const tailY = met.y - Math.sin(met.angle) * met.length;
+      const grad = ctx.createLinearGradient(tailX, tailY, met.x, met.y);
+      grad.addColorStop(0, 'rgba(255, 255, 255, 0)');
+      grad.addColorStop(0.7, met.color);
+      grad.addColorStop(1, '#ffffff');
+
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(tailX, tailY);
+      ctx.lineTo(met.x, met.y);
+      ctx.stroke();
+    }
+
+    // 5. Interactive Stardust Trails
+    for (let s = stardust.length - 1; s >= 0; s--) {
+      const p = stardust[s];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.alpha -= 0.02;
+      if (p.alpha <= 0) {
+        stardust.splice(s, 1);
+        continue;
+      }
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
 
     starryCanvasAnimationId = requestAnimationFrame(drawStarfield);
   }
@@ -2231,3 +2755,182 @@ document.addEventListener('DOMContentLoaded', () => {
   setupScene1();
   setSceneProgress(1);
 });
+
+
+// ----------------------------------------------------------------------------
+// FULL 53 PHOTOS GALLERY GRID & SLIDESHOW ENGINE
+// ----------------------------------------------------------------------------
+let currentGalleryMode = 'cosmos'; // 'cosmos' | 'grid'
+let slideshowInterval = null;
+
+function render53PhotosGrid() {
+  const container = document.getElementById('photos-grid-container');
+  if (!container || container.children.length > 0) return;
+  container.innerHTML = '';
+
+  const photos = APP_CONFIG.allBunnyPhotos || [];
+  photos.forEach((photo, idx) => {
+    const card = document.createElement('div');
+    card.className = 'grid-photo-card group';
+    card.title = `Memory #${idx + 1}: ${photo.filename}`;
+
+    card.innerHTML = `
+      <img src="${encodeURI(photo.clean)}" alt="Memory #${idx + 1}" loading="lazy" class="w-full h-full object-cover">
+      <div class="grid-photo-badge">#${idx + 1}</div>
+      <button class="grid-dl-btn" title="Download Photo #${idx + 1}" data-idx="${idx}">
+        ⬇
+      </button>
+    `;
+
+    const dlBtn = card.querySelector('.grid-dl-btn');
+    if (dlBtn) {
+      dlBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sounds.playClick();
+        downloadImage(photo.clean, photo.filename);
+      });
+    }
+
+    card.addEventListener('click', () => {
+      sounds.playClick();
+      openModalForSingleBunnyPhoto(idx);
+    });
+
+    container.appendChild(card);
+  });
+}
+
+function openModalForSingleBunnyPhoto(index) {
+  const photos = APP_CONFIG.allBunnyPhotos || [];
+  if (!photos[index]) return;
+  const photo = photos[index];
+
+  // Find corresponding memory or synthesize
+  let targetMemIndex = Math.floor(index / 3);
+  if (targetMemIndex >= APP_CONFIG.memories.length) {
+    targetMemIndex = APP_CONFIG.memories.length - 1;
+  }
+  activeModalMemoryIndex = targetMemIndex;
+  modalSlideIndex = index % 3;
+
+  const modal = document.getElementById('photo-modal');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+
+  updatePhotoModalContent();
+  applySlide(modalSlideIndex);
+}
+
+function startAutoSlideshow() {
+  if (slideshowInterval) clearInterval(slideshowInterval);
+  showToast('▶ Auto Slideshow Started ✨');
+
+  const photos = APP_CONFIG.allBunnyPhotos || [];
+  let sIndex = 0;
+  openModalForSingleBunnyPhoto(sIndex);
+
+  slideshowInterval = setInterval(() => {
+    const modal = document.getElementById('photo-modal');
+    if (!modal || modal.classList.contains('hidden')) {
+      clearInterval(slideshowInterval);
+      slideshowInterval = null;
+      return;
+    }
+    sIndex = (sIndex + 1) % photos.length;
+    openModalForSingleBunnyPhoto(sIndex);
+  }, 3500);
+}
+
+function stopAutoSlideshow() {
+  if (slideshowInterval) {
+    clearInterval(slideshowInterval);
+    slideshowInterval = null;
+  }
+}
+
+function setupUniverseControls() {
+  const cosmosBtn = document.getElementById('view-cosmos-btn');
+  const gridBtn = document.getElementById('view-grid-btn');
+  const slideshowBtn = document.getElementById('auto-slideshow-btn');
+  const dlAllBtn = document.getElementById('dl-all-btn');
+  const polaroidGallery = document.getElementById('polaroid-gallery');
+  const gridGallery = document.getElementById('grid-gallery-53');
+  const modalQuickDlBtn = document.getElementById('modal-quick-dl-btn');
+  const modalDownload = document.getElementById('modal-download');
+
+  if (cosmosBtn) {
+    cosmosBtn.addEventListener('click', () => {
+      sounds.playClick();
+      currentGalleryMode = 'cosmos';
+      cosmosBtn.classList.add('active');
+      if (gridBtn) gridBtn.classList.remove('active');
+      if (polaroidGallery) polaroidGallery.classList.remove('hidden');
+      if (gridGallery) gridGallery.classList.add('hidden');
+      stopAutoSlideshow();
+    });
+  }
+
+  if (gridBtn) {
+    gridBtn.addEventListener('click', () => {
+      sounds.playClick();
+      currentGalleryMode = 'grid';
+      gridBtn.classList.add('active');
+      if (cosmosBtn) cosmosBtn.classList.remove('active');
+      if (polaroidGallery) polaroidGallery.classList.add('hidden');
+      if (gridGallery) {
+        gridGallery.classList.remove('hidden');
+        render53PhotosGrid();
+      }
+      stopAutoSlideshow();
+    });
+  }
+
+  if (slideshowBtn) {
+    slideshowBtn.addEventListener('click', () => {
+      sounds.playClick();
+      startAutoSlideshow();
+    });
+  }
+
+  if (dlAllBtn) {
+    dlAllBtn.addEventListener('click', () => {
+      sounds.playClick();
+      const mem = APP_CONFIG.memories[activeModalMemoryIndex];
+      const src = mem && mem.images ? mem.images[modalSlideIndex] : (APP_CONFIG.allBunnyPhotos[0] ? APP_CONFIG.allBunnyPhotos[0].clean : '');
+      const filename = src.split('/').pop() || 'bunny_photo.jpeg';
+      downloadImage(src, filename);
+    });
+  }
+
+  // Hook Quick Download Button on Image
+  if (modalQuickDlBtn) {
+    modalQuickDlBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sounds.playClick();
+      const mem = APP_CONFIG.memories[activeModalMemoryIndex];
+      if (mem && mem.images && mem.images[modalSlideIndex]) {
+        const src = mem.images[modalSlideIndex];
+        const filename = `${mem.title.replace(/\s+/g, '_')}_photo_${modalSlideIndex + 1}.jpeg`;
+        downloadImage(src, filename);
+      }
+    });
+  }
+
+  // Hook Modal Download Link
+  if (modalDownload) {
+    modalDownload.addEventListener('click', (e) => {
+      e.preventDefault();
+      sounds.playClick();
+      const mem = APP_CONFIG.memories[activeModalMemoryIndex];
+      if (mem) {
+        if (mem.type === 'video') {
+          downloadImage(mem.video, `${mem.title.replace(/\s+/g, '_')}.mp4`);
+        } else if (mem.images && mem.images[modalSlideIndex]) {
+          const src = mem.images[modalSlideIndex];
+          const filename = `${mem.title.replace(/\s+/g, '_')}_photo_${modalSlideIndex + 1}.jpeg`;
+          downloadImage(src, filename);
+        }
+      }
+    });
+  }
+}
